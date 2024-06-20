@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Registazione</title>
+        <link rel="stylesheet" type="text/css" href="static/css/auth.css">
+        <link rel="icon" href="static/images/top.ico" type="image/x-icon">
+    </head>
+    <body>
+        <div class="container right-panel-active " id="container">
+            <div class="form-container sign-up-container">
+                <form method="post" id="loginForm2">
+                    <h1>Crea un Account</h1>
+                    <br>
+                    <input type="text" placeholder="Nome" name="nome"/>
+                    <input type="text" placeholder="Cognome" name="cognome" />
+                    <input type="email" placeholder="Email" name="email"/>
+                    <input type="password" placeholder="Password" name="password"/>
+                    <i class="bi bi-eye-slash" id="togglePassword"></i>
+                    <br>
+                    <button id="signUp">Registrati</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Bentornato !</h1>
+                        <p>Effettua il login con i tuoi dati personali, per avere libero accesso ai dati </p>
+                        <button class="ghost" id="signIn">Sign In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Hello, Friend!</h1>
+                        <p>Enter your personal details and start journey with us</p>
+                        <button class="ghost" id="signUp">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="static\javascript\auth.js"></script>
+    </body>
+</html>

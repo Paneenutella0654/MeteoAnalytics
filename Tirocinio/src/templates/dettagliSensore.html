@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title id = "titolopagina">{{sensore.name}}</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="/static/vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="/static/vendors/css/vendor.bundle.base.css">
+    <!-- endinject --> 
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/static/css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="/static/images/Logo.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+     <style>
+      .card{
+        border-radius: 3%;
+      }
+
+      #datiMeteo{
+        width: 100%;
+      }
+
+      #datiUmidita{
+        width: 100%;
+      }
+
+      #datiPressione{
+        width: 100%;
+        max-height: 800px;
+      }
+
+      #datiVento{
+        width: 100%;
+      }
+
+      #datiUv{
+        width: 100%;
+      }
+
+      #datiInquinamento{
+        width: 100%;
+      }
+
+      #datiPrecipitazioni{
+        width: 100%;
+      }
+
+      #map{
+        border-radius: 3%;
+          height: 500px;
+          width: 100%;
+          z-index: 1;
+      }
+
+      #mapTuttiIrrigatori{
+        height: 400px;
+        width: 100%;
+        z-index: 1;
+      }
+
+      #mapAggiungiIrrigatore{
+        height: 400px;
+        width: 100%;
+        z-index: 1;
+      }
+
+      #mapIrrigazione{
+        height: 400px;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .larger-wheel {
+      margin-top: 17rem;
+      margin-bottom:17rem;
+      width: 5rem; /* Adjust as desired */
+      height: 5rem; /* Adjust as desired */
+    }
+
+      .fa-heart{
+        color:red;
+        font-size:40px;
+      }
+  </style>
+  </head>
+  <body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="brand-logo-mini" href="listaSensori"><img
+                        src="/static/images/Logo.png" alt="logo"></a>
+                <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button"
+                    data-toggle="minimize">
+                    <span class="typcn typcn-th-menu"></span>
+                </button>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <ul class="navbar-nav mr-lg-2">
+                    <li class="nav-item  d-none d-lg-flex">
+                        <a class="nav-link active">
+                            <p id="nomsensore">{{sensore.name}}</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item dropdown  d-flex">
+                        <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
+                            id="notificationDropdown" data-toggle="dropdown">
+                            <i class="typcn typcn-bell mr-0"></i>
+                            <!--TODO farlo variabile con l'implementazione delle notifiche-->
+                            <span class="count bg-danger">2</span>
+                            <!--Numero notifiche-->
+                        </a>
+                        <!--contenuto dropdown notifiche-->
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                            aria-labelledby="notificationDropdown">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-success">
+                                        <i class="typcn typcn-info-large mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        Just now
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-warning">
+                                        <i class="typcn typcn-cog mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Settings</h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        Private message
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-info">
+                                        <i class="typcn typcn-user-outline mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        2 days ago
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle  pl-0 pr-0" data-toggle="dropdown" id="profileDropdown">
+                            <i class="typcn typcn-user-outline mr-0"></i>
+                            <span class="nav-profile-name">{{current_user.nome + " " + current_user.cognome}}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                            aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="/user">
+                                <i class="typcn typcn-cog text-primary"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item" href="/logout">
+                                <i class="typcn typcn-power text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                    <span class="typcn typcn-th-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_settings-panel.html -->
+            <!-- partial -->
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <div class="d-flex sidebar-profile">
+                            <div class="sidebar-profile-image">
+                            </div>
+                            <div class="sidebar-profile-name">
+                              <p class="sidebar-name">{{current_user.nome + ' ' + current_user.cognome}}</p>
+                              <p class="sidebar-designation">Welcome</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/listaSensori">
+                            <i class="typcn typcn-map menu-icon"></i>
+                            <span class="menu-title">Sensori</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user" aria-expanded="false" aria-controls="auth">
+                            <i class="typcn typcn-user menu-icon"></i>
+                            <span class="menu-title">User Pages</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="" target="_blank">
+                            <i class="typcn typcn-document-text menu-icon"></i>
+                            <span class="menu-title">Documentation</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-sm-6">
+                <h3 id = "nomeSensore" class="mb-0 font-weight-bold"></h3>
+              </div>
+              <div class="col-sm-6">
+                <div class="d-flex align-items-center justify-content-md-end">
+                  <div class="mb-3 mb-xl-0 pr-1">
+                    <button type="button" class="btn btn-primary"  style= "background-color: #00c39a !important; border-color: #00c39a;" onclick = "rimandamodifica()" >Modifica</button>
+                  </div>
+                  <div class="mb-3 mb-xl-0 pr-1">
+                    <button type="button" class="btn btn-primary" onclick = "rimandaelimina()" >Elimina</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row  mt-3">
+              <div class="col-xl-8 d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between">
+                      <h4 class="card-title mb-3">Mappa Sensori</h4>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row">
+                          <div id="map">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4 d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between">
+                      <h4 class="card-title mb-3">Dettagli Sensori</h4>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div class="d-flex justify-content-between mb-4">
+                              <div>Descrizione</div>
+                              <div id = "nome" class="text-muted"></div>
+                            </div>
+                            <div id="sensoriDettaglio"></div>
+                            <div class="d-flex justify-content-center mb-4">
+                            </div>
+                           </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          <div class="row  mt-3">
+            <div class="col-xl-6 d-none grid-margin stretch-card" id = "card-dati-temperatura">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-wrap justify-content-between">
+                    <h4 class="card-title mb-3">Storico Meteo</h4>
+                    <div id="datiMeteo"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 d-none grid-margin stretch-card" id="card-dati-inquinamento">
+              <div class="card">
+                  <div class="card-body">
+                    <h4 id = "datiInquinamento" class="card-title mb-4">Storico Indici Inquinamento</h4>
+                    <div id="datiInquinamento"></div>
+                  </div>
+                </div>
+               </div>
+            </div>
+            <div class="row  mt-3">
+              <div class="col-xl-6 d-none grid-margin stretch-card" id="card-dati-umidità">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between">
+                    <h4 class="card-title mb-3">Storico Umidita</h4>
+                    <div id="datiUmidita"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+              <div class="col-xl-6 d-none grid-margin stretch-card" id="card-dati-anemometro">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between">
+                    <h4 class="card-title mb-3">Storico Anemometro</h4>
+                    <div id="datiVento"></div>
+                  </div>
+                </div>
+                </div>
+              </div>
+           </div>
+           <div class="row  mt-3">
+            <div class="col-xl-6 d-none grid-margin stretch-card" id="card-dati-luminosità">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-wrap justify-content-between">
+                  <h4 class="card-title mb-3">Storico Indici UV</h4>
+                  <div id="datiUv"></div>
+                </div>
+              </div>
+              </div>
+            </div>
+
+            <div class="col-xl-6 d-none grid-margin stretch-card" id="card-dati-precipitazioni">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-wrap justify-content-between">
+                  <h4 class="card-title mb-3">Storico Precipitazioni</h4>
+                  <div id="datiPrecipitazioni"></div>
+                </div>
+              </div>
+            </div>
+
+         </div>
+           <div class="row  mt-3">
+            <div class="col-xl d-none grid-margin stretch-card" id="card-dati-atm aria">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-wrap justify-content-between">
+                  <h4 class="card-title mb-3">Storico Pressione Atmosferica</h4>
+                  <div id="datiPressione"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+          
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <footer class="footer" style= "background: border-box">
+      <div class="d-sm-flex justify-content-center justify-content-sm-between">
+        <span class="text-center text-sm-left d-block d-sm-inline-block">Progetto Tirocinio</span>
+        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Sviluppato da: Gerardo Frino</span>
+      </div>
+    </footer>
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="/static/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="/static/js/off-canvas.js"></script>
+    <script src="/static/js/hoverable-collapse.js"></script>
+    <script src="/static/js/template.js"></script>
+    <script src="/static/js/settings.js"></script>
+    <script src="/static/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <script src="/static/vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="/static/vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+      var sensoriPresenti = JSON.parse('{{ sensore.sensors | tojson }}');
+
+      for (var i = 0; i < sensoriPresenti.length; i++) {
+        var titolo = sensoriPresenti[i].title;
+        var idDivDaModificare = "card-dati-" + titolo.toLowerCase();
+        var divDaModificare = document.getElementById(idDivDaModificare);
+
+        if (divDaModificare) {
+          // Il sensore è presente, quindi cambia la classe del div
+          divDaModificare.classList.remove("d-none");
+          divDaModificare.classList.add("d-flex");
+      } else {
+          // Il sensore non è presente, quindi nascondi il div
+        var divDaNascondere = document.getElementById(idDivDaModificare);
+        console.log(divDaNascondere);
+        if (divDaNascondere) {
+            divDaNascondere.style.display = "none";
+        }
+        console.log("Div non trovato per il sensore: " + titolo);
+      }
+      }
+
+    </script>
+
+  <script>
+
+    var SensorIcon = L.icon({
+      iconUrl: '/static/images/Sensor_ico.png',
+      iconSize: [38, 38],
+      iconAnchor: [19, 18],
+      popupAnchor: [0, 0],
+    });
+ 
+    //Mappa per la posizione del sensore
+    var posizione = JSON.parse('{{ sensore.loc.geometry.coordinates | tojson }}');
+    var lat = posizione[0];
+    var lon = posizione[1];
+
+    var map = L.map('map').setView([lat, lon], 18);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    L.marker([lat,lon],{icon: SensorIcon}).addTo(map);
+
+
+
+    //Generazione grafico meteo
+    var meteoData = {{ meteo|tojson|safe }};
+    var arrayGiorniMeteo = AggiustaDatiMeteo(meteoData)
+    creaGraficoMeteo()
+
+    //Converto quello ottenuto da openMeteo in un Json
+    function AggiustaDatiMeteo(meteoData)  
+    {
+        //Cancello i dati che non mi servono
+        delete meteoData.latitude
+        delete meteoData.longitude
+        delete meteoData.generationtime_ms
+        delete meteoData.utc_offset_seconds
+        delete meteoData.timezone_abbreviation
+        delete meteoData.timezone
+        delete meteoData.elevation
+        delete meteoData.hourly_units
+        delete meteoData.time
+        delete meteoData.temperature_2m 
+        var temp = []
+        var n = meteoData.hourly.time.length
+        for(var i=0; i<n ; i++)
+        {
+          var temp2 = {
+            "Temperature (°C)": meteoData.hourly.temperature_2m[i],
+            time: meteoData.hourly.time[i],
+          }
+          temp.push(temp2)
+        }
+      return temp
+    }
+
+    function creaGraficoMeteo()
+      {
+        /*
+        Variabili globali usate:
+        arrayGiorniMeteo, contiene i dati per ogni giorno di quello che vogliamo inserire.
+        */
+
+        var parent = document.getElementById("datiMeteo")
+        var canvas = document.createElement("canvas")
+        canvas.id = "lineChartmeteo"
+        canvas.width = "800"
+        canvas.height = "595" //NON modificare, stessa altezza del testo così non esplode quando clicchiamo.
+        parent.appendChild(canvas)
+        //Genero dinamicamente i dati per il grafico, siccome non so quanti elementi
+        //Array dei colori, abbastanza da non averne bisogno dopo.
+        var colors = ["rgb(255, 102, 0)", "rgb(255, 204, 0)", "rgb(153, 204, 0)", "rgb(0, 204, 0)", "rgb(0, 255, 204)", "rgb(0, 51, 204)", "rgb(102, 0, 255)", "rgb(255, 51, 204)", "rgb(102, 0, 102)", "rgb(0, 51, 0)"]
+        var labelsData = []   //Asse x
+        var labels = [] //Nomi dei dati
+        var values = []//Valori dei dati: values[0] ha tutti i dati per la prima label.
+        var datasets = [] //Serve per creare il grafico
+        var time = [] //Serve per ripristinare il grafico dopo averlo chiuso.
+        //Riempio labelsData e values
+        for(var c = 0; c < arrayGiorniMeteo.length; c++)
+        {
+          labelsData.push(arrayGiorniMeteo[c].time.split("T")[0]) //Prendo solo la data dal timestamp
+          time.push(arrayGiorniMeteo[c].time)
+          delete arrayGiorniMeteo[c].time //Lo rimuovo in modo da poter iterare sugli altri campi per prenderne i valori
+          values.push(Object.values(arrayGiorniMeteo[c]))
+        }
+        //Riempio labels
+        for(var i = 0; i < Object.keys(arrayGiorniMeteo[0]).length; i++) //Per ogni campo di un oggetto
+        {
+          labels.push(Object.keys(arrayGiorniMeteo[0])[i])
+        }   
+        //Creo i dataset con i dati compilati, uno per lineChart
+        for(var c = 0; c < labels.length; c++)
+        {
+          var data = []
+          for(var k = 0; k < values.length; k++)
+          {
+            data.push(values[k][c])
+          }
+          //Adesso ho tutti i valori di una label, posso costruirne il dataset
+          var dataset = {
+            label : labels[c],
+            data: data,
+            fill: false,
+            borderColor: colors[c],
+            tension: 0.1
+          }
+          //Costruito, lo inserisco nell'insieme per creare il grafico
+          datasets.push(dataset)
+        }
+        //Finito il parsing dei dati, posso creare finalmente il grafico
+        new Chart(document.getElementById("lineChartmeteo"), {
+          type: 'line',
+          data: {
+            labels: labelsData,
+            datasets: datasets
+          },
+          options: {
+            title: {
+              display: true,
+              text: "Storico Meteo"
+            }
+          }
+        })
+      }
+
+
+      //Gestione creazione grafico Umidita
+      var umiditaData = {{ umidita|tojson|safe }};
+      var arrayGiorniUmidita = AggiustaDatiUmidita(umiditaData)
+      creaGraficoUmidita()
+
+
+      function creaGraficoUmidita()
+      {
+        /*
+        Variabili globali usate:
+        arrayGiorniUmidita, contiene i dati per ogni giorno di quello che vogliamo inserire.
+        */
+
+        var parent = document.getElementById("datiUmidita")
+        var canvas = document.createElement("canvas")
+        canvas.id = "lineChartumidita"
+        canvas.width = "800"
+        canvas.height = "595" //NON modificare, stessa altezza del testo così non esplode quando clicchiamo.
+        parent.appendChild(canvas)
+        //Genero dinamicamente i dati per il grafico, siccome non so quanti elementi
+        //Array dei colori, abbastanza da non averne bisogno dopo.
+        var colors = ["rgb(153, 204, 0)", "rgb(255, 204, 0)", "rgb(0, 204, 0)", "rgb(0, 255, 204)", "rgb(0, 51, 204)", "rgb(102, 0, 255)", "rgb(255, 51, 204)", "rgb(102, 0, 102)", "rgb(0, 51, 0)"]
+        var labelsData = []   //Asse x
+        var labels = [] //Nomi dei dati
+        var values = []//Valori dei dati: values[0] ha tutti i dati per la prima label.
+        var datasets = [] //Serve per creare il grafico
+        var time = [] //Serve per ripristinare il grafico dopo averlo chiuso.
+        //Riempio labelsData e values
+        for(var c = 0; c < arrayGiorniUmidita.length; c++)
+        {
+          labelsData.push(arrayGiorniUmidita[c].time.split("T")[0]) //Prendo solo la data dal timestamp
+          time.push(arrayGiorniUmidita[c].time)
+          delete arrayGiorniUmidita[c].time //Lo rimuovo in modo da poter iterare sugli altri campi per prenderne i valori
+          values.push(Object.values(arrayGiorniUmidita[c]))
+        }
+        //Riempio labels
+        for(var i = 0; i < Object.keys(arrayGiorniUmidita[0]).length; i++) //Per ogni campo di un oggetto
+        {
+          labels.push(Object.keys(arrayGiorniUmidita[0])[i])
+        }   
+        //Creo i dataset con i dati compilati, uno per lineChart
+        for(var c = 0; c < labels.length; c++)
+        {
+          var data = []
+          for(var k = 0; k < values.length; k++)
+          {
+            data.push(values[k][c])
+          }
+          //Adesso ho tutti i valori di una label, posso costruirne il dataset
+          var dataset = {
+            label : labels[c],
+            data: data,
+            fill: false,
+            borderColor: colors[c],
+            tension: 0.1
+          }
+          //Costruito, lo inserisco nell'insieme per creare il grafico
+          datasets.push(dataset)
+        }
+        //Finito il parsing dei dati, posso creare finalmente il grafico
+        new Chart(document.getElementById("lineChartumidita"), {
+          type: 'line',
+          data: {
+            labels: labelsData,
+            datasets: datasets
+          },
+          options: {
+            title: {
+              display: true,
+              text: "Storico Umidita"
+            }
+          }
+        })
+      }
+
+
+
+      function AggiustaDatiUmidita(umiditaData)  
+      {
+        //Cancello i dati che non mi servono
+        delete umiditaData.latitude
+        delete umiditaData.longitude
+        delete umiditaData.generationtime_ms
+        delete umiditaData.utc_offset_seconds
+        delete umiditaData.timezone_abbreviation
+        delete umiditaData.timezone
+        delete umiditaData.elevation
+        delete umiditaData.hourly_units
+        delete umiditaData.time
+        delete umiditaData.relative_humidity_2m 
+        var temp = []
+        var n = umiditaData.hourly.time.length
+        for(var i=0; i<n ; i++)
+        {
+          var temp2 = {
+            "Umidita (%)": umiditaData.hourly.relative_humidity_2m[i],
+            time: umiditaData.hourly.time[i],
+          }
+          temp.push(temp2)
+        }
+      return temp
+      }
+
+
+      var pressioneData = {{ pressione|tojson|safe }};
+      var arrayGiorniPressione = AggiustaDatiPressione(pressioneData)
+      creaGraficoPressione()
+
+      function AggiustaDatiPressione(pressioneData)  
+      {
+        //Cancello i dati che non mi servono
+        delete pressioneData.latitude
+        delete pressioneData.longitude
+        delete pressioneData.generationtime_ms
+        delete pressioneData.utc_offset_seconds
+        delete pressioneData.timezone_abbreviation
+        delete pressioneData.timezone
+        delete pressioneData.elevation
+        delete pressioneData.hourly_units
+        delete pressioneData.time
+        delete pressioneData.surface_pressure 
+        var temp = []
+        var n = pressioneData.hourly.time.length
+        for(var i=0; i<n ; i++)
+        {
+          var temp2 = {
+            "Pressione 1 (hPa)":  pressioneData.hourly.surface_pressure_member01[i],
+            "Pressione 2 (hPa)":  pressioneData.hourly.surface_pressure_member02[i],
+            "Pressione 3 (hPa)":  pressioneData.hourly.surface_pressure_member03[i],
+            "Pressione 4 (hPa)":  pressioneData.hourly.surface_pressure_member04[i],
+            "Pressione 5 (hPa)":  pressioneData.hourly.surface_pressure_member05[i],
+            "Pressione 6 (hPa)":  pressioneData.hourly.surface_pressure_member06[i],
+            "Pressione 7 (hPa)":  pressioneData.hourly.surface_pressure_member07[i],
+            "Pressione 8 (hPa)":  pressioneData.hourly.surface_pressure_member08[i],
+            "Pressione 9 (hPa)":  pressioneData.hourly.surface_pressure_member09[i],
+            "Pressione 10 (hPa)": pressioneData.hourly.surface_pressure_member10[i],
+            time: pressioneData.hourly.time[i],
+          }
+          temp.push(temp2)
+        }
+      return temp
+      }
+
+
+
+      function creaGraficoPressione()
+      {
+        /*
+        Variabili globali usate:
+        arrayGiorniPressione, contiene i dati per ogni giorno di quello che vogliamo inserire.
+        */
+
+        var parent = document.getElementById("datiPressione")
+        var canvas = document.createElement("canvas")
+        canvas.id = "lineChartpressione"
+        canvas.width = "800"
+        canvas.height = "400" //NON modificare, stessa altezza del testo così non esplode quando clicchiamo.
+        parent.appendChild(canvas)
+        //Genero dinamicamente i dati per il grafico, siccome non so quanti elementi
+        //Array dei colori, abbastanza da non averne bisogno dopo.
+        var colors = ["rgb(255,204,0)","rgb(153,204,0)","rgb(0,204,0)","rgb(0,255,204)","rgb(0,51,204)","rgb(102,0,255)","rgb(255,51,204)","rgb(102,0,102)","rgb(0,51,0)","rgb(255,0,0)","rgb(0,0,255)","rgb(255,102,0)","rgb(204,0,204)","rgb(0,204,204)","rgb(102,102,102)"];
+        var labelsData = []   //Asse x
+        var labels = [] //Nomi dei dati
+        var values = []//Valori dei dati: values[0] ha tutti i dati per la prima label.
+        var datasets = [] //Serve per creare il grafico
+        var time = [] //Serve per ripristinare il grafico dopo averlo chiuso.
+        //Riempio labelsData e values
+        for(var c = 0; c < arrayGiorniPressione.length; c++)
+        {
+          labelsData.push(arrayGiorniPressione[c].time.split("T")[0]) //Prendo solo la data dal timestamp
+          time.push(arrayGiorniPressione[c].time)
+          delete arrayGiorniPressione[c].time //Lo rimuovo in modo da poter iterare sugli altri campi per prenderne i valori
+          values.push(Object.values(arrayGiorniPressione[c]))
+        }
+        //Riempio labels
+        for(var i = 0; i < Object.keys(arrayGiorniPressione[0]).length; i++) //Per ogni campo di un oggetto
+        {
+          labels.push(Object.keys(arrayGiorniPressione[0])[i])
+        }   
+        //Creo i dataset con i dati compilati, uno per lineChart
+        for(var c = 0; c < labels.length; c++)
+        {
+          var data = []
+          for(var k = 0; k < values.length; k++)
+          {
+            data.push(values[k][c])
+          }
+          //Adesso ho tutti i valori di una label, posso costruirne il dataset
+          var dataset = {
+            label : labels[c],
+            data: data,
+            fill: false,
+            borderColor: colors[c],
+            tension: 0.1
+          }
+          //Costruito, lo inserisco nell'insieme per creare il grafico
+          datasets.push(dataset)
+        }
+        //Finito il parsing dei dati, posso creare finalmente il grafico
+        new Chart(document.getElementById("lineChartpressione"), {
+          type: 'line',
+          data: {
+            labels: labelsData,
+            datasets: datasets,
+          },
+          options: {
+            elements: {
+              point:{
+                radius: 0
+              }
+            }, 
+            title: {
+              display: true,
+              text: "Pressione Atmosferica"
+            }
+          }
+        })
+      }
+
+
+      //Gestione creazione grafico Vento
+      var ventoData = {{ vento|tojson|safe }};
+      var arrayGiorniVento = AggiustaDatiVento(ventoData)
+      creaGraficoVento()
+
+
+      function creaGraficoVento()
+      {
+        /*
+        Variabili globali usate:
+        arrayGiorniVento, contiene i dati per ogni giorno di quello che vogliamo inserire.
+        */
+
+        var parent = document.getElementById("datiVento")
+        var canvas = document.createElement("canvas")
+        canvas.id = "lineChartvento"
+        canvas.width = "800"
+        canvas.height = "595" //NON modificare, stessa altezza del testo così non esplode quando clicchiamo.
+        parent.appendChild(canvas)
+        //Genero dinamicamente i dati per il grafico, siccome non so quanti elementi
+        //Array dei colori, abbastanza da non averne bisogno dopo.
+        var colors = ["rgb(44, 175, 254)", "rgb(84, 79, 197)", "rgb(0, 226, 114)", "rgb(0, 255, 204)", "rgb(0, 51, 204)", "rgb(102, 0, 255)", "rgb(255, 51, 204)", "rgb(102, 0, 102)", "rgb(0, 51, 0)"]
+        var labelsData = []   //Asse x
+        var labels = [] //Nomi dei dati
+        var values = []//Valori dei dati: values[0] ha tutti i dati per la prima label.
+        var datasets = [] //Serve per creare il grafico
+        var time = [] //Serve per ripristinare il grafico dopo averlo chiuso.
+        //Riempio labelsData e values
+        for(var c = 0; c < arrayGiorniVento.length; c++)
+        {
+          labelsData.push(arrayGiorniVento[c].time.split("T")[0]) //Prendo solo la data dal timestamp
+          time.push(arrayGiorniVento[c].time)
+          delete arrayGiorniVento[c].time //Lo rimuovo in modo da poter iterare sugli altri campi per prenderne i valori
+          values.push(Object.values(arrayGiorniVento[c]))
+        }
+        //Riempio labels
+        for(var i = 0; i < Object.keys(arrayGiorniVento[0]).length; i++) //Per ogni campo di un oggetto
+        {
+          labels.push(Object.keys(arrayGiorniVento[0])[i])
+        }   
+        //Creo i dataset con i dati compilati, uno per lineChart
+        for(var c = 0; c < labels.length; c++)
+        {
+          var data = []
+          for(var k = 0; k < values.length; k++)
+          {
+            data.push(values[k][c])
+          }
+          //Adesso ho tutti i valori di una label, posso costruirne il dataset
+          var dataset = {
+            label : labels[c],
+            data: data,
+            fill: false,
+            borderColor: colors[c],
+            tension: 0.1
+          }
+          //Costruito, lo inserisco nell'insieme per creare il grafico
+          datasets.push(dataset)
+        }
+        //Finito il parsing dei dati, posso creare finalmente il grafico
+        new Chart(document.getElementById("lineChartvento"), {
+          type: 'line',
+          data: {
+            labels: labelsData,
+            datasets: datasets
+          },
+          options: {
+            title: {
+              display: true,
+              text: "Storico Anamometro"
+            }
+          }
+        })
+      }
+
+
+
+      function AggiustaDatiVento(ventoData)  
+      {
+        //Cancello i dati che non mi servono
+        delete ventoData.latitude
+        delete ventoData.longitude
+        delete ventoData.generationtime_ms
+        delete ventoData.utc_offset_seconds
+        delete ventoData.timezone_abbreviation
+        delete ventoData.timezone
+        delete ventoData.elevation
+        delete ventoData.hourly_units
+        delete ventoData.time
+        var temp = []
+        var n = ventoData.hourly.time.length
+        for(var i=0; i<n ; i++)
+        {
+          var temp2 = {
+            "Vento 10 (m/s)": ventoData.hourly.wind_speed_10m[i] ,
+            "Vento 80 (m/s)": ventoData.hourly.wind_speed_80m[i] ,
+            "Vento 120 (m/s)": ventoData.hourly.wind_speed_120m[i],
+            time: ventoData.hourly.time[i],
+          }
+          temp.push(temp2)
+        }
+      return temp
+      }
+
+
+
+      //Gestione creazione grafico Radiazioni UV
+      var UvData = {{ radiazioniuv|tojson|safe }};
+      var arrayGiorniUv = AggiustaDatiUv(UvData)
+      creaGraficoUv()
+
+
+      function creaGraficoUv()
+      {
+        /*
+        Variabili globali usate:
+        arrayGiorniUv, contiene i dati per ogni giorno di quello che vogliamo inserire.
+        */
+
+        var parent = document.getElementById("datiUv")
+        var canvas = document.createElement("canvas")
+        canvas.id = "lineChartuv"
+        canvas.width = "800"
+        canvas.height = "595" //NON modificare, stessa altezza del testo così non esplode quando clicchiamo.
+        parent.appendChild(canvas)
+        //Genero dinamicamente i dati per il grafico, siccome non so quanti elementi
+        //Array dei colori, abbastanza da non averne bisogno dopo.
+        var colors = ["rgb(44, 175, 254)", "rgb(84, 79, 197)", "rgb(0, 226, 114)", "rgb(0, 255, 204)", "rgb(0, 51, 204)", "rgb(102, 0, 255)", "rgb(255, 51, 204)", "rgb(102, 0, 102)", "rgb(0, 51, 0)"]
+        var labelsData = []   //Asse x
+        var labels = [] //Nomi dei dati
+        var values = []//Valori dei dati: values[0] ha tutti i dati per la prima label.
+        var datasets = [] //Serve per creare il grafico
+        var time = [] //Serve per ripristinare il grafico dopo averlo chiuso.
+        //Riempio labelsData e values
+        for(var c = 0; c < arrayGiorniUv.length; c++)
+        {
+          labelsData.push(arrayGiorniUv[c].time.split("T")[0]) //Prendo solo la data dal timestamp
+          time.push(arrayGiorniUv[c].time)
+          delete arrayGiorniUv[c].time //Lo rimuovo in modo da poter iterare sugli altri campi per prenderne i valori
+          values.push(Object.values(arrayGiorniUv[c]))
+        }
+        //Riempio labels
+        for(var i = 0; i < Object.keys(arrayGiorniUv[0]).length; i++) //Per ogni campo di un oggetto
+        {
+          labels.push(Object.keys(arrayGiorniUv[0])[i])
+        }   
+        //Creo i dataset con i dati compilati, uno per lineChart
+        for(var c = 0; c < labels.length; c++)
+        {
+          var data = []
+          for(var k = 0; k < values.length; k++)
+          {
+            data.push(values[k][c])
+          }
+          //Adesso ho tutti i valori di una label, posso costruirne il dataset
+          var dataset = {
+            label : labels[c],
+            data: data,
+            fill: false,
+            borderColor: colors[c],
+            tension: 0.1
+          }
+          //Costruito, lo inserisco nell'insieme per creare il grafico
+          datasets.push(dataset)
+        }
+        //Finito il parsing dei dati, posso creare finalmente il grafico
+        new Chart(document.getElementById("lineChartuv"), {
+          type: 'line',
+          data: {
+            labels: labelsData,
+            datasets: datasets
+          },
+          options: {
+            title: {
+              display: true,
+              text: "Storico Indici UV"
+            }
+          }
+        })
+      }
+
+
+
+      function AggiustaDatiUv(UvData)  
+      {
+        //Cancello i dati che non mi servono
+        delete UvData.latitude
+        delete UvData.longitude
+        delete UvData.generationtime_ms
+        delete UvData.utc_offset_seconds
+        delete UvData.timezone_abbreviation
+        delete UvData.timezone
+        delete UvData.elevation
+        delete UvData.hourly_units
+        delete UvData.time
+        var temp = []
+        var n = UvData.hourly.time.length
+        for(var i=0; i<n ; i++)
+        {
+          var temp2 = {
+            "Radiazione Diffusa W/m²": UvData.hourly.diffuse_radiation[i],
+            "Radiazione Diretta W/m²": UvData.hourly.direct_radiation[i],
+            "Radiazione Terreste W/m²": UvData.hourly.terrestrial_radiation[i],
+            "Radiazione Onde Cortee W/m²": UvData.hourly.shortwave_radiation[i],
+            "Irraggiamento Diretto W/m²": UvData.hourly.direct_normal_irradiance[i],
+            "Indice Uv": UvData.hourly.uv_index[i],
+            time: ventoData.hourly.time[i],
+          }
+          temp.push(temp2)
+        }
+      return temp
+      }
+
+
+
+      var InquiData = {{ inquinamento|tojson|safe }};
+      var arrayGiorniInqui = AggiustaDatiInqui(InquiData)
+      creaGraficoInqui()
+
+      function creaGraficoInqui()
+      {
+        /*
+        Variabili globali usate:
+        arrayGiorniInqui, contiene i dati per ogni giorno di quello che vogliamo inserire.
+        */
+
+        var parent = document.getElementById("datiInquinamento")
+        var canvas = document.createElement("canvas")
+        canvas.id = "lineChartinquinamento"
+        canvas.width = "800"
+        canvas.height = "595" //NON modificare, stessa altezza del testo così non esplode quando clicchiamo.
+        parent.appendChild(canvas)
+        //Genero dinamicamente i dati per il grafico, siccome non so quanti elementi
+        //Array dei colori, abbastanza da non averne bisogno dopo.
+        var colors = ["rgb(255, 51, 204)", "rgb(102, 0, 102)", "rgb(0, 51, 0)"]
+        var labelsData = []   //Asse x
+        var labels = [] //Nomi dei dati
+        var values = []//Valori dei dati: values[0] ha tutti i dati per la prima label.
+        var datasets = [] //Serve per creare il grafico
+        var time = [] //Serve per ripristinare il grafico dopo averlo chiuso.
+        //Riempio labelsData e values
+        for(var c = 0; c < arrayGiorniInqui.length; c++)
+        {
+          labelsData.push(arrayGiorniInqui[c].time.split("T")[0]) //Prendo solo la data dal timestamp
+          time.push(arrayGiorniInqui[c].time)
+          delete arrayGiorniInqui[c].time //Lo rimuovo in modo da poter iterare sugli altri campi per prenderne i valori
+          values.push(Object.values(arrayGiorniInqui[c]))
+        }
+        //Riempio labels
+        for(var i = 0; i < Object.keys(arrayGiorniInqui[0]).length; i++) //Per ogni campo di un oggetto
+        {
+          labels.push(Object.keys(arrayGiorniInqui[0])[i])
+        }   
+        //Creo i dataset con i dati compilati, uno per lineChart
+        for(var c = 0; c < labels.length; c++)
+        {
+          var data = []
+          for(var k = 0; k < values.length; k++)
+          {
+            data.push(values[k][c])
+          }
+          //Adesso ho tutti i valori di una label, posso costruirne il dataset
+          var dataset = {
+            label : labels[c],
+            data: data,
+            fill: false,
+            borderColor: colors[c],
+            tension: 0.1
+          }
+          //Costruito, lo inserisco nell'insieme per creare il grafico
+          datasets.push(dataset)
+        }
+        //Finito il parsing dei dati, posso creare finalmente il grafico
+        new Chart(document.getElementById("lineChartinquinamento"), {
+          type: 'line',
+          data: {
+            labels: labelsData,
+            datasets: datasets
+          },
+          options: {
+            title: {
+              display: true,
+              text: "Storico Indici Inquinamento"
+            }
+          }
+        })
+      }
+
+
+
+      function AggiustaDatiInqui(InquiData) 
+      {
+        //Cancello i dati che non mi servono
+        delete InquiData.latitude
+        delete InquiData.longitude
+        delete InquiData.generationtime_ms
+        delete InquiData.utc_offset_seconds
+        delete InquiData.timezone_abbreviation
+        delete InquiData.timezone
+        delete InquiData.elevation
+        delete InquiData.hourly_units
+        delete InquiData.time
+        var temp = []
+        var n = InquiData.hourly.time.length
+        for(var i=0; i<n ; i++)
+        {
+          var temp2 = {
+            "Pm 2.5 (µg/m³)": InquiData.hourly.pm2_5[i],
+            "Pm 10 (µg/m³)": InquiData.hourly.pm10[i],
+            "Biossido d'azoto (µg/m³)" : InquiData.hourly.nitrogen_dioxide[i],
+            time: InquiData.hourly.time[i],
+          }
+          temp.push(temp2)
+        }
+      return temp
+      }
+
+
+      var PreciData = {{ precipitazioni|tojson|safe }};
+      var arrayGiorniPrecipi = AggiustaDatiPreci(PreciData)
+      creaGraficoPreci()
+
+      function creaGraficoPreci()
+      {
+        /*
+        Variabili globali usate:
+        arrayGiorniPrecipi, contiene i dati per ogni giorno di quello che vogliamo inserire.
+        */
+
+        var parent = document.getElementById("datiPrecipitazioni")
+        var canvas = document.createElement("canvas")
+        canvas.id = "lineChartprecipitazioni"
+        canvas.width = "800"
+        canvas.height = "595" //NON modificare, stessa altezza del testo così non esplode quando clicchiamo.
+        parent.appendChild(canvas)
+        //Genero dinamicamente i dati per il grafico, siccome non so quanti elementi
+        //Array dei colori, abbastanza da non averne bisogno dopo.
+        var colors_border = ["rgb(255, 122, 150)"]
+        var colors_background = ["rgb(255, 216, 225)"]
+        var labelsData = []   //Asse x
+        var labels = [] //Nomi dei dati
+        var values = []//Valori dei dati: values[0] ha tutti i dati per la prima label.
+        var datasets = [] //Serve per creare il grafico
+        var time = [] //Serve per ripristinare il grafico dopo averlo chiuso.
+        //Riempio labelsData e values
+        for(var c = 0; c < arrayGiorniPrecipi.length; c++)
+        {
+          labelsData.push(arrayGiorniPrecipi[c].time.split("T")[0]) //Prendo solo la data dal timestamp
+          time.push(arrayGiorniPrecipi[c].time)
+          delete arrayGiorniPrecipi[c].time //Lo rimuovo in modo da poter iterare sugli altri campi per prenderne i valori
+          values.push(Object.values(arrayGiorniPrecipi[c]))
+        }
+        //Riempio labels
+        for(var i = 0; i < Object.keys(arrayGiorniPrecipi[0]).length; i++) //Per ogni campo di un oggetto
+        {
+          labels.push(Object.keys(arrayGiorniPrecipi[0])[i])
+        }   
+        //Creo i dataset con i dati compilati, uno per lineChart
+        for(var c = 0; c < labels.length; c++)
+        {
+          var data = []
+          for(var k = 0; k < values.length; k++)
+          {
+            data.push(values[k][c])
+          }
+          //Adesso ho tutti i valori di una label, posso costruirne il dataset
+          var dataset = {
+            label : labels[c],
+            data: data,
+            fill: false,
+            borderColor: colors_border[c],
+            backgroundColor: colors_background[c],
+            tension: 0.1
+          }
+          //Costruito, lo inserisco nell'insieme per creare il grafico
+          datasets.push(dataset)
+        }
+        //Finito il parsing dei dati, posso creare finalmente il grafico
+        new Chart(document.getElementById("lineChartprecipitazioni"), {
+          type: 'bar',
+          data: {
+            labels: labelsData,
+            datasets: datasets
+          },
+          options: {
+            title: {
+              display: true,
+              text: "Storico Precipitazioni"
+            }
+          }
+        })
+      }
+
+
+
+      function AggiustaDatiPreci(PreciData) 
+      {
+        //Cancello i dati che non mi servono
+        delete PreciData.latitude
+        delete PreciData.longitude
+        delete PreciData.generationtime_ms
+        delete PreciData.utc_offset_seconds
+        delete PreciData.timezone_abbreviation
+        delete PreciData.timezone
+        delete PreciData.elevation
+        delete PreciData.hourly_units
+        delete PreciData.time
+        var temp = []
+        var n = PreciData.hourly.time.length
+        for(var i=0; i<n ; i++)
+        {
+          var temp2 = {
+            "Precipitazioni (mm)": PreciData.hourly.precipitation[i],
+            time: PreciData.hourly.time[i],
+          }
+          temp.push(temp2)
+        }
+      return temp
+      }
+
+
+
+      var sensoreData = JSON.parse('{{ sensore.sensors | tojson }}');
+
+      var sensoriDettaglio = document.getElementById("sensoriDettaglio");
+      sensoreData.forEach(function (sensore) {
+        var elementoSensore = document.createElement("div");
+        elementoSensore.innerHTML = `<div class="d-flex justify-content-between mb-2">
+                                       <div>${sensore.title}</div>
+                                       <div>${sensore.sensor_type}</div>
+                                     </div>`;
+        sensoriDettaglio.appendChild(elementoSensore);
+      });
+
+      
+      var sensore = {id: "{{ sensore.id }}", name: "{{ sensore.name }}"};
+
+
+      function rimandamodifica()
+      {
+        window.location.href = "/modificaSensore?idSensore=" + sensore.id 
+      }
+
+      function rimandaelimina()
+      {
+        Swal.fire({
+          title: "Sei Sicuro?",
+          text: "Non sarà possibile ripristinarlo!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Si, eliminalo"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Effettua la chiamata AJAX alla route /eliminasensore
+            $.ajax({
+              url: '/eliminaSensore',
+              type: 'POST',
+              contentType: 'application/json',  // Imposta il Content-Type a application/json
+              data: JSON.stringify({ idSensore: sensore.id }),  // Converte l'oggetto in formato JSON
+              success: function (data) {
+                // Gestisci la risposta del server se necessario
+                console.log(data);
+        
+                // Mostri un messaggio di successo
+                Swal.fire({
+                  title: "Eliminato!",
+                  text: "Il tuo sensore è stato eliminato",
+                  icon: "success"
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location.href = "listaSensori"
+                  }
+                });
+              },
+            });
+          }
+        });
+      } 
+  </script>
+
+  </body>
+</html>

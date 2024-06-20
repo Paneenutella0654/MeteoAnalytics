@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Login</title>
+        <link rel="stylesheet" type="text/css" href="static/css/auth.css">
+        <link rel="icon" href="static/images/top.ico" type="image/x-icon">
+    </head>
+    <body>
+        <div class="container" id="container">
+            <div class="form-container sign-up-container">
+                <form action="#">
+                    <h1>Create Account</h1>
+                    <input type="text" placeholder="Name" />
+                    <input type="email" placeholder="Email" />
+                    <input type="password" placeholder="Password" />
+                    <button>Sign Up</button>
+                </form>
+            </div>
+            <div class="form-container sign-in-container">
+                <form method="post" id="loginForm">
+                    <h1>Login</h1>
+                    <br>
+                    <input type="email" id="email" name="email" placeholder="Email" />
+                    <input type="password"  id="password" name="password" placeholder="Password" />
+                    <input type = "hidden" name = "next" value = "{{request.args.get("next", "")}}">
+                    <br>
+                    <button id="signin" >Login</button>
+                    {% if risposta["PasswordNonValida"] %}
+                        <p class="error-message">La password inserita non è valida. Riprova.</p>
+                    {% endif %}
+                </form>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Welcome Back!</h1>
+                        <p>To keep connected with us please login with your personal info</p>
+                        <button class="ghost" id="signIn">Sign In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Ciao !</h1>
+                        <p>Inserisci i tui dati personali per avere libero accesso ai dati</p>
+                        <button class="ghost" id="signUp" href="https://www.google.it/">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="static\javascript\auth.js"></script>
+    </body>
+</html>

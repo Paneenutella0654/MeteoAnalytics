@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title id = "titolopagina">Modifica Sensore</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="/static/vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="/static/vendors/css/vendor.bundle.base.css">
+    <!-- endinject --> 
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/static/css/vertical-layout-light/style.css">
+    <link rel="stylesheet" href="/static/css/nuovo_sensore.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="/static/images/Logo.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+     <style>
+      .card{
+        border-radius: 3%;
+      }
+      #datiMeteo{
+        width: 100%;
+      }
+      #map{
+        border-radius: 3%;
+          height: 500px;
+          width: 100%;
+          z-index: 1;
+      }
+
+      #mapTuttiIrrigatori{
+        height: 400px;
+        width: 100%;
+        z-index: 1;
+      }
+
+      #mapAggiungiSensore{
+        height: 400px;
+        width: 100%;
+        z-index: 1;
+      }
+
+      #mapIrrigazione{
+        height: 400px;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .larger-wheel {
+      margin-top: 17rem;
+      margin-bottom:17rem;
+      width: 5rem; /* Adjust as desired */
+      height: 5rem; /* Adjust as desired */
+    }
+
+    .fa-heart{
+      color:red;
+      font-size:40px;
+    }
+
+    input[type=text] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 3px solid #ccc;
+      -webkit-transition: 0.5s;
+      transition: 0.5s;
+      outline: none;
+    }
+    
+    input[type=text]:focus {
+      border: 3px solid #555;
+    }
+  </style>
+  </head>
+  <body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="brand-logo-mini" href="listaSensori"><img
+                        src="/static/images/Logo.png" alt="logo"></a>
+                <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button"
+                    data-toggle="minimize">
+                    <span class="typcn typcn-th-menu"></span>
+                </button>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <ul class="navbar-nav mr-lg-2">
+                    <li class="nav-item  d-none d-lg-flex">
+                        <a class="nav-link active">
+                            <p id="nomsensore">Modifica Sensore</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item dropdown  d-flex">
+                        <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
+                            id="notificationDropdown" data-toggle="dropdown">
+                            <i class="typcn typcn-bell mr-0"></i>
+                            <!--TODO farlo variabile con l'implementazione delle notifiche-->
+                            <span class="count bg-danger">2</span>
+                            <!--Numero notifiche-->
+                        </a>
+                        <!--contenuto dropdown notifiche-->
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                            aria-labelledby="notificationDropdown">
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-success">
+                                        <i class="typcn typcn-info-large mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        Just now
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-warning">
+                                        <i class="typcn typcn-cog mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">Settings</h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        Private message
+                                    </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-info">
+                                        <i class="typcn typcn-user-outline mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        2 days ago
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle  pl-0 pr-0" data-toggle="dropdown" id="profileDropdown">
+                            <i class="typcn typcn-user-outline mr-0"></i>
+                            <span class="nav-profile-name">{{current_user.nome + " " + current_user.cognome}}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                            aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="/user">
+                                <i class="typcn typcn-cog text-primary"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item" href="/logout">
+                                <i class="typcn typcn-power text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                    <span class="typcn typcn-th-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_settings-panel.html -->
+            <!-- partial -->
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <div class="d-flex sidebar-profile">
+                            <div class="sidebar-profile-image">
+                            </div>
+                            <div class="sidebar-profile-name">
+                              <p class="sidebar-name">{{current_user.nome + ' ' + current_user.cognome}}</p>
+                              <p class="sidebar-designation">Welcome</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/listaSensori">
+                            <i class="typcn typcn-map menu-icon"></i>
+                            <span class="menu-title">Sensori</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user" aria-expanded="false" aria-controls="auth">
+                            <i class="typcn typcn-user menu-icon"></i>
+                            <span class="menu-title">User Pages</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="" target="_blank">
+                            <i class="typcn typcn-document-text menu-icon"></i>
+                            <span class="menu-title">Documentation</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-sm-6">
+                <h3 id = "nomeSensore" class="mb-0 font-weight-bold"></h3>
+              </div>
+            </div>
+            <div class="row  mt-3">
+              <div class="col-xl d-flex grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between">
+                      <h4 class="card-title mb-3">Modifica Sensore</h4>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row">
+                          
+                        <div class="col-12 perso_col">
+                          <form>
+                            <label for="Sname">Nome Sensore</label>
+                            <input type="text" id="Sname" name="Sname" value="" placeholder="{{sensore.name}}" >
+                          </form>
+                        </div>
+                        
+                        <div class="grid padding_perso">
+                          <label class="card_sensori">
+                            <input name="plan" class="checkbox" type="checkbox" value="Luminosità">
+                            <span class="plan-details">
+                              <span class="plan-type">Luminosità</span>
+                              <span class="plan-cost">GL5528</span>
+                              <span>Sensore di rilevamento </span>
+                              <span>dei parametri UV</span>
+                            </span>
+                          </label>
+                          <label class="card_sensori">
+                            <input name="plan" class="checkbox" type="checkbox" value="Umidità">
+                            <span class="plan-details" aria-hidden="true">
+                              <span class="plan-type">Umidità</span>
+                              <span class="plan-cost">DHT11</span>
+                              <span>Sensore di rilevamento </span>
+                              <span>per la percentuale di Umidita</span>
+                            </span>
+                          </label>
+                          <label class="card_sensori">
+                            <input name="plan" class="checkbox" type="checkbox" value="Temperatura">
+                            <span class="plan-details" aria-hidden="true">
+                              <span class="plan-type">Temperatura</span>
+                              <span class="plan-cost">BMP085</span>
+                              <span>Sensore di rilevamento </span>
+                              <span>dei parametri della Temperatura</span>
+                            </span>
+                          </label>
+                          <label class="card_sensori">
+                            <input name="plan" class="checkbox" type="checkbox" value="ATM Aria">
+                            <span class="plan-details">
+                              <span class="plan-type">ATM Aria</span>
+                              <span class="plan-cost">BMP085</span>
+                              <span>Sensori di rilevamento </span>
+                              <span>della pressione Atmosferica</span>
+                          </label>
+                          <label class="card_sensori">
+                            <input name="plan" class="checkbox" type="checkbox" value="Anemometro">
+                            <span class="plan-details" aria-hidden="true">
+                              <span class="plan-type">Anemometro</span>
+                              <span class="plan-cost">KWG1</span>
+                              <span>Sensore di rilevamento </span>
+                              <span>della velocita del vento</span>
+                          </label>
+                          <label class="card_sensori">
+                            <input name="plan" class="checkbox" type="checkbox" value="Inquinamento">
+                            <span class="plan-details" aria-hidden="true">
+                              <span class="plan-type">Inquinamento</span>
+                              <span class="plan-cost">MQ-2</span>
+                              <span>Sensore di rilevamento </span>
+                              <span>dell Inquinamento Atmosferico</span>
+                          </label>
+                          <label class="card_sensori">
+                            <input name="plan" class="checkbox" type="checkbox" value="Precipitazioni">
+                            <span class="plan-details" aria-hidden="true">
+                              <span class="plan-type">Precipitazioni</span>
+                              <span class="plan-cost">S-RGB-M002</span>
+                              <span>Sensore di rilevamento </span>
+                              <span>delle precipitazioni di piggia</span>
+                          </label>
+                        </div>
+                        <div class="col-12 padding_maps_add">
+                          <div class="row" >
+                            <div class="col-sm-12">
+                              <div >
+                                <div class="form-group" id="mapAggiungiSensore">
+                                </div>
+                                <button type="submit" class="btn btn-primary" style= "background-color:#00c39a ; border-color: #00c39a " id="btnAggiungiSensore" onclick="inviaSensoreModificato()">Modifica</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+          
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <footer class="footer" style= "background: border-box">
+      <div class="d-sm-flex justify-content-center justify-content-sm-between">
+        <span class="text-center text-sm-left d-block d-sm-inline-block">Progetto Tirocinio</span>
+        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Sviluppato da: Gerardo Frino</span>
+      </div>
+    </footer>
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="/static/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="/static/js/off-canvas.js"></script>
+    <script src="/static/js/hoverable-collapse.js"></script>
+    <script src="/static/js/template.js"></script>
+    <script src="/static/js/settings.js"></script>
+    <script src="/static/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <script src="/static/vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="/static/vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+
+    <script>
+
+      var SensorIcon = L.icon({
+        iconUrl: '/static/images/Sensor_ico.png',
+        iconSize: [38, 38],
+        iconAnchor: [19, 18],
+        popupAnchor: [0, 0],
+      });
+
+      var sensore = {id: "{{ sensore.id }}"};
+
+      var sensoriPresenti = JSON.parse('{{ sensore.sensors | tojson }}');
+
+      sensoriPresenti.forEach(function(sensore) {
+        // Trova la checkbox corrispondente utilizzando il valore (value) della checkbox
+        var checkbox = document.querySelector('input[type="checkbox"][value="' + sensore.title + '"]');
+      
+        // Se la checkbox è trovata, selezionala
+        if (checkbox) {
+          checkbox.checked = true;
+        }
+      });
+
+      var posizioneSensore = JSON.parse('{{ sensore.loc | tojson }}');
+      var lat = posizioneSensore.geometry.coordinates[1];
+      var lon = posizioneSensore.geometry.coordinates[0];
+      console.log(lat,lon);
+
+
+      var mapAggiungiSensore = L.map('mapAggiungiSensore').setView([lon,lat], 12);
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(mapAggiungiSensore);
+
+      L.marker([lon,lat], {icon: SensorIcon}).addTo(mapAggiungiSensore);
+
+
+      var markerAggiungiSensore
+      mapAggiungiSensore.on('click', function(e) {
+        if(markerAggiungiSensore != undefined)
+          mapAggiungiSensore.removeLayer(markerAggiungiSensore);
+        markerAggiungiSensore = L.marker([e.latlng.lat, e.latlng.lng])
+        markerAggiungiSensore.addTo(mapAggiungiSensore);
+        markerAggiungiSensore.setIcon(SensorIcon)
+        console.log(e.latlng.lat + ", " + e.latlng.lng);
+      });
+
+      var nomeMacroSensore = JSON.parse('{{sensore.name | tojson }}'); 
+
+      function inviaSensoreModificato(){
+        if(document.getElementById("Sname").value != ""){
+          nomeMacroSensore = document.getElementById("Sname").value;
+        }
+        
+        if(markerAggiungiSensore){
+          var posizioneSensore = markerAggiungiSensore.toGeoJSON();
+          lat = posizioneSensore.geometry.coordinates[0];
+          lon = posizioneSensore.geometry.coordinates[1];
+        }
+
+        //Per inviare la posizione al database devo creare un oggetto con la stessa struttura del database
+        var posizioneDataBase = {
+          geometry: {
+            coordinates: [lon, lat],
+            type: "Point"
+          }
+        };
+
+         //Gestione checkbox
+        var checkboxes = document.querySelectorAll('input[name="plan"]');
+        var checkboxSelezionate = [];
+
+        checkboxes.forEach(function (checkbox) {
+          if (checkbox.checked) {
+            checkboxSelezionate.push(checkbox.value);
+          }
+        });
+
+        console.log(checkboxSelezionate);
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var idSensore = urlParams.get('idSensore');
+        var nuovoUrl  = "/dettagliSensore?idSensore=" + idSensore;
+
+        fetch('/modificaSensore', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            idSensore: sensore.id,
+            nomeSensore: nomeMacroSensore,
+            posizioneSensore: posizioneDataBase,
+            sensoriselezionati: checkboxSelezionate,
+          })
+        }).then(function(response) {
+          return response.json();
+        }).then(function(data) {
+          console.log(data);
+          if(data.success){
+            Swal.fire({
+              title: 'Sensore Modificato',
+              text: 'Il sensore è stato modificato correttamente',
+              icon: 'success',
+              confirmButtonText: 'Ok'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = nuovoUrl;
+              }
+            })
+          }
+          else{
+            Swal.fire({
+              title: 'Errore',
+              text: 'Si è verificato un errore durante la modifica del sensore',
+              icon: 'error',
+              confirmButtonText: 'Ok'
+            })
+          }
+        })
+      }
+
+    </script>
+  </body>
+</html>

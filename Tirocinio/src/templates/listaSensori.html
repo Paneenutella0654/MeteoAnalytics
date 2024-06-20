@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title id="titolopagina">Lista Sensori</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="/static/vendors/typicons.font/font/typicons.css">
+  <link rel="stylesheet" href="/static/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/static/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/static/images/Logo.png" />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <style>
+    .mappa {
+      height: 300px;
+      width: 100%;
+    }
+    .mappa_generale {
+      height: 600px;
+      width: 100%;
+    }
+    .padding_perso{
+      padding-bottom: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="brand-logo-mini" href="listaSensori"><img
+          src="/static/images/Logo.png" alt="logo"></a>
+        <button class="navbar-toggler navbar-toggler align-self-center d-none d-lg-flex" type="button"
+          data-toggle="minimize">
+          <span class="typcn typcn-th-menu"></span>
+        </button>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item  d-none d-lg-flex">
+            <a class="nav-link active">
+              Sensori
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item dropdown  d-flex">
+            <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
+              id="notificationDropdown" data-toggle="dropdown">
+              <i class="typcn typcn-bell mr-0"></i>
+              <!--TODO farlo variabile con l'implementazione delle notifiche-->
+              <span class="count bg-danger">2</span>
+              <!--Numero notifiche-->
+            </a>
+            <!--contenuto dropdown notifiche-->
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+              aria-labelledby="notificationDropdown">
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-success">
+                    <i class="typcn typcn-info-large mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                  <p class="font-weight-light small-text mb-0">
+                    Just now
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-warning">
+                    <i class="typcn typcn-cog mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">Settings</h6>
+                  <p class="font-weight-light small-text mb-0">
+                    Private message
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-info">
+                    <i class="typcn typcn-user-outline mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                  <p class="font-weight-light small-text mb-0">
+                    2 days ago
+                  </p>
+                </div>
+              </a>
+            </div>
+          </li>
+          <li class="nav-item nav-profile dropdown">
+            <a class="nav-link dropdown-toggle  pl-0 pr-0" data-toggle="dropdown" id="profileDropdown">
+              <i class="typcn typcn-user-outline mr-0"></i>
+              <span class="nav-profile-name">{{current_user.nome + ' ' + current_user.cognome}}</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              <a class="dropdown-item" href="/user">
+                <i class="typcn typcn-cog text-primary"></i>
+                Settings
+                </a>
+                <a class="dropdown-item" href="/logout">
+                <i class="typcn typcn-power text-primary"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+          data-toggle="offcanvas">
+          <span class="typcn typcn-th-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <div class="d-flex sidebar-profile">
+              <div class="sidebar-profile-image">
+              </div>
+              <div class="sidebar-profile-name">
+                <p class="sidebar-name">{{current_user.nome + ' ' + current_user.cognome}}</p>
+                <p class="sidebar-designation">Welcome</p>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/listaSensori">
+              <i class="typcn typcn-map menu-icon"></i>
+              <span class="menu-title">Sensori</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/user" aria-expanded="false" aria-controls="auth">
+              <i class="typcn typcn-user menu-icon"></i>
+              <span class="menu-title">User Pages</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/mappa" target="_blank" >
+              <i class="typcn typcn-map menu-icon"></i>
+              <span class="menu-title">Mappa Sensori</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-6">
+              <h3 id="nomeSensore" class="mb-0 font-weight-bold">Benvenuto {{current_user.nome}}</h3>
+            </div>
+          </div>
+          <div class="row  mt-3">
+            {%for sensore in listaSensori%}
+            <div class="col-xl-4 d-flex grid-margin stretch-card">
+              <div class="card" style="border-radius: 5%;">
+                <div class="card-body">
+                  <div class="d-flex flex-wrap justify-content-between">
+                    <div id ="{{sensore.id}}"style="border-radius: 5%; z-index: 1;"></div>
+                  </div>
+                  <div class="d-flex flex-wrap justify-content-between rounded p-2 mt-2"
+                    style="background-color: #00c39a;">
+                    <p class="mb-0 text-white" style="font-size:large;">Nome Sensore:</p>
+                    <p class="text-left text-black mb-0">{{sensore.name}}</p>
+                  </div>
+                  <div class="d-flex flex-wrap justify-content-between rounded p-2 mt-2" style="background-color: #00c39a;">
+                    <p id="paragrafo_{{sensore.id}}" class="mb-0 text-white" style="font-size:large;">Località</p>
+                    <p id="{{sensore.id}}_paragrafo" class="text-left text-black mb-0">Sconoscuta</p>
+                  </div>
+                  <a href="dettagliSensore?idSensore={{sensore.id}}"
+                    class="d-flex flex-wrap justify-content-center rounded p-2 mt-2 btn btn-success btn-fw"
+                    style="border-radius: 5%; background-color: #5E747F; border-color: #5E747F;">Dettagli</a>
+                </div>
+              </div>
+            </div>
+            {%endfor%}
+          </div>
+
+          <div class="row  mt-3">  
+            <div class="col-xl d-flex grid-margin stretch-card">
+              <div class="card" style="border-radius: 2%;">
+                <div id="div_mappa_generale" class="card-body">
+                  <div class="d-flex flex-wrap justify-content-between">
+                    <div id="mappa_generale" style="border-radius: 2%; z-index: 1;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>  
+          </div>
+
+          <!--Spazio bottone + -->
+          <div class="d-flex justify-content-center padding_perso">
+            <button type="button" style="background-color: #00c39a; border-color: #00c39a" class="btn btn-success rounded-circle" onclick = "rimandaAggiunta()" ><i class="typcn typcn-plus"></i>
+            </button>
+          </div>
+
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <footer class="footer" style= "background: border-box">
+      <div class="d-sm-flex justify-content-center justify-content-sm-between">
+        <span class="text-center text-sm-left d-block d-sm-inline-block">Progetto Tirocinio <a href="#" target="_blank"></a> 2023</span>
+        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Sviluppato da: Gerardo Frino</span>
+      </div>
+    </footer>
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="/static/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="/static/js/off-canvas.js"></script>
+    <script src="/static/js/hoverable-collapse.js"></script>
+    <script src="/static/js/template.js"></script>
+    <script src="/static/js/settings.js"></script>
+    <script src="/static/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <script src="/static/vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="/static/vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+    <script>
+      function rimandaAggiunta()
+      {
+        window.location.href = "/aggiungiSensore"
+      }
+
+      var arrayMappe = [];
+      var arrayNomi = [];
+      var coordinateMarker = [];
+
+      var SensorIcon = L.icon({
+        iconUrl: '/static/images/Sensor_ico.png',
+        iconSize: [38, 38],
+        iconAnchor: [19, 18],
+        popupAnchor: [0, 0],
+      });
+
+      {% for sensore in listaSensori %}
+        arrayNomi.push("{{ sensore.name }}");
+      {% endfor %}
+      
+      {% for sensore in listaSensori %}
+        arrayMappe.push("{{ sensore.id }}");
+      
+        {% if listaSensori and sensore and sensore.loc %}
+          var posizione = JSON.parse('{{ sensore.loc | tojson | safe }}');
+          var lat = posizione.geometry.coordinates[0];
+          var lon = posizione.geometry.coordinates[1];
+
+      
+          coordinateMarker.push({
+            lat: lat,
+            lon: lon
+          });
+      
+          // chiamata per ottenere il nome della città
+          reverseGeocode(lat, lon, "{{ sensore.id }}");
+        {% endif %}
+      {% endfor %}
+      
+      // Funzione  per ottenere il nome della nazione
+      function reverseGeocode(lat, lon, sensorId) {
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+          .then(response => response.json())
+          .then(data => {
+            const countryName = data.address ? data.address.country : "N/A";
+            // Aggiorno il testo del paragrafo con il nome della città
+            var paragrafoId = `${sensorId}_paragrafo`;
+            var paragrafo = document.getElementById(paragrafoId);
+            if (paragrafo) {
+              paragrafo.innerText = countryName;
+            }
+          })
+          .catch(error => console.error("Errore nella richiesta di geocodifica:", error));
+      }
+      
+      for (var i = 0; i < arrayMappe.length; i++) {
+        var mappa = document.getElementById(arrayMappe[i]);
+        mappa.className = "mappa";
+      
+        // Usa le coordinate salvate nell'array durante il secondo ciclo
+        if (coordinateMarker[i]) {
+          var map = L.map(arrayMappe[i], {
+            zoomControl: false
+          }).setView([coordinateMarker[i].lat, coordinateMarker[i].lon], 13);
+      
+          L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          }).addTo(map);
+      
+          L.marker([coordinateMarker[i].lat, coordinateMarker[i].lon], {icon: SensorIcon}).addTo(map);
+      
+          // Non permettere all'utente di interagire con la mappa
+          map.dragging.disable();
+          map.touchZoom.disable();
+          map.scrollWheelZoom.disable();
+        }
+      }
+
+      //Se non ci sono sensori, nascondo la mappa generale
+      if(arrayNomi.length === 0)
+      {
+        var DicMappaGenerale = document.getElementById("div_mappa_generale");
+        DicMappaGenerale.classList.add("d-none");
+      }
+
+      //Codice realtivo alla generazione della mappa generale con marker cliccabili
+      var mappa_generale = document.getElementById("mappa_generale");
+      mappa_generale.className = "mappa_generale";
+      
+      var map = L.map('mappa_generale').setView([coordinateMarker[0].lat, coordinateMarker[0].lon], 8);
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
+      
+      var markersLayer = new L.LayerGroup();
+      
+      for (var i = 0; i < coordinateMarker.length; i++) {
+        var marker = L.marker([coordinateMarker[i].lat, coordinateMarker[i].lon], {icon: SensorIcon}).addTo(markersLayer);
+        var idSensore = arrayMappe[i];
+
+        marker.bindPopup('<b>' + arrayNomi[i] + '</b>');
+        
+        //Codice necessario per rendere cliccabili i marker
+        marker.on('popupopen', function (event) {
+          var popup = event.popup;
+          popup.getElement().addEventListener('click', function () {
+            window.location.href = '/dettagliSensore?idSensore=' + idSensore;
+          });
+        });
+      }
+      
+      map.addLayer(markersLayer);
+
+
+
+      function scrollaVersoMappaGenerale() {
+        var mappaGenerale = document.getElementById("mappa_generale");
+    
+        // Calcolo la posizione verticale assoluta del punto centrale della mappa rispetto al documento
+        var posizioneMappaCentrale = mappaGenerale.getBoundingClientRect().top + window.scrollY + (mappaGenerale.clientHeight / 2);
+    
+        // Calcola la posizione verticale della finestra di visualizzazione
+        var posizioneFinestra = window.innerHeight / 2;
+    
+        // Calcola la posizione verticale finale per centrare il punto centrale della mappa nella finestra
+        var posizioneFinale = posizioneMappaCentrale - posizioneFinestra;
+  
+        window.scrollTo({
+          top: posizioneFinale,
+          behavior: 'smooth'
+        });
+      }
+
+      var linkMappaSensori = document.querySelector('a[href="/mappa"]');
+      linkMappaSensori.addEventListener('click', function (event) {
+        event.preventDefault();
+        scrollaVersoMappaGenerale();
+      });
+
+
+    </script>
+    <!-- End custom js for this page-->
+
+</body>
+
+</html>
