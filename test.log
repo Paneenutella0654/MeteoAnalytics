@@ -8414,3 +8414,38 @@
  * Restarting with watchdog (windowsapi)
  * Debugger is active!
  * Debugger PIN: 973-937-000
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 973-937-000
+127.0.0.1 - - [25/Jun/2024 16:38:41] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [25/Jun/2024 16:38:41] "GET /static/images/Inte_sito.png HTTP/1.1" 200 -
+127.0.0.1 - - [25/Jun/2024 16:38:41] "GET /static/images/demo.png HTTP/1.1" 200 -
+127.0.0.1 - - [25/Jun/2024 16:38:41] "[33mGET /cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js HTTP/1.1[0m" 404 -
+127.0.0.1 - - [25/Jun/2024 16:38:44] "GET /static/images/Logo_32.png HTTP/1.1" 200 -
+ * Detected change in 'c:\\Users\\Gerardo\\Documents\\GitHub\\MeteoAnalytics\\Tirocinio\\src\\__init__.py', reloading
+ * Detected change in 'c:\\Users\\Gerardo\\Documents\\GitHub\\MeteoAnalytics\\Tirocinio\\src\\__init__.py', reloading
+ * Detected change in 'c:\\Users\\Gerardo\\Documents\\GitHub\\MeteoAnalytics\\Tirocinio\\src\\__init__.py', reloading
+ * Restarting with watchdog (windowsapi)
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 973-937-000
+127.0.0.1 - - [25/Jun/2024 16:57:32] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [25/Jun/2024 16:57:33] "[36mGET /static/images/Inte_sito.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [25/Jun/2024 16:57:33] "[36mGET /static/images/demo.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [25/Jun/2024 16:57:33] "[33mGET /cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js HTTP/1.1[0m" 404 -
+ * Detected change in 'C:\\Python311\\Lib\\functools.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 973-937-000
+ * Detected change in 'c:\\Users\\Gerardo\\Documents\\GitHub\\MeteoAnalytics\\Tirocinio\\src\\__init__.py', reloading
+ * Detected change in 'c:\\Users\\Gerardo\\Documents\\GitHub\\MeteoAnalytics\\Tirocinio\\src\\__init__.py', reloading
+ * Detected change in 'c:\\Users\\Gerardo\\Documents\\GitHub\\MeteoAnalytics\\Tirocinio\\src\\__init__.py', reloading
+ * Restarting with watchdog (windowsapi)
+ * Debugger is active!
+ * Debugger PIN: 973-937-000

@@ -7,9 +7,8 @@ from flask_pymongo import PyMongo
 
 
 
-
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb+srv://gerardofrino588:95VOEFttqh89tAsS@cluster0.hqsn7ul.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+app.config["MONGO_URI"] = "mongodb+srv://gerardofrino588:HFP1WMfpsjD1cfDA@cluster0.hqsn7ul.mongodb.net/DBMeteoAnalytisc?retryWrites=true&w=majority&appName=Cluster0"
 app.config["COMPRESS_ALGORITHM"] = 'gzip'  # disable default compression of all eligible requests
 app.config['SECRET_KEY'] = 'jshwifhjwieoajhf5847f5ae4eaws'
 
