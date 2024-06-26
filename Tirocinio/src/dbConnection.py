@@ -6,7 +6,7 @@ from src import app
 mongo = PyMongo(app)
 
 #Assegnazione alla variabile db il database
-db = mongo.db.client.MeteoAnalytisc
+db = mongo.db.client.MeteoAnalytics
 
 utenti = db.Utenti
 
