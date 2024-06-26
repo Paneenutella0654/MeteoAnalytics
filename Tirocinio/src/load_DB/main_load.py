@@ -55,7 +55,7 @@ def creaUtente(nome: str, cognome: str, email: str, password: str, ruolo: str):
           result = utenti.insert_one({"nome":nome,"cognome":cognome,"email":email,"password":password,"ruolo":ruolo})
           return result
       
-def RetriveallSensori():
+"""def RetriveallSensori(self):
     print("sono dentro la funzione RetriveallSensori")
     trovati = sensori.find()
     listaSensori = []
@@ -85,10 +85,56 @@ def RetriveallSensori():
             }
             for m in trovato["measurements"]
         ]
-        
+ 
         new_Sensore = sensore(id2, latitude, longitude, measurements)
         listaSensori.append(new_Sensore)
     
+    return listaSensori
+"""
+
+def RetriveallSensori():
+    print("sono dentro la funzione RetriveallSensori")
+    trovati = sensori.find()
+    listaSensori = []
+    print("sto Fuori dal for")
+    for trovato in trovati:
+        id2 = str(trovato.get("_id"))
+        print("sto dentro il for")
+        latitude = trovato.get("latitude")
+        longitude = trovato.get("longitude")
+        measurements = []
+        
+        if "measurements" in trovato:
+            measurements = [
+                {
+                    "time": m["time"],
+                    "temperature_2m": m.get("temperature_2m"),
+                    "relative_humidity_2m": m.get("relative_humidity_2m"),
+                    "precipitation": m.get("precipitation"),
+                    "rain": m.get("rain"),
+                    "snowfall": m.get("snowfall"),
+                    "surface_pressure": m.get("surface_pressure"),
+                    "wind_speed_10m": m.get("wind_speed_10m"),
+                    "wind_direction_10m": m.get("wind_direction_10m"),
+                    "wind_gusts_10m": m.get("wind_gusts_10m"),
+                    "soil_temperature_0_to_7cm": m.get("soil_temperature_0_to_7cm"),
+                    "direct_radiation": m.get("direct_radiation"),
+                    "pm10": m.get("pm10"),
+                    "pm2_5": m.get("pm2_5"),
+                    "carbon_monoxide": m.get("carbon_monoxide")
+                }
+                for m in trovato["measurements"]
+            ]
+        else:
+            print(f"Il documento con _id {id2} non contiene 'measurements'")
+        
+        listaSensori.append({
+            "id": id2,
+            "latitude": latitude,
+            "longitude": longitude,
+            "measurements": measurements
+        })
+
     return listaSensori
 
 def SensorebyID (id : str) -> sensore:

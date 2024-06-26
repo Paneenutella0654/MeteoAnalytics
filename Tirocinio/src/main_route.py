@@ -161,9 +161,9 @@ def register():
             return redirect(url_for("login"))
     return render_template("register.html")
 
-@app.route("/test")
+@app.route("/test", methods=["GET", "POST"])
 def test():
     #user = current_user.id
     listaSensori = main_load.RetriveallSensori()
-    print("ecco la lista sensori ",listaSensori)
-    return render_template("test.html",listaSensori=listaSensori)
+    #print("ecco la lista sensori ",listaSensori)
+    return render_template("test.html", listaSensori = listaSensori)

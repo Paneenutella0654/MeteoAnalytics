@@ -9,5 +9,8 @@
 </html>
 
 <script>
-    console.log(listaSensori|json_encode);
+    // Pass the value of listaSensori as a JavaScript variable
+    var listaSensori = JSON.parse('{{ listaSensori | tojson | safe }}');
+    // Log the value of listaSensori to the console
+    console.log(listaSensori);
 </script>

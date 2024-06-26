@@ -8907,3 +8907,313 @@
  * Restarting with watchdog (windowsapi)
  * Debugger is active!
  * Debugger PIN: 973-937-000
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 16:20:07] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:20:07] "GET /static/images/Inte_sito.png HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:20:07] "[33mGET /cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js HTTP/1.1[0m" 404 -
+127.0.0.1 - - [26/Jun/2024 16:20:07] "GET /static/images/demo.png HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:20:09] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:20:09] "GET /static/css/auth.css HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:20:09] "GET /static/javascript/auth.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:21:46] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:21:46] "[36mGET /static/javascript/auth.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:21:46] "GET /static/css/auth.css HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:21:53] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:21:53] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:21:53] "[36mGET /static/javascript/auth.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:21:57] "[32mPOST /login HTTP/1.1[0m" 302 -
+127.0.0.1 - - [26/Jun/2024 16:21:57] "[35m[1mGET /listaSensori HTTP/1.1[0m" 500 -
+127.0.0.1 - - [26/Jun/2024 16:21:57] "GET /listaSensori?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:21:57] "GET /listaSensori?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:21:57] "GET /listaSensori?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:21:57] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 16:32:46] "[35m[1mGET /listaSensori HTTP/1.1[0m" 500 -
+127.0.0.1 - - [26/Jun/2024 16:32:46] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:32:46] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:32:46] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:32:46] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 16:34:36] "GET /login HTTP/1.1" 200 -
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 16:36:23] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:36:24] "[36mGET /static/images/Inte_sito.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:36:24] "[36mGET /static/images/demo.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:36:24] "[33mGET /cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js HTTP/1.1[0m" 404 -
+127.0.0.1 - - [26/Jun/2024 16:36:27] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:36:27] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:36:27] "[36mGET /static/javascript/auth.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:36:28] "[32mPOST /login HTTP/1.1[0m" 302 -
+127.0.0.1 - - [26/Jun/2024 16:36:28] "[35m[1mGET /listaSensori HTTP/1.1[0m" 500 -
+127.0.0.1 - - [26/Jun/2024 16:36:28] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:36:28] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:36:29] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 16:37:28] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:37:29] "[36mGET /static/images/Inte_sito.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:37:29] "[36mGET /static/images/demo.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:37:29] "[33mGET /cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js HTTP/1.1[0m" 404 -
+127.0.0.1 - - [26/Jun/2024 16:37:31] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:37:31] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:37:31] "[36mGET /static/javascript/auth.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:37:33] "[32mPOST /login HTTP/1.1[0m" 302 -
+127.0.0.1 - - [26/Jun/2024 16:37:34] "[35m[1mGET /listaSensori HTTP/1.1[0m" 500 -
+127.0.0.1 - - [26/Jun/2024 16:37:34] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:37:34] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:37:34] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 16:39:56] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:39:56] "[36mGET /static/images/Inte_sito.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:39:56] "[36mGET /static/images/demo.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:39:56] "[33mGET /cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js HTTP/1.1[0m" 404 -
+127.0.0.1 - - [26/Jun/2024 16:39:59] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:40:00] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:40:00] "[36mGET /static/javascript/auth.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:40:04] "[32mPOST /login HTTP/1.1[0m" 302 -
+127.0.0.1 - - [26/Jun/2024 16:40:04] "[35m[1mGET /listaSensori HTTP/1.1[0m" 500 -
+127.0.0.1 - - [26/Jun/2024 16:40:04] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:40:04] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:40:04] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\load_DB\\main_load.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 16:42:47] "[35m[1mGET /listaSensori HTTP/1.1[0m" 500 -
+127.0.0.1 - - [26/Jun/2024 16:42:47] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:42:47] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:42:47] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:42:47] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\load_DB\\main_load.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /listaSensori HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/vendors/typicons.font/font/typicons.css HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/vendors/css/vendor.bundle.base.css HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/css/vertical-layout-light/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/vendors/js/vendor.bundle.base.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/images/Logo.png HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/js/off-canvas.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/js/hoverable-collapse.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/js/template.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/js/settings.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/vendors/progressbar.js/progressbar.min.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/js/todolist.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/vendors/chart.js/Chart.min.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/vendors/typicons.font/font/typicons.woff HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/fonts/Roboto/Roboto-Bold.woff2 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/fonts/Roboto/Roboto-Light.woff2 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:56] "GET /static/fonts/Roboto/Roboto-Regular.woff2 HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:47:57] "[36mGET /static/images/Logo.png HTTP/1.1[0m" 304 -
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 16:51:22] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:51:22] "[36mGET /static/images/Inte_sito.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:51:22] "[36mGET /static/images/demo.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:51:23] "[33mGET /cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js HTTP/1.1[0m" 404 -
+127.0.0.1 - - [26/Jun/2024 16:51:24] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:51:24] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:51:24] "[36mGET /static/javascript/auth.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:51:25] "[32mPOST /login HTTP/1.1[0m" 302 -
+127.0.0.1 - - [26/Jun/2024 16:51:25] "[35m[1mGET /listaSensori HTTP/1.1[0m" 500 -
+127.0.0.1 - - [26/Jun/2024 16:51:25] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:51:25] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:51:25] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:51:25] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:53:05] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:53:08] "[32mPOST /login HTTP/1.1[0m" 302 -
+127.0.0.1 - - [26/Jun/2024 16:53:08] "[35m[1mGET /listaSensori HTTP/1.1[0m" 500 -
+127.0.0.1 - - [26/Jun/2024 16:53:08] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:53:08] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:53:08] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:53:10] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:53:12] "[32mPOST /login HTTP/1.1[0m" 302 -
+127.0.0.1 - - [26/Jun/2024 16:53:12] "[35m[1mGET /listaSensori HTTP/1.1[0m" 500 -
+127.0.0.1 - - [26/Jun/2024 16:53:12] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:53:12] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:53:12] "[36mGET /listaSensori?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 16:53:18] "[35m[1mGET /test HTTP/1.1[0m" 500 -
+127.0.0.1 - - [26/Jun/2024 16:53:18] "GET /test?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:53:18] "GET /test?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:53:18] "GET /test?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 16:53:18] "[36mGET /test?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5500
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5500
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5500
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 17:07:11] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:07:12] "GET /static/images/Inte_sito.png HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:07:12] "GET /static/images/demo.png HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:07:12] "[33mGET /cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js HTTP/1.1[0m" 404 -
+127.0.0.1 - - [26/Jun/2024 17:07:13] "GET /static/images/Logo_32.png HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:07:19] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:07:19] "GET /static/css/auth.css HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:07:19] "GET /static/javascript/auth.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:07:24] "[35m[1mGET /test HTTP/1.1[0m" 500 -
+127.0.0.1 - - [26/Jun/2024 17:07:24] "GET /test?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:07:24] "GET /test?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:07:24] "GET /test?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:07:24] "[36mGET /test?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\load_DB\\main_load.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 17:08:53] "[35m[1mGET /test HTTP/1.1[0m" 500 -
+127.0.0.1 - - [26/Jun/2024 17:08:53] "[36mGET /test?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 17:08:53] "[36mGET /test?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 17:08:53] "[36mGET /test?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 17:08:53] "[36mGET /test?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:8080
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 17:15:46] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:15:46] "GET /static/images/Inte_sito.png HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:15:46] "GET /static/images/demo.png HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:15:46] "[33mGET /cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js HTTP/1.1[0m" 404 -
+127.0.0.1 - - [26/Jun/2024 17:15:47] "GET /static/images/Logo_32.png HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:15:50] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:15:50] "GET /static/css/auth.css HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:15:50] "GET /static/javascript/auth.js HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:15:50] "[33mGET /static/images/top.ico HTTP/1.1[0m" 404 -
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:8080
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:8080
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 17:22:25] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:22:25] "[36mGET /static/images/Inte_sito.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 17:22:25] "[36mGET /static/images/demo.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 17:22:25] "[33mGET /cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js HTTP/1.1[0m" 404 -
+127.0.0.1 - - [26/Jun/2024 17:22:27] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:22:28] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 17:22:28] "[36mGET /static/javascript/auth.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 17:23:01] "GET /test HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:23:01] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [26/Jun/2024 17:36:24] "GET /test HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:38:51] "GET /test HTTP/1.1" 200 -
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 17:45:09] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:45:11] "[36mGET /static/images/Inte_sito.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 17:45:11] "[36mGET /static/images/demo.png HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 17:45:11] "[33mGET /cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js HTTP/1.1[0m" 404 -
+127.0.0.1 - - [26/Jun/2024 17:45:12] "GET /static/images/Logo_32.png HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:45:13] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:45:13] "[36mGET /static/css/auth.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 17:45:13] "[36mGET /static/javascript/auth.js HTTP/1.1[0m" 304 -
+127.0.0.1 - - [26/Jun/2024 17:45:48] "GET /test HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2024 17:45:48] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [26/Jun/2024 17:48:15] "GET /test HTTP/1.1" 200 -
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 110-080-893
+127.0.0.1 - - [26/Jun/2024 18:05:17] "GET /test HTTP/1.1" 200 -
+ * Detected change in 'c:\\Users\\USER\\Documents\\GitHub\\MeteoAnalytics\\MeteoAnalytics\\Tirocinio\\src\\main_route.py', reloading
+ * Restarting with stat
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:8080
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
