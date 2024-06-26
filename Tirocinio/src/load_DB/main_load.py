@@ -55,38 +55,70 @@ def creaUtente(nome: str, cognome: str, email: str, password: str, ruolo: str):
           result = utenti.insert_one({"nome":nome,"cognome":cognome,"email":email,"password":password,"ruolo":ruolo})
           return result
       
-def RetriveSensori(propietarioid:str):
-    if propietarioid != None:
-        trovati = sensori.find({"propietario": propietarioid})
-        listaSensori = []
-        for trovato in trovati:
-            id2 = str(trovato.get("_id"))
-            name = str(trovato.get("name"))
-            box_type = str(trovato.get("box_type"))
-            exposure = str(trovato.get("exposure"))
-            model = str(trovato.get("model"))
-            propietario = str(trovato.get("propietario"))
-            loc = trovato.get("loc")
-            sensor = trovato.get("sensors")
-            new_Sensore = sensore(id2,name,box_type,exposure,model,propietario,loc,sensor)
-            listaSensori.append(new_Sensore)
-    else:
-        listaSensori = []
-    return listaSensori 
+def RetriveallSensori():
+    print("sono dentro la funzione RetriveallSensori")
+    trovati = sensori.find()
+    listaSensori = []
+    print("sto Fuori dal for")
+    for trovato in trovati:
+        id2 = str(trovato.get("_id"))
+        print("sto dentro il for")
+        latitude = trovato.get("latitude")
+        longitude = trovato.get("longitude")
+        measurements = [
+            {
+                "time": m["time"],
+                "temperature_2m": m.get("temperature_2m"),
+                "relative_humidity_2m": m.get("relative_humidity_2m"),
+                "precipitation": m.get("precipitation"),
+                "rain": m["rain"],
+                "snowfall": m.get("snowfall"),
+                "surface_pressure": m.get("surface_pressure"),
+                "wind_speed_10m": m.get("wind_speed_10m"),
+                "wind_direction_10m": m.get("wind_direction_10m"),
+                "wind_gusts_10m": m.get("wind_gusts_10m"),
+                "soil_temperature_0_to_7cm": m.get("soil_temperature_0_to_7cm"),
+                "direct_radiation": m.get("direct_radiation"),
+                "pm10": m.get("pm10"),
+                "pm2_5": m.get("pm2_5"),
+                "carbon_monoxide": m.get("carbon_monoxide")
+            }
+            for m in trovato["measurements"]
+        ]
+        
+        new_Sensore = sensore(id2, latitude, longitude, measurements)
+        listaSensori.append(new_Sensore)
+    
+    return listaSensori
 
 def SensorebyID (id : str) -> sensore:
     trovato = sensori.find_one({"_id": ObjectId(id)})
     if trovato is None:
         return None
-    id = str(trovato.get("_id"))
-    name = str(trovato.get("name"))
-    box_type = str(trovato.get("box_type"))
-    exposure = str(trovato.get("exposure"))
-    model = str(trovato.get("model"))
-    propietario = str(trovato.get("propietario"))
-    loc = trovato.get("loc")
-    sensor = trovato.get("sensors")
-    new_Sensore = sensore(id,name,box_type,exposure,model,propietario,loc,sensor)
+    id2 = str(trovato.get("_id"))
+    latitude = trovato.get("latitude")
+    longitude = trovato.get("longitude")
+    measurements = [
+        {
+            "time": m["time"],
+            "temperature_2m": m.get("temperature_2m"),
+            "relative_humidity_2m": m.get("relative_humidity_2m"),
+            "precipitation": m.get("precipitation"),
+            "rain": m["rain"],
+            "snowfall": m.get("snowfall"),
+            "surface_pressure": m.get("surface_pressure"),
+            "wind_speed_10m": m.get("wind_speed_10m"),
+            "wind_direction_10m": m.get("wind_direction_10m"),
+            "wind_gusts_10m": m.get("wind_gusts_10m"),
+            "soil_temperature_0_to_7cm": m.get("soil_temperature_0_to_7cm"),
+            "direct_radiation": m.get("direct_radiation"),
+            "pm10": m.get("pm10"),
+            "pm2_5": m.get("pm2_5"),
+            "carbon_monoxide": m.get("carbon_monoxide")
+        }
+        for m in trovato["measurements"]
+    ]
+    new_Sensore = sensore(id2, latitude, longitude, measurements)
     return new_Sensore
 
 def AggiungiSensore(name: str, box_type: str, exposure: str, model: str, propietario: str, loc: dict, sensors: dict):

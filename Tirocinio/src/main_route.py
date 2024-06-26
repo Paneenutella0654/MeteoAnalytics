@@ -160,3 +160,10 @@ def register():
             main_load.creaUtente(nome,cognome,email,password)
             return redirect(url_for("login"))
     return render_template("register.html")
+
+@app.route("/test")
+def test():
+    #user = current_user.id
+    listaSensori = main_load.RetriveallSensori()
+    print("ecco la lista sensori ",listaSensori)
+    return render_template("test.html",listaSensori=listaSensori)
