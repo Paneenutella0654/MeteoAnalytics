@@ -1,5 +1,5 @@
 import hashlib , re
-from src.dbConnection import  utenti,sensori,coordinate
+from src.dbConnection import  utenti,sensori,coordinate, inquinamento 
 "from src import login_manager"
 from src.model.utente import utente
 from src.model.sensore import sensore
@@ -204,3 +204,26 @@ def RetriveCoordinareSensori():
             "lon": longitude
         })
     return listaCoordinate
+
+def RetriveInquinamentoBySensoredID(id:str):
+    trovato = inquinamento.find_one({"id": id})
+    inquinamentoTrovato = []
+    if trovato is None:
+        return None
+    id = str(trovato.get("_id"))
+    idSensore = trovato.get("id")
+    hourly = trovato.get("hourly")
+    time = hourly.get("time")
+    pm10 = hourly.get("pm10")
+    pm2_5 = hourly.get("pm2_5")
+    carbon_monoxide = hourly.get("carbon_monoxide")
+    inquinamentoTrovato.append({
+        "id": id,
+        "idSensore": idSensore,
+        "time": time,
+        "pm10": pm10,
+        "pm2_5": pm2_5,
+        "carbon_monoxide": carbon_monoxide
+    })
+    return inquinamentoTrovato
+

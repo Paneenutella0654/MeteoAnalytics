@@ -13,3 +13,5 @@ utenti = db.Utenti
 sensori = db.Sensori
 
 coordinate = db.Coordinate
+
+inquinamento = db.Inquinamento
