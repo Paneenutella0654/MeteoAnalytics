@@ -13,6 +13,8 @@ from flask import request, render_template, session, jsonify, redirect, url_for
 from src import app
 from flask_login import current_user, login_required , login_user, logout_user
 
+import json
+
 @app.route("/listaSensori",methods=["GET", "POST"])
 @login_required
 def listaSensori():
@@ -76,17 +78,17 @@ def logout():
 def dettagliSensore():
     idsensore = request.args.get("idSensore")
     sensore = main_load.SensorebyID(idsensore)
-    lat = sensore.loc['geometry']['coordinates'][0]
-    lon = sensore.loc['geometry']['coordinates'][1]
-    openmeteo = OpenMeteo(lat,lon)
-    meteo = openmeteo.get_data_temperatura()
-    umidita = openmeteo.get_data_umidita()
-    pressione = openmeteo.get_data_pressione()
-    vento = openmeteo.get_data_vento()
-    radiazioniuv = openmeteo.get_data_uv()
-    inquinamento = openmeteo.get_data_inquinamento()
-    precipitazioni = openmeteo.get_data_precipitazioni()
-    return render_template("dettagliSensore.html", sensore=sensore, meteo=meteo, umidita=umidita, pressione=pressione, vento=vento, radiazioniuv=radiazioniuv, inquinamento=inquinamento, precipitazioni=precipitazioni)
+    #lat = sensore.loc['geometry']['coordinates'][0]
+    #lon = sensore.loc['geometry']['coordinates'][1]
+    #openmeteo = OpenMeteo(lat,lon)
+    #meteo = openmeteo.get_data_temperatura()
+    #umidita = openmeteo.get_data_umidita()
+    #pressione = openmeteo.get_data_pressione()
+    #vento = openmeteo.get_data_vento()
+    #radiazioniuv = openmeteo.get_data_uv()
+    #inquinamento = openmeteo.get_data_inquinamento()
+    #precipitazioni = openmeteo.get_data_precipitazioni()
+    return render_template("test.html", sensore=sensore)
 
 @app.errorhandler(404)
 def page_not_found(error):

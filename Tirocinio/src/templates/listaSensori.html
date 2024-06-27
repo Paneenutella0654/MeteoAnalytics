@@ -289,12 +289,11 @@
       
         {% if listaSensori and sensore %}
           var posizione = JSON.parse('{{ sensore | tojson | safe }}');
-          console.log(posizione);
           //var lat = posizione.geometry.coordinates[0];
           //var lon = posizione.geometry.coordinates[1];
 
           var lat = posizione.lat;
-          var lon = posizione.lon
+          var lon = posizione.lon;
 
       
           coordinateMarker.push({
@@ -408,7 +407,6 @@
         event.preventDefault();
         scrollaVersoMappaGenerale();
       });
-
 
     </script>
     <!-- End custom js for this page-->

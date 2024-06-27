@@ -141,6 +141,7 @@ def SensorebyID (id : str) -> sensore:
     trovato = sensori.find_one({"_id": ObjectId(id)})
     if trovato is None:
         return None
+    Sensore = []
     id2 = str(trovato.get("_id"))
     latitude = trovato.get("latitude")
     longitude = trovato.get("longitude")
@@ -164,8 +165,14 @@ def SensorebyID (id : str) -> sensore:
         }
         for m in trovato["measurements"]
     ]
-    new_Sensore = sensore(id2, latitude, longitude, measurements)
-    return new_Sensore
+    
+    Sensore.append({
+            "id": id2,
+            "latitude": latitude,
+            "longitude": longitude,
+            "measurements": measurements
+        })
+    return Sensore
 
 def AggiungiSensore(name: str, box_type: str, exposure: str, model: str, propietario: str, loc: dict, sensors: dict):
     result = sensori.insert_one({"name":name,"box_type":box_type,"exposure":exposure,"model":model,"propietario":propietario,"loc":loc,"sensors":sensors})
