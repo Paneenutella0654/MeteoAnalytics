@@ -20,6 +20,12 @@ def listaSensori():
     listaSensori = main_load.RetriveCoordinareSensori()
     return render_template("listaSensori.html", listaSensori=listaSensori)
 
+@app.route("/sensoriPreferiti",methods=["GET", "POST"])
+@login_required
+def sensoriPreferiti():
+    user = current_user.id
+    listaSensori = main_load.RetriveCoordinareSensori()
+    return render_template("sensoriPreferiti.html", listaSensori=listaSensori)
 
 @app.route("/login",methods=["GET", "POST"])
 def login():
