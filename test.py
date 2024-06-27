@@ -1,74 +1,34 @@
-import os
 import json
-from datetime import datetime
+import requests
 
-def remove_data(data):
+def get_air_quality(latitude, longitude):
+    print("sto nel API")
+    url = f"https://air-quality-api.open-meteo.com/v1/air-quality?latitude={latitude}&longitude={longitude}&hourly=pm10,pm2_5,carbon_monoxide&start_date=2022-12-01&end_date=2023-12-31"
+    print(url)
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Error fetching data for latitude {latitude} and longitude {longitude}: {response.status_code}")
+        return None
 
-    keys_to_remove = [
-        "pressure_msl",
-        "wind_speed_100m",
-        "wind_direction_100m",
-        "direct_radiation_instant",
-        "direct_normal_irradiance_instant",
-        "nitrogen_dioxide",
-        "ozone",
-        "ammonia"
-    ]
+def main(json_file_path):
+    with open(json_file_path, 'r') as file:
+        data = json.load(file)
     
-    for measurement in data["measurements"]:
-        for key in keys_to_remove:
-            if key in measurement:
-                del measurement[key]
-    return data
+    for indice, item in enumerate(data):
+        if 'id' in item and 'lat' in item and 'lon' in item:
+            latitude = item['lat']
+            longitude = item['lon']
+            air_quality_data = get_air_quality(latitude, longitude)
+            if air_quality_data:
+                nome_file = f'dati_{indice + 1}_2.json'
+                with open(nome_file, 'w') as f:
+                    json.dump(air_quality_data, f, indent=4)
+                    print(f"Dati salvati in '{nome_file}'")
+            else:
+                print(f"Non è stato possibile ottenere i dati di qualità dell'aria per la latitudine {latitude} e longitudine {longitude}")
 
-def filter_measurements_by_time(measurements, desired_times):
-    filtered = []
-    for measurement in measurements:
-        time = measurement['time'][11:16]  # Estrai l'ora dal timestamp
-        if time in desired_times:
-            filtered.append(measurement)
-    return filtered
-
-def filter_measurements_by_date(measurements, cutoff_date):
-
-    cutoff_datetime = datetime.strptime(cutoff_date, '%Y-%m-%d')
-    filtered = []
-    for measurement in measurements:
-        measurement_date = datetime.strptime(measurement['time'][:10], '%Y-%m-%d')
-        if measurement_date >= cutoff_datetime:
-            filtered.append(measurement)
-    return filtered
-
-def process_files(input_folder, output_folder, desired_times, cutoff_date):
-
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
-
-    for filename in os.listdir(input_folder):
-        if filename.endswith(".json"):
-            file_path = os.path.join(input_folder, filename)
-
-            with open(file_path, 'r') as f:
-                data = json.load(f)
-
-            data['measurements'] = filter_measurements_by_date(data['measurements'], cutoff_date)
-
-
-            data['measurements'] = filter_measurements_by_time(data['measurements'], desired_times)
-
-            data = remove_data(data)
-
-            output_file_path = os.path.join(output_folder, filename)
-            with open(output_file_path, 'w') as f:
-                json.dump(data, f, indent=4)
-
-            print(f"File elaborato e salvato come {output_file_path}")
-
-
-input_folder = "/content/drive/Shareddrives/sensori"  
-output_folder = "/content/Sensori_aggiustati"  
-desired_times = ["03:00", "12:00", "21:00"]  
-cutoff_date = "2015-01-01"  
-
-
-process_files(input_folder, output_folder, desired_times, cutoff_date)
+# Percorso del file JSON contenente id, latitude e longitude
+json_file_path = 'coordinate.json'
+main(json_file_path)

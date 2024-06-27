@@ -405,7 +405,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
 
-      var sensoriPresenti = JSON.parse('{{ sensore.sensors | tojson }}');
+      var sensoriPresenti = JSON.parse('{{ sensore | tojson }}');
 
       for (var i = 0; i < sensoriPresenti.length; i++) {
         var titolo = sensoriPresenti[i].title;
