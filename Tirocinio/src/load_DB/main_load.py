@@ -1,5 +1,5 @@
 import hashlib , re
-from src.dbConnection import  utenti,sensori
+from src.dbConnection import  utenti,sensori,coordinate
 "from src import login_manager"
 from src.model.utente import utente
 from src.model.sensore import sensore
@@ -183,3 +183,17 @@ def creaUtente(nome: str, cognome: str, email: str, password: str):
           result = utenti.insert_one({"nome":nome,"cognome":cognome,"password":password,"email":email})
           return result
       
+def RetriveCoordinareSensori():
+    trovati = coordinate.find()
+    listaCoordinate = []
+    for trovato in trovati:
+        id = str(trovato.get("id"))
+        latitude = trovato.get("lat")
+        longitude = trovato.get("lon")
+        
+        listaCoordinate.append({
+            "id": id,
+            "lat": latitude,
+            "lon": longitude
+        })
+    return listaCoordinate

@@ -190,7 +190,7 @@
                   <div class="d-flex flex-wrap justify-content-between rounded p-2 mt-2"
                     style="background-color: #00c39a;">
                     <p class="mb-0 text-white" style="font-size:large;">Nome Sensore:</p>
-                    <p class="text-left text-black mb-0">{{sensore.name}}</p>
+                    <p class="text-left text-black mb-0">TEMP</p>
                   </div>
                   <div class="d-flex flex-wrap justify-content-between rounded p-2 mt-2" style="background-color: #00c39a;">
                     <p id="paragrafo_{{sensore.id}}" class="mb-0 text-white" style="font-size:large;">Località</p>
@@ -282,10 +282,14 @@
       {% for sensore in listaSensori %}
         arrayMappe.push("{{ sensore.id }}");
       
-        {% if listaSensori and sensore and sensore.loc %}
-          var posizione = JSON.parse('{{ sensore.loc | tojson | safe }}');
-          var lat = posizione.geometry.coordinates[0];
-          var lon = posizione.geometry.coordinates[1];
+        {% if listaSensori and sensore %}
+          var posizione = JSON.parse('{{ sensore | tojson | safe }}');
+          console.log(posizione);
+          //var lat = posizione.geometry.coordinates[0];
+          //var lon = posizione.geometry.coordinates[1];
+
+          var lat = posizione.lat;
+          var lon = posizione.lon
 
       
           coordinateMarker.push({

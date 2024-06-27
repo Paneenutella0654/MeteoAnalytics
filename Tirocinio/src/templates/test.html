@@ -9,8 +9,12 @@
 </html>
 
 <script>
-    // Pass the value of listaSensori as a JavaScript variable
-    var listaSensori = JSON.parse('{{ listaSensori | tojson | safe }}');
-    // Log the value of listaSensori to the console
-    console.log(listaSensori);
+        // Pass the value of listaSensori as a JavaScript variable
+    //var listaSensori = JSON.parse('{{ listaSensori | tojson | safe }}');
+        // Log the value of listaSensori to the console
+    //console.log(listaSensori);
+    {%for sensore in listaSensori%}
+        var lat = {{'sensore.lat'}}
+        var lon = {{'sensore.lon'}}
+    {%endfor%}
 </script>

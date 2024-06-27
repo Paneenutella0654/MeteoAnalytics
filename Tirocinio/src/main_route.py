@@ -17,7 +17,7 @@ from flask_login import current_user, login_required , login_user, logout_user
 @login_required
 def listaSensori():
     user = current_user.id
-    listaSensori = main_load.RetriveSensori(user)
+    listaSensori = main_load.RetriveCoordinareSensori()
     return render_template("listaSensori.html", listaSensori=listaSensori)
 
 
@@ -161,9 +161,9 @@ def register():
             return redirect(url_for("login"))
     return render_template("register.html")
 
-@app.route("/test", methods=["GET", "POST"])
+
+@app.route("/test",methods=["GET", "POST"])
+@login_required
 def test():
-    #user = current_user.id
-    listaSensori = main_load.RetriveallSensori()
-    #print("ecco la lista sensori ",listaSensori)
-    return render_template("test.html", listaSensori = listaSensori)
+    listaSensori = main_load.RetriveCoordinareSensori()
+    return render_template("test.html", listaSensori=listaSensori)

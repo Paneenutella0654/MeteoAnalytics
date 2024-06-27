@@ -11,3 +11,5 @@ db = mongo.db.client.MeteoAnalytics
 utenti = db.Utenti
 
 sensori = db.Sensori
+
+coordinate = db.Coordinate
