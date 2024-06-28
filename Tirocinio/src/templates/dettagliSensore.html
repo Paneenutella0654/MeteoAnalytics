@@ -398,7 +398,7 @@
     <!-- endinject -->
     <!-- plugin js for this page -->
     <script src="/static/vendors/progressbar.js/progressbar.min.js"></script>
-    <script src="/static/vendors/chart.js/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- End plugin js for this page -->
     <!-- Custom js for this page-->
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
@@ -440,13 +440,11 @@
  
     //Mappa per la posizione del sensore
     var posizione = JSON.parse('{{ sensore | tojson }}');
-    console.log(posizione);
-    var lat2 = posizione[0][latitude];
-    var lon2 = posizione[0][longitude];
-    console.log(lat2);
-    console.log(lon2);
+    var lat = posizione[0].latitude;
+    var lon = posizione[0].longitude;
 
-    var map = L.map('map').setView([lat, lon], 18);
+
+    var map = L.map('map').setView([lat, lon], 15);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -458,90 +456,60 @@
 
     //Generazione grafico meteo
     var meteoData = {{ datiinquinamento|tojson|safe }};
-    var arrayGiorniMeteo = AggiustaDatiMeteo(meteoData)
+    console.log(meteoData)
+    var arrayGiorniMeteo = meteoData
     creaGraficoMeteo()
 
-    //Converto quello ottenuto da openMeteo in un Json
-    function AggiustaDatiMeteo(meteoData)  
-    {
-        //Cancello i dati che non mi servono
-        delete meteoData.latitude
-        delete meteoData.longitude
-        delete meteoData.generationtime_ms
-        delete meteoData.utc_offset_seconds
-        delete meteoData.timezone_abbreviation
-        delete meteoData.timezone
-        delete meteoData.elevation
-        delete meteoData.hourly_units
-        delete meteoData.time
-        delete meteoData.temperature_2m 
-        var temp = []
-        var n = meteoData.hourly.time.length
-        for(var i=0; i<n ; i++)
-        {
-          var temp2 = {
-            "Temperature (°C)": meteoData.hourly.temperature_2m[i],
-            time: meteoData.hourly.time[i],
-          }
-          temp.push(temp2)
-        }
-      return temp
-    }
-
-    function creaGraficoMeteo()
+      function creaGraficoMeteo() 
       {
-        /*
-        Variabili globali usate:
-        arrayGiorniMeteo, contiene i dati per ogni giorno di quello che vogliamo inserire.
-        */
-
-        var parent = document.getElementById("datiMeteo")
-        var canvas = document.createElement("canvas")
-        canvas.id = "lineChartmeteo"
-        canvas.width = "800"
-        canvas.height = "595" //NON modificare, stessa altezza del testo così non esplode quando clicchiamo.
-        parent.appendChild(canvas)
-        //Genero dinamicamente i dati per il grafico, siccome non so quanti elementi
-        //Array dei colori, abbastanza da non averne bisogno dopo.
-        var colors = ["rgb(255, 102, 0)", "rgb(255, 204, 0)", "rgb(153, 204, 0)", "rgb(0, 204, 0)", "rgb(0, 255, 204)", "rgb(0, 51, 204)", "rgb(102, 0, 255)", "rgb(255, 51, 204)", "rgb(102, 0, 102)", "rgb(0, 51, 0)"]
-        var labelsData = []   //Asse x
-        var labels = [] //Nomi dei dati
-        var values = []//Valori dei dati: values[0] ha tutti i dati per la prima label.
-        var datasets = [] //Serve per creare il grafico
-        var time = [] //Serve per ripristinare il grafico dopo averlo chiuso.
-        //Riempio labelsData e values
-        for(var c = 0; c < arrayGiorniMeteo.length; c++)
+        // Seleziona il contenitore e crea un nuovo canvas per il grafico
+        var parent = document.getElementById("datiMeteo");
+        var canvas = document.createElement("canvas");
+        canvas.id = "lineChartmeteo";
+        canvas.width = 800;
+        canvas.height = 595; // NON modificare, stessa altezza del testo così non esplode quando clicchiamo.
+        parent.appendChild(canvas);
+    
+        // Colori per le linee del grafico
+        var colors = [
+            "rgb(255, 102, 0)", "rgb(255, 204, 0)", "rgb(153, 204, 0)", "rgb(0, 204, 0)",
+            "rgb(0, 255, 204)", "rgb(0, 51, 204)", "rgb(102, 0, 255)", "rgb(255, 51, 204)",
+            "rgb(102, 0, 102)", "rgb(0, 51, 0)"
+        ];
+    
+        // Estrai le date dai timestamp
+        var labelsData = arrayGiorniMeteo[0].time.map(timestamp => timestamp.split("T")[0]);
+    
+        // Crea i dataset
+        var datasets = [];
+        var keys = Object.keys(arrayGiorniMeteo[0]).filter(key => key !== "id" && key !== "idSensore" && key !== "time" && key !=="pm10" && key !=="pm2_5");
+    
+        for (var c = 0; c < keys.length; c++) 
         {
-          labelsData.push(arrayGiorniMeteo[c].time.split("T")[0]) //Prendo solo la data dal timestamp
-          time.push(arrayGiorniMeteo[c].time)
-          delete arrayGiorniMeteo[c].time //Lo rimuovo in modo da poter iterare sugli altri campi per prenderne i valori
-          values.push(Object.values(arrayGiorniMeteo[c]))
-        }
-        //Riempio labels
-        for(var i = 0; i < Object.keys(arrayGiorniMeteo[0]).length; i++) //Per ogni campo di un oggetto
-        {
-          labels.push(Object.keys(arrayGiorniMeteo[0])[i])
-        }   
-        //Creo i dataset con i dati compilati, uno per lineChart
-        for(var c = 0; c < labels.length; c++)
-        {
-          var data = []
-          for(var k = 0; k < values.length; k++)
-          {
-            data.push(values[k][c])
+          var data = [];
+          for (var i = 0; i < arrayGiorniMeteo[0].time.length; i++) {
+              data.push(arrayGiorniMeteo[0][keys[c]][i]);
           }
-          //Adesso ho tutti i valori di una label, posso costruirne il dataset
+          
+          var color = colors[c % colors.length];
+          
           var dataset = {
-            label : labels[c],
-            data: data,
-            fill: false,
-            borderColor: colors[c],
-            tension: 0.1
-          }
-          //Costruito, lo inserisco nell'insieme per creare il grafico
-          datasets.push(dataset)
-        }
-        //Finito il parsing dei dati, posso creare finalmente il grafico
+              label: keys[c],
+              data: data,
+              fill: false,
+              borderColor: color,
+              backgroundColor: color,
+              tension: 0.1
+          };
+          
+          datasets.push(dataset);
+      }
+      
+
+        console.log(datasets)
+
+    
+        // Crea finalmente il grafico
         new Chart(document.getElementById("lineChartmeteo"), {
           type: 'line',
           data: {
@@ -556,6 +524,8 @@
           }
         })
       }
+      
+    
 
       var sensore = {id: "{{ sensore.id }}", name: "{{ sensore.name }}"};
 
