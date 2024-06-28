@@ -55,6 +55,7 @@ def creaUtente(nome: str, cognome: str, email: str, password: str, ruolo: str):
           result = utenti.insert_one({"nome":nome,"cognome":cognome,"email":email,"password":password,"ruolo":ruolo})
           return result
       
+
 def RetriveallSensori():
     print("sono dentro la funzione RetriveallSensori")
     trovati = sensori.find()

@@ -80,17 +80,7 @@ def dettagliSensore():
     sensore = main_load.SensorebyID(idsensore)
     idSensoreMacro = sensore[0]['id']
     datiinquinamento = main_load.RetriveInquinamentoBySensoredID(idSensoreMacro)
-    #lat = sensore.loc['geometry']['coordinates'][0]
-    #lon = sensore.loc['geometry']['coordinates'][1]
-    #openmeteo = OpenMeteo(lat,lon)
-    #meteo = openmeteo.get_data_temperatura()
-    #umidita = openmeteo.get_data_umidita()
-    #pressione = openmeteo.get_data_pressione()
-    #vento = openmeteo.get_data_vento()
-    #radiazioniuv = openmeteo.get_data_uv()
-    #inquinamento = openmeteo.get_data_inquinamento()
-    #precipitazioni = openmeteo.get_data_precipitazioni()
-    return render_template("test.html", sensore=sensore, datiinquinamento=datiinquinamento)
+    return render_template("dettagliSensore.html", sensore=sensore, datiinquinamento=datiinquinamento)
 
 @app.errorhandler(404)
 def page_not_found(error):
