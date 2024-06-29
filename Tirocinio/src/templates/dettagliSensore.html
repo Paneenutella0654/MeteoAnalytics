@@ -26,6 +26,8 @@
 
       #datiMeteo{
         width: 100%;
+        max-height: 1000px;
+        max-width: 1000px;
       }
 
       #datiUmidita{
@@ -76,6 +78,12 @@
         height: 400px;
         width: 100%;
         z-index: 1;
+    }
+
+    #datiprova{
+      width: 100%;
+      max-height: 595px;
+      max-width: 800px;
     }
 
     .larger-wheel {
@@ -290,7 +298,7 @@
               </div>
             </div>
           <div class="row  mt-3">
-            <div class="col-xl-6 d-none grid-margin stretch-card" id = "card-dati-temperatura">
+            <div class="col-xl-6 grid-margin stretch-card" id = "card-dati-temperatura">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-wrap justify-content-between">
@@ -367,6 +375,7 @@
           </div>
         </div>
       </div>
+
           
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
@@ -398,36 +407,12 @@
     <!-- endinject -->
     <!-- plugin js for this page -->
     <script src="/static/vendors/progressbar.js/progressbar.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/vendors/chart.js/Chart.min.js"></script>
     <!-- End plugin js for this page -->
     <!-- Custom js for this page-->
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
 
-      var sensoriPresenti = JSON.parse('{{ sensore | tojson }}');
-
-      for (var i = 0; i < sensoriPresenti.length; i++) {
-        var titolo = sensoriPresenti[i].title;
-        var idDivDaModificare = "card-dati-" + titolo.toLowerCase();
-        var divDaModificare = document.getElementById(idDivDaModificare);
-
-        if (divDaModificare) {
-          // Il sensore è presente, quindi cambia la classe del div
-          divDaModificare.classList.remove("d-none");
-          divDaModificare.classList.add("d-flex");
-      } else {
-          // Il sensore non è presente, quindi nascondi il div
-        var divDaNascondere = document.getElementById(idDivDaModificare);
-        console.log(divDaNascondere);
-        if (divDaNascondere) {
-            divDaNascondere.style.display = "none";
-        }
-        console.log("Div non trovato per il sensore: " + titolo);
-      }
-      }
-
-    </script>
 
   <script>
 
@@ -442,6 +427,7 @@
     var posizione = JSON.parse('{{ sensore | tojson }}');
     var lat = posizione[0].latitude;
     var lon = posizione[0].longitude;
+    console.log(posizione)
 
 
     var map = L.map('map').setView([lat, lon], 15);
@@ -480,9 +466,9 @@
         // Estrai le date dai timestamp
         var labelsData = arrayGiorniMeteo[0].time.map(timestamp => timestamp.split("T")[0]);
     
-        // Crea i dataset
+        // Serve per le keys degli oggetti
         var datasets = [];
-        var keys = Object.keys(arrayGiorniMeteo[0]).filter(key => key !== "id" && key !== "idSensore" && key !== "time" && key !=="pm10" && key !=="pm2_5");
+        var keys = Object.keys(arrayGiorniMeteo[0]).filter(key => key !== "id" && key !== "idSensore" && key !== "time");
     
         for (var c = 0; c < keys.length; c++) 
         {
@@ -517,6 +503,11 @@
             datasets: datasets
           },
           options: {
+            elements: {
+              point:{
+                radius: 0
+              }
+            }, 
             title: {
               display: true,
               text: "Storico Meteo"
