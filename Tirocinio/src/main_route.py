@@ -80,7 +80,10 @@ def dettagliSensore():
     sensore = main_load.SensorebyID(idsensore)
     idSensoreMacro = sensore[0]['id']
     datiinquinamento = main_load.RetriveInquinamentoBySensoredID(idSensoreMacro)
-    return render_template("dettagliSensore.html", sensore=sensore, datiinquinamento=datiinquinamento)
+    datiPrecipitazioni = sensore[0]['measurementsPrecipitation']
+    datiTemperatura = sensore[0]['measurementsTemperature']
+    datiVento = sensore[0]['measurementsWind']
+    return render_template("dettagliSensore.html", sensore=sensore, datiinquinamento=datiinquinamento, datiPrecipitazioni=datiPrecipitazioni,datiTemperatura=datiTemperatura, datiVento=datiVento)
 
 @app.errorhandler(404)
 def page_not_found(error):

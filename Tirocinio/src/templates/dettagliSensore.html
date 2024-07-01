@@ -36,7 +36,7 @@
 
       #datiPressione{
         width: 100%;
-        max-height: 800px;
+        max-height: 1000px;
       }
 
       #datiVento{
@@ -298,81 +298,52 @@
               </div>
             </div>
           <div class="row  mt-3">
-            <div class="col-xl-6 grid-margin stretch-card" id = "card-dati-temperatura">
+            <div class="col-xl grid-margin stretch-card" id = "card-dati-temperatura">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-wrap justify-content-between">
-                    <h4 class="card-title mb-3">Storico Meteo</h4>
-                    <div id="datiMeteo"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-6 d-none grid-margin stretch-card" id="card-dati-inquinamento">
-              <div class="card">
-                  <div class="card-body">
-                    <h4 id = "datiInquinamento" class="card-title mb-4">Storico Indici Inquinamento</h4>
+                    <h4 class="card-title mb-3">Storico Indici Inquinamento</h4>
                     <div id="datiInquinamento"></div>
                   </div>
-                </div>
-               </div>
-            </div>
-            <div class="row  mt-3">
-              <div class="col-xl-6 d-none grid-margin stretch-card" id="card-dati-umidità">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex flex-wrap justify-content-between">
-                    <h4 class="card-title mb-3">Storico Umidita</h4>
-                    <div id="datiUmidita"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-              <div class="col-xl-6 d-none grid-margin stretch-card" id="card-dati-anemometro">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex flex-wrap justify-content-between">
-                    <h4 class="card-title mb-3">Storico Anemometro</h4>
-                    <div id="datiVento"></div>
-                  </div>
-                </div>
-                </div>
-              </div>
-           </div>
-           <div class="row  mt-3">
-            <div class="col-xl-6 d-none grid-margin stretch-card" id="card-dati-luminosità">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex flex-wrap justify-content-between">
-                  <h4 class="card-title mb-3">Storico Indici UV</h4>
-                  <div id="datiUv"></div>
-                </div>
-              </div>
-              </div>
-            </div>
-
-            <div class="col-xl-6 d-none grid-margin stretch-card" id="card-dati-precipitazioni">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex flex-wrap justify-content-between">
-                  <h4 class="card-title mb-3">Storico Precipitazioni</h4>
-                  <div id="datiPrecipitazioni"></div>
-                </div>
-              </div>
-            </div>
-
-         </div>
-           <div class="row  mt-3">
-            <div class="col-xl d-none grid-margin stretch-card" id="card-dati-atm aria">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex flex-wrap justify-content-between">
-                  <h4 class="card-title mb-3">Storico Pressione Atmosferica</h4>
-                  <div id="datiPressione"></div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="row  mt-3">
+            <div class="col-xl grid-margin stretch-card" id="card-dati-precipitazioni">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-wrap justify-content-between">
+                    <h4 class="card-title mb-3">Storico Temperatura</h4>
+                    <div id="datiTemperatura"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row  mt-3">
+            <div class="col-xl grid-margin stretch-card" id="card-dati-precipitazioni">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-wrap justify-content-between">
+                    <h4 class="card-title mb-3">Storico Anemometro</h4>
+                    <div id="datiVento"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row  mt-3">
+            <div class="col-xl grid-margin stretch-card" id="card-dati-precipitazioni">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-wrap justify-content-between">
+                    <h4 class="card-title mb-3">Storico Precipitazioni</h4>
+                    <div id="datiPrecipitazioni"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
 
@@ -441,40 +412,40 @@
 
 
     //Generazione grafico meteo
-    var meteoData = {{ datiinquinamento|tojson|safe }};
-    console.log(meteoData)
-    var arrayGiorniMeteo = meteoData
+    var inquinamento = {{ datiinquinamento|tojson|safe }};
+    console.log(inquinamento)
+    var arrayInquinamento = inquinamento
     creaGraficoMeteo()
 
       function creaGraficoMeteo() 
       {
         // Seleziona il contenitore e crea un nuovo canvas per il grafico
-        var parent = document.getElementById("datiMeteo");
+        var parent = document.getElementById("datiInquinamento");
         var canvas = document.createElement("canvas");
         canvas.id = "lineChartmeteo";
-        canvas.width = 800;
+        canvas.width = 1000;
         canvas.height = 595; // NON modificare, stessa altezza del testo così non esplode quando clicchiamo.
         parent.appendChild(canvas);
     
         // Colori per le linee del grafico
         var colors = [
-            "rgb(255, 102, 0)", "rgb(255, 204, 0)", "rgb(153, 204, 0)", "rgb(0, 204, 0)",
-            "rgb(0, 255, 204)", "rgb(0, 51, 204)", "rgb(102, 0, 255)", "rgb(255, 51, 204)",
-            "rgb(102, 0, 102)", "rgb(0, 51, 0)"
+          "rgb(255, 25, 25)", "rgb(255, 128, 25)", "rgb(255, 255, 25)", "rgb(128, 255, 25)",
+          "rgb(25, 255, 128)", "rgb(25, 25, 255)", "rgb(128, 25, 255)", "rgb(255, 25, 128)",
+          "rgb(128, 25, 128)", "rgb(12, 25, 12)"
         ];
     
         // Estrai le date dai timestamp
-        var labelsData = arrayGiorniMeteo[0].time.map(timestamp => timestamp.split("T")[0]);
+        var labelsData = arrayInquinamento[0].time.map(timestamp => timestamp.split("T")[0]);
     
         // Serve per le keys degli oggetti
         var datasets = [];
-        var keys = Object.keys(arrayGiorniMeteo[0]).filter(key => key !== "id" && key !== "idSensore" && key !== "time");
+        var keys = Object.keys(arrayInquinamento[0]).filter(key => key !== "id" && key !== "idSensore" && key !== "time");
     
         for (var c = 0; c < keys.length; c++) 
         {
           var data = [];
-          for (var i = 0; i < arrayGiorniMeteo[0].time.length; i++) {
-              data.push(arrayGiorniMeteo[0][keys[c]][i]);
+          for (var i = 0; i < arrayInquinamento[0].time.length; i++) {
+              data.push(arrayInquinamento[0][keys[c]][i]);
           }
           
           var color = colors[c % colors.length];
@@ -510,13 +481,231 @@
             }, 
             title: {
               display: true,
-              text: "Storico Meteo"
+              text: "Storico Inquinamento"
             }
           }
         })
       }
-      
+
+      //Generazione grafico Precipitazioni
+    var precipitazioni = {{ datiPrecipitazioni|tojson|safe }};
+    console.log(precipitazioni)
+    var arrayPrecipitazioni = precipitazioni
+    creaGraficoPrecipitazioni()
+
+      function creaGraficoPrecipitazioni() 
+      {
+        // Seleziona il contenitore e crea un nuovo canvas per il grafico
+        var parent = document.getElementById("datiPrecipitazioni");
+        var canvas = document.createElement("canvas");
+        canvas.id = "precipitation";
+        canvas.width = 1000;
+        canvas.height = 595; // NON modificare, stessa altezza del testo così non esplode quando clicchiamo.
+        parent.appendChild(canvas);
     
+        // Colori per le linee del grafico
+        var colors = [
+            "rgb(0, 255, 102)", "rgb(0, 0, 255)", "rgb(102, 0, 255)", "rgb(255, 0, 102)",
+            "rgb(255, 0, 0)", "rgb(255, 102, 0)", "rgb(255, 255, 0)", "rgb(102, 255, 0)",
+            "rgb(102, 0, 102)", "rgb(0, 25, 0)"
+        ];
+    
+        // Estrai le date dai timestamp
+        var labelsData = arrayPrecipitazioni.map(data => data.time.split("T")[0]);
+    
+        // Serve per le keys degli oggetti
+        var datasets = [];
+        var keys = ["precipitation", "rain", "relative_humidity_2m", "snowfall"];
+        
+        for (var c = 0; c < keys.length; c++) {
+            var data = arrayPrecipitazioni.map(data => data[keys[c]]);
+            
+            var color = colors[c % colors.length];
+            
+          
+          var dataset = {
+              label: keys[c],
+              data: data,
+              fill: false,
+              borderColor: color,
+              backgroundColor: color,
+              tension: 0.1
+          };
+          
+          datasets.push(dataset);
+      }
+      
+
+        console.log(datasets)
+
+    
+        // Crea finalmente il grafico
+        new Chart(document.getElementById("precipitation"), {
+          type: 'line',
+          data: {
+            labels: labelsData,
+            datasets: datasets
+          },
+          options: {
+            elements: {
+              point:{
+                radius: 0
+              }
+            }, 
+            title: {
+              display: true,
+              text: "Storico Precipitazioni"
+            }
+          }
+        })
+      }
+
+      
+      //Generazione grafico Vento
+    var vento = {{ datiVento|tojson|safe }};
+    console.log(vento)
+    var arrayVento = vento
+    creaGraficoVento()
+
+      function creaGraficoVento() 
+      {
+        // Seleziona il contenitore e crea un nuovo canvas per il grafico
+        var parent = document.getElementById("datiVento");
+        var canvas = document.createElement("canvas");
+        canvas.id = "wind";
+        canvas.width = 1000;
+        canvas.height = 595; // NON modificare, stessa altezza del testo così non esplode quando clicchiamo.
+        parent.appendChild(canvas);
+    
+        // Colori per le linee del grafico
+        var colors = [
+            "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(255, 99, 132)", "rgb(255, 159, 64)",
+            "rgb(153, 102, 255)", "rgb(201, 203, 207)", "rgb(255, 205, 86)", "rgb(66, 135, 245)",
+            "rgb(244, 66, 146)", "rgb(148, 159, 177)"
+        ];
+    
+        // Estrai le date dai timestamp
+        var labelsData = arrayVento.map(data => data.time.split("T")[0]);
+    
+        // Serve per le keys degli oggetti
+        var datasets = [];
+        var keys = ["wind_speed_10m", "wind_direction_10m", "wind_gusts_10m"];
+        
+        for (var c = 0; c < keys.length; c++) {
+            var data = arrayVento.map(data => data[keys[c]]);
+            
+            var color = colors[c % colors.length];
+            
+          
+          var dataset = {
+              label: keys[c],
+              data: data,
+              fill: false,
+              borderColor: color,
+              backgroundColor: color,
+              tension: 0.1
+          };
+          
+          datasets.push(dataset);
+      }
+      
+
+        console.log(datasets)
+
+    
+        // Crea finalmente il grafico
+        new Chart(document.getElementById("wind"), {
+          type: 'line',
+          data: {
+            labels: labelsData,
+            datasets: datasets
+          },
+          options: {
+            elements: {
+              point:{
+                radius: 0
+              }
+            }, 
+            title: {
+              display: true,
+              text: "Storico Anemometro"
+            }
+          }
+        })
+      }
+
+      //Generazione grafico Temperatura
+    var temperatura = {{ datiTemperatura|tojson|safe }};
+    console.log(temperatura)
+    var arrayTemperatura = temperatura
+    creaGraficoTemperatura()
+
+      function creaGraficoTemperatura() 
+      {
+        // Seleziona il contenitore e crea un nuovo canvas per il grafico
+        var parent = document.getElementById("datiTemperatura");
+        var canvas = document.createElement("canvas");
+        canvas.id = "temperature";
+        canvas.width = 1000;
+        canvas.height = 595; // NON modificare, stessa altezza del testo così non esplode quando clicchiamo.
+        parent.appendChild(canvas);
+    
+        // Colori per le linee del grafico
+        var colors = [
+          "rgb(255, 77, 77)", "rgb(255, 166, 77)", "rgb(255, 255, 77)", "rgb(166, 255, 77)",
+          "rgb(77, 255, 166)", "rgb(166, 77, 166)", "rgb(38, 77, 38)", "rgb(255, 77, 166)",
+          "rgb(166, 77, 166)", "rgb(38, 77, 38)"
+        ];
+    
+        // Estrai le date dai timestamp
+        var labelsData = arrayTemperatura.map(data => data.time.split("T")[0]);
+    
+        // Serve per le keys degli oggetti
+        var datasets = [];
+        var keys = ["temperature_2m", "soil_temperature_0_to_7cm",  "surface_pressure", "direct_radiation"];
+
+        for (var c = 0; c < keys.length; c++) {
+            var data = arrayTemperatura.map(data => data[keys[c]]);
+            
+            var color = colors[c % colors.length];
+            
+          
+          var dataset = {
+              label: keys[c],
+              data: data,
+              fill: false,
+              borderColor: color,
+              backgroundColor: color,
+              tension: 0.1
+          };
+          
+          datasets.push(dataset);
+      }
+      
+
+        console.log(datasets)
+
+    
+        // Crea finalmente il grafico
+        new Chart(document.getElementById("temperature"), {
+          type: 'line',
+          data: {
+            labels: labelsData,
+            datasets: datasets
+          },
+          options: {
+            elements: {
+              point:{
+                radius: 0
+              }
+            }, 
+            title: {
+              display: true,
+              text: "Storico Temperatura"
+            }
+          }
+        })
+      }
 
       var sensore = {id: "{{ sensore.id }}", name: "{{ sensore.name }}"};
 
