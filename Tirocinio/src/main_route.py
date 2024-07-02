@@ -1,5 +1,7 @@
 import hashlib
 import datetime
+import random
+import json
 from src.dbConnection import  utenti, sensori
 from src import login_manager
 from src.model import utente, sensore
@@ -13,7 +15,6 @@ from flask import request, render_template, session, jsonify, redirect, url_for
 from src import app
 from flask_login import current_user, login_required , login_user, logout_user
 
-import json
 
 @app.route("/listaSensori",methods=["GET", "POST"])
 @login_required
@@ -99,24 +100,32 @@ def aggiungiSensore():
         richiesta = request.get_json()
         nome = richiesta.get("nomeSensore")
         posizioneSensore = richiesta.get("posizioneSensore")
-        checkboxes = richiesta.get("sensoriselezionati")
-        user = current_user.id
-        sensoriselezionati = help_functions.creadict(checkboxes)
-        control = main_load.AggiungiSensore(nome,None,None,None,user,posizioneSensore,sensoriselezionati)
-
+        
+        with open("coordinate.json", "r") as file:
+            coordinate_data = json.load(file)
+            
+        random_entry = random.choice(coordinate_data)
+        id = random_entry["id"]
+        sensore = main_load.Retrive_one_Sensori(id)
+        sensoreinqui = main_load.RetriveInquinamentoBySensoredID(id)
+        "BISOGNA FARE L'INSERT DEI DATI INQUINAMENTO E DEI DATI METEO"
+        control = True
+        
         if control != None:
-            return jsonify({"success": True})
+            return jsonify({"success": True, "Sensore": sensore,"datiinquimaneto": sensoreinqui})
         elif control == None:
             return jsonify({"success": False})
+        
         
 @app.route("/eliminaSensore", methods=['GET', 'POST'])
 def eliminaSensore():
     if(request.method != "POST"):
         return redirect(url_for("listaSensori"))
     elif request.method == "POST":
-        print("sono nel post")
         richiesta = request.get_json()
+        print(richiesta)
         idsensore = richiesta.get("idSensore")
+        print(idsensore)
         control = main_load.EliminaSensore(idsensore)
         if control != None:
             return jsonify({"success": True})
@@ -165,8 +174,44 @@ def register():
     return render_template("register.html")
 
 
-@app.route("/test",methods=["GET", "POST"])
-@login_required
+@app.route('/contagiorni', methods=['GET', 'POST'])
+@login_required  
+def contagiorni():
+    if request.method == 'POST':
+        data = request.json
+        idsensore = data['id']
+        limite_inferiore = float(data['value'])
+        dati_sensore = main_load.SensorebyID(idsensore)
+        if data['type'] == 'temperature':
+            temperature = dati_sensore[0]['measurementsTemperature']
+            result = [
+                        {'valore_rilevazione': entry['temperature_2m'], 'time': entry['time']}
+                        for entry in temperature
+                        if entry['temperature_2m'] > limite_inferiore
+            ]
+            return jsonify({'success': True, 'data': result,'tipo': data['type']})
+        elif data['type'] == 'wind':
+            wind = dati_sensore[0]['measurementsWind']
+            result = [
+                        {'valore_rilevazione': entry['wind_speed_10m'], 'time': entry['time']}
+                        for entry in wind
+                        if entry['wind_speed_10m'] > limite_inferiore
+            ]
+            return jsonify({'success': True, 'data': result,'tipo': data['type']})
+        elif data['type'] == 'precipitation':
+            precipitation = dati_sensore[0]['measurementsPrecipitation']
+            result = [
+                        {'valore_rilevazione': entry['relative_humidity_2m'], 'time': entry['time']}
+                        for entry in precipitation
+                        if entry['relative_humidity_2m'] > limite_inferiore
+            ]
+            return jsonify({'success': True, 'data': result,'tipo': data['type']})
+
+
+
+
+@app.route('/test', methods=['GET', 'POST'])
+@login_required  
 def test():
-    sensoreinquinamento = main_load.RetriveInquinamentoBySensoredID("6673072d7c1a6ec7099f942d")
-    return render_template("test.html",sensoreinquinamento=sensoreinquinamento)
+    data = request.json
+    print(data)

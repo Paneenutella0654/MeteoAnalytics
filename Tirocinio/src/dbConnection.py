@@ -15,3 +15,5 @@ sensori = db.Sensori
 coordinate = db.Coordinate
 
 inquinamento = db.Inquinamento
+
+coordinate_n = db.Coordinate_N

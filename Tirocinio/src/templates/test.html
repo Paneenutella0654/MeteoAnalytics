@@ -11,8 +11,6 @@
 <script>
         // Pass the value of listaSensori as a JavaScript variable
     var listaSensori = JSON.parse('{{ sensore | tojson | safe }}');
-    var listaSensori2 = JSON.parse('{{ datiinquinamento | tojson | safe }}');
-        // Log the value of listaSensori to the console
-    console.log(listaSensori);
+
     console.log(listaSensori2);
 </script>

@@ -20,14 +20,27 @@
      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
      crossorigin=""/>
      <style>
+        .container {
+          margin: 20px;
+      }
+      .input-group {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+      }
+      .input-group label {
+          margin-right: 10px;
+      }
+      .input-group input, .input-group select, .input-group button {
+          margin-right: 10px;
+          padding: 5px;
+      }
       .card{
         border-radius: 3%;
       }
 
       #datiMeteo{
         width: 100%;
-        max-height: 1000px;
-        max-width: 1000px;
       }
 
       #datiUmidita{
@@ -36,7 +49,6 @@
 
       #datiPressione{
         width: 100%;
-        max-height: 1000px;
       }
 
       #datiVento{
@@ -82,8 +94,6 @@
 
     #datiprova{
       width: 100%;
-      max-height: 595px;
-      max-width: 800px;
     }
 
     .larger-wheel {
@@ -276,17 +286,36 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-wrap justify-content-between">
-                      <h4 class="card-title mb-3">Dettagli Sensori</h4>
+                      <h4 class="card-title mb-3">Query di Ricerca</h4>
                     </div>
                     <div class="row">
                       <div class="col-12">
                         <div class="row">
                           <div class="col-sm-12">
                             <div class="d-flex justify-content-between mb-4">
-                              <div>Descrizione</div>
-                              <div id = "nome" class="text-muted"></div>
+                            <!-- Qua ci devo fare il coso per le query -->
+                            <div class="container">
+                              <form id="updateForm">
+                                  <div class="input-group">
+                                      <label for="dataType">Seleziona il tipo di dato:</label>
+                                      <select id="dataType" name="dataType">
+                                          <option value="temperature">Temperatura</option>
+                                          <option value="wind">Velocita del Vento</option>
+                                          <option value="precipitation">Umidita</option>
+                                          <!-- Aggiungi altre opzioni qui -->
+                                      </select>
+                                  </div>
+                                  <div class="input-group">
+                                      <label for="dataValue">Inserisci il valore:</label>
+                                      <input type="number" id="dataValue" name="dataValue" required>
+                                  </div>
+                                  <div class="input-group">
+                                      <button type="button" onclick="updateData()">Update</button>
+                                  </div>
+                              </form>
+                          </div>
+                            <!-- Qua ci devo fare il coso per le query -->
                             </div>
-                            <div id="sensoriDettaglio"></div>
                             <div class="d-flex justify-content-center mb-4">
                             </div>
                            </div>
@@ -395,10 +424,11 @@
     });
  
     //Mappa per la posizione del sensore
-    var posizione = JSON.parse('{{ sensore | tojson }}');
-    var lat = posizione[0].latitude;
-    var lon = posizione[0].longitude;
-    console.log(posizione)
+    var sensore = JSON.parse('{{ sensore | tojson }}');
+    console.log(sensore)
+    var lat = sensore[0].latitude;
+    var lon = sensore[0].longitude;
+    var idsensoremio = sensore[0].id;
 
 
     var map = L.map('map').setView([lat, lon], 15);
@@ -413,7 +443,6 @@
 
     //Generazione grafico meteo
     var inquinamento = {{ datiinquinamento|tojson|safe }};
-    console.log(inquinamento)
     var arrayInquinamento = inquinamento
     creaGraficoMeteo()
 
@@ -463,7 +492,6 @@
       }
       
 
-        console.log(datasets)
 
     
         // Crea finalmente il grafico
@@ -489,7 +517,6 @@
 
       //Generazione grafico Precipitazioni
     var precipitazioni = {{ datiPrecipitazioni|tojson|safe }};
-    console.log(precipitazioni)
     var arrayPrecipitazioni = precipitazioni
     creaGraficoPrecipitazioni()
 
@@ -536,7 +563,6 @@
       }
       
 
-        console.log(datasets)
 
     
         // Crea finalmente il grafico
@@ -563,7 +589,6 @@
       
       //Generazione grafico Vento
     var vento = {{ datiVento|tojson|safe }};
-    console.log(vento)
     var arrayVento = vento
     creaGraficoVento()
 
@@ -610,7 +635,6 @@
       }
       
 
-        console.log(datasets)
 
     
         // Crea finalmente il grafico
@@ -636,7 +660,6 @@
 
       //Generazione grafico Temperatura
     var temperatura = {{ datiTemperatura|tojson|safe }};
-    console.log(temperatura)
     var arrayTemperatura = temperatura
     creaGraficoTemperatura()
 
@@ -683,8 +706,6 @@
       }
       
 
-        console.log(datasets)
-
     
         // Crea finalmente il grafico
         new Chart(document.getElementById("temperature"), {
@@ -715,6 +736,60 @@
         window.location.href = "/modificaSensore?idSensore=" + sensore.id 
       }
 
+      function updateData() {
+        const dataType = $('#dataType').val();
+        const dataValue = $('#dataValue').val();
+    
+        if (!dataValue) {
+            alert('Per favore, inserisci un valore.');
+            return;
+        }
+    
+        const data = {
+            type: dataType,
+            value: dataValue,
+            id : idsensoremio
+        };
+    
+        $.ajax({
+          type: 'POST',
+          url: '/contagiorni',
+          contentType: 'application/json',
+          data: JSON.stringify(data),
+          success: function(response) {
+              console.log('Success:', response);
+
+              // Costruisci il contenuto della lista scrollabile
+              let content = `<div style="max-height: 200px; overflow-y: auto;">`;
+              response.data.forEach(entry => {
+                  if (entry.valore_rilevazione) {
+                      content += `<p>Time: ${entry.time}, Valore: ${entry.valore_rilevazione}</p>`;
+                  }
+              });
+              content += `</div>`;
+
+              // Mostra il popup con SweetAlert
+              Swal.fire({
+                  title: 'Dati recuperati con successo!',
+                  html: `
+                            <p style="font-size: 1.2em; padding-bottom: 1em;"><b>Numero di sforamenti:</b> ${response.data.length - 1}</p>
+                            ${content}
+                        `,
+                  icon: 'success'
+              });
+          },
+          error: function(xhr, status, error) {
+              console.error('Errore:', error);
+              Swal.fire({
+                  title: 'Errore',
+                  text: 'Errore durante l\'aggiornamento dei dati.',
+                  icon: 'error'
+              });
+          }
+      });
+  }
+    
+
       function rimandaelimina()
       {
         Swal.fire({
@@ -732,7 +807,7 @@
               url: '/eliminaSensore',
               type: 'POST',
               contentType: 'application/json',  // Imposta il Content-Type a application/json
-              data: JSON.stringify({ idSensore: sensore.id }),  // Converte l'oggetto in formato JSON
+              data: JSON.stringify({ idSensore: idsensoremio }),  // Converte l'oggetto in formato JSON
               success: function (data) {
                 // Gestisci la risposta del server se necessario
                 console.log(data);
