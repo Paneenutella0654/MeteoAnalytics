@@ -7,10 +7,16 @@
     <h1>Hello World!</h1>
 </body>
 </html>
+   
+    <script>
+        // Pass the value of sensore as a JavaScript variable
+        var sensore = JSON.parse('{{ sensore | tojson | safe }}');
+        console.log(sensore);
 
-<script>
-        // Pass the value of listaSensori as a JavaScript variable
-    var listaSensori = JSON.parse('{{ sensore | tojson | safe }}');
-
-    console.log(listaSensori2);
-</script>
+        // You can now manipulate the data as needed in JavaScript
+        // For example, display it in the HTML
+        document.addEventListener('DOMContentLoaded', function() {
+            var container = document.getElementById('sensore-data');
+            container.innerHTML = JSON.stringify(sensore, null, 2);
+        });
+    </script>

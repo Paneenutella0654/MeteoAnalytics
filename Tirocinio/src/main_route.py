@@ -19,9 +19,13 @@ from flask_login import current_user, login_required , login_user, logout_user
 @app.route("/listaSensori",methods=["GET", "POST"])
 @login_required
 def listaSensori():
-    user = current_user.id
-    listaSensori = main_load.RetriveCoordinareSensori()
-    return render_template("listaSensori.html", listaSensori=listaSensori)
+    nazione = request.args.get("nazione")
+    if nazione:
+        listaSensori = main_load.sensoriByNazione(nazione)
+        return render_template("listaSensori.html", listaSensori=listaSensori)
+    else :
+        listaSensori = main_load.RetriveCoordinareSensori()
+        return render_template("listaSensori.html", listaSensori=listaSensori)
 
 @app.route("/sensoriPreferiti",methods=["GET", "POST"])
 @login_required
@@ -77,14 +81,17 @@ def logout():
 
 @app.route("/dettagliSensore", methods=["POST", "GET"])
 def dettagliSensore():
-    idsensore = request.args.get("idSensore")
-    sensore = main_load.SensorebyID(idsensore)
-    idSensoreMacro = sensore[0]['id']
-    datiinquinamento = main_load.RetriveInquinamentoBySensoredID(idSensoreMacro)
-    datiPrecipitazioni = sensore[0]['measurementsPrecipitation']
-    datiTemperatura = sensore[0]['measurementsTemperature']
-    datiVento = sensore[0]['measurementsWind']
-    return render_template("dettagliSensore.html", sensore=sensore, datiinquinamento=datiinquinamento, datiPrecipitazioni=datiPrecipitazioni,datiTemperatura=datiTemperatura, datiVento=datiVento)
+    if (request.method == "POST"):
+        print("POST")
+    elif (request.method != "POST"):
+        idsensore = request.args.get("idSensore")
+        sensore = main_load.SensorebyID(idsensore)
+        idSensoreMacro = sensore[0]['id']
+        datiinquinamento = main_load.RetriveInquinamentoBySensoredID(idSensoreMacro)
+        datiPrecipitazioni = sensore[0]['measurementsPrecipitation']
+        datiTemperatura = sensore[0]['measurementsTemperature']
+        datiVento = sensore[0]['measurementsWind']
+        return render_template("dettagliSensore.html", sensore=sensore, datiinquinamento=datiinquinamento, datiPrecipitazioni=datiPrecipitazioni,datiTemperatura=datiTemperatura, datiVento=datiVento)
 
 @app.errorhandler(404)
 def page_not_found(error):
@@ -207,6 +214,22 @@ def contagiorni():
             ]
             return jsonify({'success': True, 'data': result,'tipo': data['type']})
 
+@app.route('/test', methods=['GET'])
+@login_required  
+def filterByDateRange():
+    idsensore = request.args.get("idSensore")
+    start_date = str(request.args.get("startDate"))
+    end_date = str(request.args.get("endDate"))
+    print(start_date)
+    print(end_date)
+
+    try:
+        results = main_load.Filter_by_date_range(idsensore, start_date, end_date)
+        if results is None:
+            return jsonify({"success": False, "message": "No data found"}), 404
+        return jsonify({"success": True, "data": results}), 200
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500
 
 
 

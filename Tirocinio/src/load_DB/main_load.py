@@ -160,17 +160,19 @@ def creaUtente(nome: str, cognome: str, email: str, password: str):
           return result
       
 def RetriveCoordinareSensori():
-    trovati = coordinate.find()
+    trovati = coordinate_n.find()
     listaCoordinate = []
     for trovato in trovati:
         id = str(trovato.get("id"))
         latitude = trovato.get("lat")
         longitude = trovato.get("lon")
+        nazione = trovato.get("nazione")
         
         listaCoordinate.append({
             "id": id,
             "lat": latitude,
-            "lon": longitude
+            "lon": longitude,
+            "nazione": nazione
         })
     return listaCoordinate
 
@@ -343,3 +345,77 @@ def Filter_by_date_gt (id: str, data: str) -> sensore:
     })
 
     return Sensorebydategt
+
+def Filter_by_date_range(id: str, start_date: str, end_date: str) -> list:
+    # Costruzione della query
+    query = {
+        "_id": ObjectId(id),
+        "measurements": {
+            "$elemMatch": {
+                "time": {
+                    "$gte": start_date,
+                    "$lte": end_date
+                }
+            }
+        }
+    }
+
+    # Proiezione per includere solo le misurazioni che soddisfano il criterio di data
+    projection = {
+        "measurements": {
+            "$filter": {
+                "input": "$measurements",
+                "as": "m",
+                "cond": {
+                    "$and": [
+                        {"$gte": ["$$m.time", start_date]},
+                        {"$lte": ["$$m.time", end_date]}
+                    ]
+                }
+            }
+        }
+    }
+    
+    trovato = sensori.find_one(query, projection)
+    if trovato is None:
+        return None
+
+    Sensorebydate = []
+    measurementsPrecipitation = [
+        {
+            "time": m["time"],
+            "relative_humidity_2m": m.get("relative_humidity_2m"),
+            "precipitation": m.get("precipitation"),
+            "rain": m.get("rain"),
+            "snowfall": m.get("snowfall"),
+        }
+        for m in trovato["measurements"]
+    ]
+    measurementsWind = [
+        {
+            "time": m["time"],
+            "wind_speed_10m": m.get("wind_speed_10m"),
+            "wind_direction_10m": m.get("wind_direction_10m"),
+            "wind_gusts_10m": m.get("wind_gusts_10m"),
+        }
+        for m in trovato["measurements"]
+    ]
+    measurementsTemperature = [
+        {
+            "time": m["time"],
+            "temperature_2m": m.get("temperature_2m"),
+            "soil_temperature_0_to_7cm": m.get("soil_temperature_0_to_7cm"),
+            "surface_pressure": m.get("surface_pressure"),
+            "direct_radiation": m.get("direct_radiation"),
+        }
+        for m in trovato["measurements"]
+    ]
+
+    Sensorebydate.append({
+        "id": id,
+        "measurementsPrecipitation": measurementsPrecipitation,
+        "measurementsWind": measurementsWind,
+        "measurementsTemperature": measurementsTemperature
+    })
+
+    return Sensorebydate
