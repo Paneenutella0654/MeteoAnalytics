@@ -19,9 +19,13 @@ from flask_login import current_user, login_required , login_user, logout_user
 @app.route("/listaSensori",methods=["GET", "POST"])
 @login_required
 def listaSensori():
-    user = current_user.id
-    listaSensori = main_load.RetriveCoordinareSensori()
-    return render_template("listaSensori.html", listaSensori=listaSensori)
+    nazione = request.args.get("nazione")
+    if nazione:
+        listaSensori = main_load.sensoriByNazione(nazione)
+        return render_template("listaSensori.html", listaSensori=listaSensori)
+    else :
+        listaSensori = main_load.RetriveCoordinareSensori()
+        return render_template("listaSensori.html", listaSensori=listaSensori)
 
 @app.route("/sensoriPreferiti",methods=["GET", "POST"])
 @login_required

@@ -239,11 +239,11 @@
                   <div class="d-flex flex-wrap justify-content-between rounded p-2 mt-2"
                     style="background-color: #7dba56;">
                     <p class="mb-0 text-white" style="font-size:large;">Nome Sensore:</p>
-                    <p class="text-left text-black mb-0">TEMP</p>
+                    <p class="text-left text-black mb-0">Sensore {{loop.index}}</p>
                   </div>
                   <div class="d-flex flex-wrap justify-content-between rounded p-2 mt-2" style="background-color: #7dba56;">
                     <p id="paragrafo_{{sensore.id}}" class="mb-0 text-white" style="font-size:large;">Località</p>
-                    <p id="{{sensore.id}}_paragrafo" class="text-left text-black mb-0">Sconosciuta</p>
+                    <p id="{{sensore.id}}_paragrafo" class="text-left text-black mb-0">{{sensore.nazione}}</p>
                   </div>
                   <a href="dettagliSensore?idSensore={{sensore.id}}"
                     class="d-flex flex-wrap justify-content-center rounded p-2 mt-2 btn btn-success btn-fw"
@@ -282,7 +282,7 @@
     </div>
     <footer class="footer" style= "background: border-box">
       <div class="d-sm-flex justify-content-center justify-content-sm-between">
-        <span class="text-center text-sm-left d-block d-sm-inline-block">MetaAnalytics <a href="#" target="_blank"></a> 2023</span>
+        <span class="text-center text-sm-left d-block d-sm-inline-block">MeteoAnalytics <a href="#" target="_blank"></a> 2023</span>
         <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Sviluppato da: Gerardo Frino, Giulio Triggiani, Maria Lombardi</span>
       </div>
     </footer>
@@ -325,7 +325,7 @@
       });
 
       {% for sensore in listaSensori %}
-        arrayNomi.push("{{ sensore.name }}");
+        arrayNomi.push("Sensore {{ loop.index }}");
       {% endfor %}
       
       {% for sensore in listaSensori %}
@@ -346,7 +346,6 @@
           });
       
           // chiamata per ottenere il nome della città
-          reverseGeocode(lat, lon, "{{ sensore.id }}");
         {% endif %}
       {% endfor %}
       

@@ -160,17 +160,19 @@ def creaUtente(nome: str, cognome: str, email: str, password: str):
           return result
       
 def RetriveCoordinareSensori():
-    trovati = coordinate.find()
+    trovati = coordinate_n.find()
     listaCoordinate = []
     for trovato in trovati:
         id = str(trovato.get("id"))
         latitude = trovato.get("lat")
         longitude = trovato.get("lon")
+        nazione = trovato.get("nazione")
         
         listaCoordinate.append({
             "id": id,
             "lat": latitude,
-            "lon": longitude
+            "lon": longitude,
+            "nazione": nazione
         })
     return listaCoordinate
 
