@@ -77,14 +77,17 @@ def logout():
 
 @app.route("/dettagliSensore", methods=["POST", "GET"])
 def dettagliSensore():
-    idsensore = request.args.get("idSensore")
-    sensore = main_load.SensorebyID(idsensore)
-    idSensoreMacro = sensore[0]['id']
-    datiinquinamento = main_load.RetriveInquinamentoBySensoredID(idSensoreMacro)
-    datiPrecipitazioni = sensore[0]['measurementsPrecipitation']
-    datiTemperatura = sensore[0]['measurementsTemperature']
-    datiVento = sensore[0]['measurementsWind']
-    return render_template("dettagliSensore.html", sensore=sensore, datiinquinamento=datiinquinamento, datiPrecipitazioni=datiPrecipitazioni,datiTemperatura=datiTemperatura, datiVento=datiVento)
+    if (request.method == "POST"):
+        print("POST")
+    elif (request.method != "POST"):
+        idsensore = request.args.get("idSensore")
+        sensore = main_load.SensorebyID(idsensore)
+        idSensoreMacro = sensore[0]['id']
+        datiinquinamento = main_load.RetriveInquinamentoBySensoredID(idSensoreMacro)
+        datiPrecipitazioni = sensore[0]['measurementsPrecipitation']
+        datiTemperatura = sensore[0]['measurementsTemperature']
+        datiVento = sensore[0]['measurementsWind']
+        return render_template("dettagliSensore.html", sensore=sensore, datiinquinamento=datiinquinamento, datiPrecipitazioni=datiPrecipitazioni,datiTemperatura=datiTemperatura, datiVento=datiVento)
 
 @app.errorhandler(404)
 def page_not_found(error):
