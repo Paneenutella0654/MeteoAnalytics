@@ -10,6 +10,7 @@
   <!-- base:css -->
   <link rel="stylesheet" href="/static/vendors/typicons.font/font/typicons.css">
   <link rel="stylesheet" href="/static/vendors/css/vendor.bundle.base.css">
+  
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
@@ -32,6 +33,31 @@
     .padding_perso{
       padding-bottom: 30px;
     }
+
+    .country-button {
+      display: inline-block;
+      margin: 5px;
+      padding: 10px 20px;
+      border: 1px solid #007BFF;
+      border-radius: 5px;
+      background-color: #f8f9fa;
+      color: #007BFF;
+      text-decoration: none;
+      cursor: pointer;
+  }
+  .country-button:hover {
+      background-color: #007BFF;
+      color: white;
+  }
+
+  .nazione {
+    text-align: center;
+    max-width: 80%; /* Imposta la larghezza massima */
+    overflow-y: auto; /* Abilita lo scrolling verticale */
+    height: 50vh; /* Imposta l'altezza massima */
+    padding: 20px;
+    border-radius: 8px;
+}
   </style>
 </head>
 
@@ -59,56 +85,74 @@
           <li class="nav-item dropdown  d-flex">
             <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
               id="notificationDropdown" data-toggle="dropdown">
-              <i class="typcn typcn-bell mr-0"></i>
-              <!--TODO farlo variabile con l'implementazione delle notifiche-->
-              <span class="count bg-danger">2</span>
-              <!--Numero notifiche-->
+              <i class="typcn typcn-coffee mr-0"></i>
             </a>
             <!--contenuto dropdown notifiche-->
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-              aria-labelledby="notificationDropdown">
-              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-success">
-                    <i class="typcn typcn-info-large mx-0"></i>
-                  </div>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list">
+              <p class="mb-0 sidebar-name float-left dropdown-header">Seleziona la nazione che vuoi visualizzare</p>
+              <div class="container nazione ">
+                <div>
+                  <a href="listaSensori?nazione=italia"
+                  class="country-button" onclick="toggleSelection(event)">Italia</a>
+                  <a href="listaSensori?nazione=spagna"
+                  class="country-button" onclick="toggleSelection(event)">Spagna</a>
+                  <a href="listaSensori?nazione=albania"
+                  class="country-button" onclick="toggleSelection(event)">Albania</a>
+                  <a href="listaSensori?nazione=grecia"
+                  class="country-button" onclick="toggleSelection(event)">Grecia</a>
+                  <a href="listaSensori?nazione=malta"
+                  class="country-button" onclick="toggleSelection(event)">Malta</a>
+                  <a href="listaSensori?nazione=bulgaria"
+                  class="country-button" onclick="toggleSelection(event)">Bulgaria</a>
+                  <a href="listaSensori?nazione=turchia"
+                  class="country-button" onclick="toggleSelection(event)">Turchia</a>
+                  <a href="listaSensori?nazione=serbia"
+                  class="country-button" onclick="toggleSelection(event)">Serbia</a>
+                  <a href="listaSensori?nazione=bosniaederzegovina"
+                  class="country-button" onclick="toggleSelection(event)">Bosnia ed Erzegovina</a>
+                  <a href="listaSensori?nazione=croazia"
+                  class="country-button" onclick="toggleSelection(event)">Croazia</a>
+                  <a href="listaSensori?nazione=monaco"
+                  class="country-button" onclick="toggleSelection(event)">Monaco</a>
+                  <a href="listaSensori?nazione=romania"
+                  class="country-button" onclick="toggleSelection(event)">Romania</a>
+                  <a href="listaSensori?nazione=austria"
+                  class="country-button" onclick="toggleSelection(event)">Austria</a>
+                  <a href="listaSensori?nazione=svezia"
+                  class="country-button" onclick="toggleSelection(event)">Svezia</a>
+                  <a href="listaSensori?nazione=slovenia"
+                  class="country-button" onclick="toggleSelection(event)">Slovenia</a>
+                  <a href="listaSensori?nazione=polonia"
+                  class="country-button" onclick="toggleSelection(event)">Polonia</a>
+                  <a href="listaSensori?nazione=germania"
+                  class="country-button" onclick="toggleSelection(event)">Germania</a>
+                  <a href="listaSensori?nazione=finlandia"
+                  class="country-button" onclick="toggleSelection(event)">Finlandia</a>
+                  <a href="listaSensori?nazione=svizzera"
+                  class="country-button" onclick="toggleSelection(event)">Svizzera</a>
+                  <a href="listaSensori?nazione=irlanda"
+                  class="country-button" onclick="toggleSelection(event)">Irlanda</a>
+                  <a href="listaSensori?nazione=ungheria"
+                  class="country-button" onclick="toggleSelection(event)">Ungheria</a>
+                  <a href="listaSensori?nazione=belgio"
+                  class="country-button" onclick="toggleSelection(event)">Belgio</a>
+                  <a href="listaSensori?nazione=norvegia"
+                  class="country-button" onclick="toggleSelection(event)">Norvegia</a>
+                  <a href="listaSensori?nazione=lettonia"
+                  class="country-button" onclick="toggleSelection(event)">Lettonia</a>
+                  <a href="listaSensori?nazione=moldavia"
+                  class="country-button" onclick="toggleSelection(event)">Moldavia</a>
+                  <a href="listaSensori?nazione=liechtenstein"
+                  class="country-button" onclick="toggleSelection(event)">Liechtenstein</a>
+                  <a href="listaSensori?nazione=slovacchia"
+                  class="country-button" onclick="toggleSelection(event)">Slovacchia</a>
+                  <a href="listaSensori?nazione=cechi"
+                  class="country-button" onclick="toggleSelection(event)">Cechia</a>
+                  <a href="listaSensori?nazione=ucraina"
+                  class="country-button" onclick="toggleSelection(event)">Ucraina</a>
                 </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                  <p class="font-weight-light small-text mb-0">
-                    Just now
-                  </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-warning">
-                    <i class="typcn typcn-cog mx-0"></i>
-                  </div>
-                </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">Settings</h6>
-                  <p class="font-weight-light small-text mb-0">
-                    Private message
-                  </p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-info">
-                    <i class="typcn typcn-user-outline mx-0"></i>
-                  </div>
-                </div>
-                <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                  <p class="font-weight-light small-text mb-0">
-                    2 days ago
-                  </p>
-                </div>
-              </a>
+              </div>
             </div>
-          </li>
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle  pl-0 pr-0" data-toggle="dropdown" id="profileDropdown">
               <i class="typcn typcn-user-outline mr-0"></i>
@@ -364,7 +408,6 @@
       }).addTo(map);
       
       var markersLayer = new L.LayerGroup();
-      
       for (var i = 0; i < coordinateMarker.length; i++) {
         var marker = L.marker([coordinateMarker[i].lat, coordinateMarker[i].lon], {icon: SensorIcon}).addTo(markersLayer);
         var idSensore = arrayMappe[i];
@@ -407,7 +450,6 @@
         event.preventDefault();
         scrollaVersoMappaGenerale();
       });
-
     </script>
     <!-- End custom js for this page-->
 
