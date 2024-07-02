@@ -207,6 +207,22 @@ def contagiorni():
             ]
             return jsonify({'success': True, 'data': result,'tipo': data['type']})
 
+@app.route('/test', methods=['GET'])
+@login_required  
+def filterByDateRange():
+    idsensore = request.args.get("idSensore")
+    start_date = str(request.args.get("startDate"))
+    end_date = str(request.args.get("endDate"))
+    print(start_date)
+    print(end_date)
+
+    try:
+        results = main_load.Filter_by_date_range(idsensore, start_date, end_date)
+        if results is None:
+            return jsonify({"success": False, "message": "No data found"}), 404
+        return jsonify({"success": True, "data": results}), 200
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 500
 
 
 
