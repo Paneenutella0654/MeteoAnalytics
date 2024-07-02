@@ -313,6 +313,22 @@
                                       <button type="button" onclick="updateData()">Update</button>
                                   </div>
                               </form>
+                              <form id="updateForm">
+                                <div class="input-group">
+                                    <label for="queryType">Seleziona il tipo di quety:</label>
+                                    <select id="queryType" name="queryType">
+                                        <option value="giornosingolo">Giorno singolo</option>
+                                        <option value="giornosucc">Giorni successivi</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                  <label for="dateValue">Seleziona la data:</label>
+                                  <input type="date" id="dateValue" name="dateValue" required>
+                              </div>
+                                <div class="input-group">
+                                    <button type="button" onclick="updateGrafici()">Update</button>
+                                </div>
+                            </form>
                           </div>
                             <!-- Qua ci devo fare il coso per le query -->
                             </div>
@@ -788,6 +804,31 @@
           }
       });
   }
+
+  // Funzione per query date
+  function updateGrafici() {
+    const queryType = $('#queryType').val();
+    const dateValue = $('#dateValue').val();
+
+    if (!dateValue) {
+        alert('Per favore, inserisci una data valida.');
+        return;
+    }
+
+    const data = {
+        type: queryType,
+        date: dateValue,
+        id : idsensoremio
+    };
+    console.log(data);
+
+    $.ajax({
+      type: 'POST',
+      url: '/test',
+      contentType: 'application/json',
+      data: JSON.stringify(data)
+  });
+}
     
 
       function rimandaelimina()
