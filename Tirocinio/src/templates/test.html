@@ -10,13 +10,9 @@
    
     <script>
         // Pass the value of sensore as a JavaScript variable
-        var sensore = JSON.parse('{{ sensore | tojson | safe }}');
-        console.log(sensore);
+        var sensore2 = JSON.parse('{{ listaSensori | tojson }}');
+        console.log(sensore2); 
 
         // You can now manipulate the data as needed in JavaScript
         // For example, display it in the HTML
-        document.addEventListener('DOMContentLoaded', function() {
-            var container = document.getElementById('sensore-data');
-            container.innerHTML = JSON.stringify(sensore, null, 2);
-        });
     </script>

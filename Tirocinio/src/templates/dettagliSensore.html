@@ -20,6 +20,15 @@
      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
      crossorigin=""/>
      <style>
+      .sel{
+        border: 1px solid $border;
+        margin-bottom: 18px;
+        color: #888;
+        font-family: 'Lato', 'sans-serif';
+        font-size: 16px;
+        font-weight: 300;
+        background-color: #fff;
+      }
         .container {
           margin: 20px;
       }
@@ -125,7 +134,7 @@
                 <ul class="navbar-nav mr-lg-2">
                     <li class="nav-item  d-none d-lg-flex">
                         <a class="nav-link active">
-                            <p id="nomsensore">{{sensore.name}}</p>
+                            <p id="nomsensore">Dettagli Sensore</p>
                         </a>
                     </li>
                 </ul>
@@ -256,7 +265,7 @@
               <div class="col-sm-6">
                 <div class="d-flex align-items-center justify-content-md-end">
                   <div class="mb-3 mb-xl-0 pr-1">
-                    <button type="button" class="btn btn-primary"  style= "background-color: #00c39a !important; border-color: #00c39a;" onclick = "rimandamodifica()" >Modifica</button>
+                    <button type="button" class="btn btn-primary"  style= "background-color: #7dba56 !important; border-color: #7dba56;" onclick = "inviaSensorePreferito()" >Preferito</button>
                   </div>
                   <div class="mb-3 mb-xl-0 pr-1">
                     <button type="button" class="btn btn-primary" onclick = "rimandaelimina()" >Elimina</button>
@@ -315,16 +324,21 @@
                               </form>
                               <form id="updateForm">
                                 <div class="input-group">
-                                    <label for="queryType">Seleziona il tipo di quety:</label>
+                                    <label for="queryType">Seleziona il tipo di query:</label>
                                     <select id="queryType" name="queryType">
                                         <option value="giornosingolo">Giorno singolo</option>
                                         <option value="giornosucc">Giorni successivi</option>
+                                        <option value="rangegiorni">Range di Giorni</option>
                                     </select>
                                 </div>
                                 <div class="input-group">
-                                  <label for="dateValue">Seleziona la data:</label>
-                                  <input type="date" id="dateValue" name="dateValue" required>
-                              </div>
+                                    <label id="firstDateLabel" for="dateValue">Seleziona la data:</label>
+                                    <input type="date" id="dateValue" name="dateValue" required>
+                                </div>
+                                <div class="input-group" id="secondDateGroup" style="display: none;">
+                                    <label for="secondDateValue">Seleziona la seconda data:</label>
+                                    <input type="date" id="secondDateValue" name="secondDateValue">
+                                </div>
                                 <div class="input-group">
                                     <button type="button" onclick="updateGrafici()">Update</button>
                                 </div>
@@ -430,6 +444,29 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
+
+  <script>
+    function toggleDateRange() {
+      var queryType = document.getElementById("queryType").value;
+      var secondDateGroup = document.getElementById("secondDateGroup");
+      var firstDateLabel = document.getElementById("firstDateLabel");
+
+      if (queryType === "rangegiorni") {
+          secondDateGroup.style.display = "block";
+          firstDateLabel.textContent = "Seleziona la data iniziale:";
+      } else {
+          secondDateGroup.style.display = "none";
+          firstDateLabel.textContent = "Seleziona la data:";
+      }
+  }
+
+  window.onload = function() {
+      document.getElementById("queryType").addEventListener("change", toggleDateRange);
+      toggleDateRange(); // Call the function to set the initial state
+  }
+  </script>
+
+
   <script>
 
     var SensorIcon = L.icon({
@@ -455,19 +492,51 @@
 
     L.marker([lat,lon],{icon: SensorIcon}).addTo(map);
 
-
-
-    //Generazione grafico meteo
     var inquinamento = {{ datiinquinamento|tojson|safe }};
-    var arrayInquinamento = inquinamento
-    creaGraficoMeteo()
 
-      function creaGraficoMeteo() 
+    if (!inquinamento || !Array.isArray(inquinamento) || inquinamento.length === 0) {
+      var parent = document.getElementById("datiInquinamento");
+      
+      // Rimuovi eventuali elementi figli già presenti in parent
+      parent.innerHTML = '';
+      
+      // Crea il primo paragrafo con il testo principale
+      var paragrafo1 = document.createElement('p');
+      paragrafo1.textContent = 'Nessun Dato Disponibile';
+      
+      // Applica stili al primo paragrafo
+      paragrafo1.style.display = 'flex';
+      paragrafo1.style.justifyContent = 'center';
+      paragrafo1.style.alignItems = 'center';
+      paragrafo1.style.height = '100%'; // Altezza del paragrafo al 100% del parent
+      paragrafo1.style.fontSize = '28px'; // Dimensione del testo
+      paragrafo1.style.fontWeight = 'bold'; // Grassetto
+      paragrafo1.style.padding = '10px'; // Spazio intorno al paragrafo
+      
+      // Aggiungi il primo paragrafo come figlio del parent
+      parent.appendChild(paragrafo1);
+      
+      // Crea il secondo paragrafo come descrizione aggiuntiva
+      var paragrafo2 = document.createElement('p');
+      paragrafo2.textContent = 'I Dati dell inquinamento sono disponibili dal 01-12-2022';
+      
+      paragrafo2.style.textAlign = 'center'; 
+      paragrafo2.style.color = '#69727b';
+      
+      // Aggiungi il secondo paragrafo come figlio del parent
+      parent.appendChild(paragrafo2);
+  }else {
+      var arrayInquinamento = inquinamento;
+      creaGraficoInquinamento()
+  }
+
+
+      function creaGraficoInquinamento() 
       {
         // Seleziona il contenitore e crea un nuovo canvas per il grafico
         var parent = document.getElementById("datiInquinamento");
         var canvas = document.createElement("canvas");
-        canvas.id = "lineChartmeteo";
+        canvas.id = "lineChartinquinamento";
         canvas.width = 1000;
         canvas.height = 595; // NON modificare, stessa altezza del testo così non esplode quando clicchiamo.
         parent.appendChild(canvas);
@@ -511,7 +580,7 @@
 
     
         // Crea finalmente il grafico
-        new Chart(document.getElementById("lineChartmeteo"), {
+        new Chart(document.getElementById("lineChartinquinamento"), {
           type: 'line',
           data: {
             labels: labelsData,
@@ -747,10 +816,41 @@
       var sensore = {id: "{{ sensore.id }}", name: "{{ sensore.name }}"};
 
 
-      function rimandamodifica()
-      {
-        window.location.href = "/modificaSensore?idSensore=" + sensore.id 
-      }
+      function inviaSensorePreferito() {
+        Swal.fire({
+            title: "Vuoi impostare questo sensore come preferito?",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: "SI",
+            denyButtonText: `NO`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Se l'utente conferma, invia la richiesta AJAX
+                var data = { id: idsensoremio };
+    
+                $.ajax({
+                    url: '/settapreferito',
+                    type: 'POST',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function(response) {
+                        // Gestisci la risposta di successo
+                        Swal.fire("Saved!", "", "success");
+                        console.log('Sensore preferito impostato con successo:', response);
+                    },
+                    error: function(error) {
+                        // Gestisci eventuali errori
+                        Swal.fire("Error", "Errore nell'impostare il sensore preferito", "error");
+                        console.error('Errore nell\'impostare il sensore preferito:', error);
+                    }
+                });
+            } else if (result.isDenied) {
+                Swal.fire("Changes are not saved", "", "info");
+            }
+        });
+    }
+    
 
       function updateData() {
         const dataType = $('#dataType').val();
@@ -805,29 +905,41 @@
       });
   }
 
-  // Funzione per query date
   function updateGrafici() {
     const queryType = $('#queryType').val();
     const dateValue = $('#dateValue').val();
+    let secondDateValue = '';
 
     if (!dateValue) {
         alert('Per favore, inserisci una data valida.');
         return;
     }
 
+    if (queryType === 'rangegiorni') {
+        secondDateValue = $('#secondDateValue').val();
+        if (!secondDateValue) {
+            alert('Per favore, inserisci una seconda data valida per il range di giorni.');
+            return;
+        }
+    }
+
     const data = {
         type: queryType,
         date: dateValue,
-        id : idsensoremio
+        secondDate: secondDateValue,
+        id: idsensoremio
     };
     console.log(data);
 
-    $.ajax({
-      type: 'POST',
-      url: '/test',
-      contentType: 'application/json',
-      data: JSON.stringify(data)
-  });
+    let url = "/dettagliSensore?idSensore=" + idsensoremio + "&type=" + queryType;
+
+    if (queryType === 'giornosingolo' || queryType === 'giornosucc') {
+        url += "&startDate=" + dateValue;
+    } else if (queryType === 'rangegiorni') {
+        url += "&startDate=" + dateValue + "&endDate=" + secondDateValue;
+    }
+
+    window.location.href = url;
 }
     
 

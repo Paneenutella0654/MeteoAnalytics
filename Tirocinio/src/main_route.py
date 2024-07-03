@@ -30,8 +30,7 @@ def listaSensori():
 @app.route("/sensoriPreferiti",methods=["GET", "POST"])
 @login_required
 def sensoriPreferiti():
-    user = current_user.id
-    listaSensori = main_load.RetriveCoordinareSensori()
+    listaSensori = main_load.RetrivePreferiti()
     return render_template("sensoriPreferiti.html", listaSensori=listaSensori)
 
 @app.route("/login",methods=["GET", "POST"])
@@ -81,17 +80,51 @@ def logout():
 
 @app.route("/dettagliSensore", methods=["POST", "GET"])
 def dettagliSensore():
-    if (request.method == "POST"):
-        print("POST")
-    elif (request.method != "POST"):
-        idsensore = request.args.get("idSensore")
+    idsensore = request.args.get("idSensore")
+    date_str = request.args.get("startDate")
+    date_end_str = request.args.get("endDate")
+    type_param = request.args.get("type")
+    
+    if type_param == "giornosingolo":
+        date_str_n = date_str + "T03:00:00"
+        date_str_i = date_str + "T03:00"
+        sensore = main_load.Filter_by_date(idsensore, date_str_n)
+        idSensoreMacro = sensore[0]['id']
+        datiinquinamento = main_load.Filter_inquinamento_by_date(idSensoreMacro, date_str_i)
+        datiPrecipitazioni = sensore[0]['measurementsPrecipitation']
+        datiTemperatura = sensore[0]['measurementsTemperature']
+        datiVento = sensore[0]['measurementsWind']
+        return render_template("dettagliSensore.html", sensore=sensore, datiinquinamento=datiinquinamento,datiPrecipitazioni=datiPrecipitazioni, datiTemperatura=datiTemperatura, datiVento=datiVento)
+    elif type_param == "giornosucc":
+        date_str_n = date_str + "T03:00:00"
+        date_str_i = date_str + "T03:00"
+        sensore = main_load.Filter_by_date_gt(idsensore, date_str_n)
+        idSensoreMacro = sensore[0]['id']
+        datiinquinamento = main_load.Filter_inquinamento_by_date_gt(idSensoreMacro, date_str_i)
+        datiPrecipitazioni = sensore[0]['measurementsPrecipitation']
+        datiTemperatura = sensore[0]['measurementsTemperature']
+        datiVento = sensore[0]['measurementsWind']
+        return render_template("dettagliSensore.html", sensore=sensore, datiinquinamento=datiinquinamento,datiPrecipitazioni=datiPrecipitazioni, datiTemperatura=datiTemperatura, datiVento=datiVento)
+    elif type_param == "rangegiorni":
+        date_str_n = date_str + "T03:00:00"
+        date_str_i = date_str + "T03:00"
+        date_end_str_n = date_end_str + "T03:00:00"
+        date_end_str_i = date_end_str + "T03:00"
+        sensore = main_load.Filter_by_date_range(idsensore, date_str_n, date_end_str_n)
+        idSensoreMacro = sensore[0]['id']
+        datiinquinamento = main_load.Filter_inquinamento_by_date_range(idSensoreMacro, date_str_i, date_end_str_i)
+        datiPrecipitazioni = sensore[0]['measurementsPrecipitation']
+        datiTemperatura = sensore[0]['measurementsTemperature']
+        datiVento = sensore[0]['measurementsWind']
+        return render_template("dettagliSensore.html", sensore=sensore, datiinquinamento=datiinquinamento,datiPrecipitazioni=datiPrecipitazioni, datiTemperatura=datiTemperatura, datiVento=datiVento)
+    else:
         sensore = main_load.SensorebyID(idsensore)
         idSensoreMacro = sensore[0]['id']
         datiinquinamento = main_load.RetriveInquinamentoBySensoredID(idSensoreMacro)
         datiPrecipitazioni = sensore[0]['measurementsPrecipitation']
         datiTemperatura = sensore[0]['measurementsTemperature']
         datiVento = sensore[0]['measurementsWind']
-        return render_template("dettagliSensore.html", sensore=sensore, datiinquinamento=datiinquinamento, datiPrecipitazioni=datiPrecipitazioni,datiTemperatura=datiTemperatura, datiVento=datiVento)
+        return render_template("dettagliSensore.html", sensore=sensore, datiinquinamento=datiinquinamento,datiPrecipitazioni=datiPrecipitazioni, datiTemperatura=datiTemperatura, datiVento=datiVento)     
 
 @app.errorhandler(404)
 def page_not_found(error):
@@ -130,9 +163,7 @@ def eliminaSensore():
         return redirect(url_for("listaSensori"))
     elif request.method == "POST":
         richiesta = request.get_json()
-        print(richiesta)
         idsensore = richiesta.get("idSensore")
-        print(idsensore)
         control = main_load.EliminaSensore(idsensore)
         if control != None:
             return jsonify({"success": True})
@@ -214,15 +245,27 @@ def contagiorni():
             ]
             return jsonify({'success': True, 'data': result,'tipo': data['type']})
 
-@app.route('/test', methods=['GET'])
-@login_required  
-def filterByDateRange():
-    idsensore = request.args.get("idSensore")
-    start_date = str(request.args.get("startDate"))
-    end_date = str(request.args.get("endDate"))
-    print(start_date)
-    print(end_date)
 
+@app.route('/settapreferito', methods=['GET', 'POST'])
+def settapreferito():
+    if request.method == 'POST':
+        data = request.json
+        idsensore = data['id']
+        control = main_load.SettaPreferito(idsensore)
+        if control != None:
+            return jsonify({"success": True})
+        elif control == None:
+            return jsonify({"success": False})
+
+
+
+@app.route('/test', methods=['GET', 'POST'])
+@login_required  
+def test():
+    idsensore = request.args.get("idSensore")
+    start_date = request.args.get("start_date")
+    end_date = request.args.get("end_date")
+    
     try:
         results = main_load.Filter_by_date_range(idsensore, start_date, end_date)
         if results is None:
@@ -230,11 +273,3 @@ def filterByDateRange():
         return jsonify({"success": True, "data": results}), 200
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
-
-
-
-@app.route('/test', methods=['GET', 'POST'])
-@login_required  
-def test():
-    data = request.json
-    print(data)
