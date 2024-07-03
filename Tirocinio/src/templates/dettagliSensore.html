@@ -16,10 +16,102 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="/static/images/Logo.png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
      crossorigin=""/>
      <style>
+
+
+      .custom-swal-container {
+        z-index: 9999;
+    }
+
+    .custom-swal-popup {
+        background: #f7f7f7;
+        border-radius: 15px;
+    }
+
+    .custom-swal-title {
+        color: #333;
+        font-size: 24px;
+    }
+
+    .custom-datepicker {
+        font-family: Arial, sans-serif;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        padding: 10px;
+        background: #fff;
+    }
+
+    .custom-datepicker .ui-datepicker-header {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .custom-datepicker .ui-datepicker-calendar thead th {
+        color: #4CAF50;
+    }
+
+    .custom-datepicker .ui-state-default {
+        background: #f0f0f0;
+        border: none;
+        color: #333;
+        border-radius: 50%;
+    }
+
+    .custom-datepicker .ui-state-active,
+    .custom-datepicker .ui-state-hover {
+        background: #4CAF50;
+        color: white;
+    }
+
+    .custom-datepicker .ui-datepicker-prev,
+    .custom-datepicker .ui-datepicker-next {
+        background: none;
+        border: none;
+        color: white;
+    }
+
+    .custom-datepicker .ui-datepicker-prev:hover,
+    .custom-datepicker .ui-datepicker-next:hover {
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+    }
+      
+      .ui-datepicker {
+        z-index: 1600 !important; /* Assicura che il datepicker sia visibile sopra SweetAlert */
+      }
+
+      .country-button {
+        display: inline-block;
+        margin: 5px;
+        padding: 10px 20px;
+        border: 1px solid #007BFF;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+        color: #007BFF;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .country-button:hover {
+        background-color: #007BFF;
+        color: white;
+    }
+  
+    .nazione {
+      text-align: center;
+      max-width: 80%; /* Imposta la larghezza massima */
+      overflow-y: auto; /* Abilita lo scrolling verticale */
+      height: 50vh; /* Imposta l'altezza massima */
+      padding: 20px;
+      border-radius: 8px;
+  }
+
       .sel{
         border: 1px solid $border;
         margin-bottom: 18px;
@@ -112,10 +204,162 @@
       height: 5rem; /* Adjust as desired */
     }
 
-      .fa-heart{
-        color:red;
-        font-size:40px;
-      }
+    .fa-heart{
+      color:red;
+      font-size:40px;
+    }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+    }
+    .input-group label {
+        margin-bottom: 5px; /* Aggiunge spazio tra la label e l'input */
+    }
+    .raw {
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+
+  <!-- calendar style -->
+  .form-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 300px;
+  }
+
+  .input-group {
+      margin-bottom: 15px;
+      width: 100%;
+  }
+
+  label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+  }
+
+  input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px;
+      color: #333;
+  }
+
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-clear-button {
+      display: none;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    background-color: #7dba56;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .btn {
+      background-color: #7dba56 !important;
+      border-color: #7dba56;
+      color: white;
+      padding: 0.875rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      display: inline-block;
+      width: 100%;
+      margin-top: 10px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+  }
+
+  .btn:hover {
+      background-color: #6aa847 !important;
+  }
+
+  <!-- end calendar style -->
+
+
+
+  <!-- query style -->
+  .elegant-form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .input-group select,
+  .input-group input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input-group select:focus,
+  .input-group input[type="number"]:focus {
+    outline: none;
+    border-color: #4CAF50;
+  }
+  
+  .input-group button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .input-group button:hover {
+    background-color: #45a049;
+  }
+
+  .elimina {
+      background-color: red !important;
+      border-color: red;
+      color: white;
+      padding: 0.875rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      display: inline-block;
+      width: 100%;
+      margin-top: 10px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+  }
+    
+  <!-- end query style -->
+
+
+  
+
   </style>
   </head>
   <body>
@@ -142,56 +386,73 @@
                     <li class="nav-item dropdown  d-flex">
                         <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
                             id="notificationDropdown" data-toggle="dropdown">
-                            <i class="typcn typcn-bell mr-0"></i>
-                            <!--TODO farlo variabile con l'implementazione delle notifiche-->
-                            <span class="count bg-danger">2</span>
-                            <!--Numero notifiche-->
-                        </a>
-                        <!--contenuto dropdown notifiche-->
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-                            aria-labelledby="notificationDropdown">
-                            <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-success">
-                                        <i class="typcn typcn-info-large mx-0"></i>
-                                    </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                                    <p class="font-weight-light small-text mb-0">
-                                        Just now
-                                    </p>
-                                </div>
-                            </a>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-warning">
-                                        <i class="typcn typcn-cog mx-0"></i>
-                                    </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <h6 class="preview-subject font-weight-normal">Settings</h6>
-                                    <p class="font-weight-light small-text mb-0">
-                                        Private message
-                                    </p>
-                                </div>
-                            </a>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-info">
-                                        <i class="typcn typcn-user-outline mx-0"></i>
-                                    </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                                    <p class="font-weight-light small-text mb-0">
-                                        2 days ago
-                                    </p>
-                                </div>
-                            </a>
+                            <i class="typcn typcn-flag-outline mr-0"></i>
+                            <!--contenuto dropdown notifiche-->
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list">
+                          <p class="mb-0 sidebar-name float-left dropdown-header">Seleziona la nazione che vuoi visualizzare</p>
+                          <div class="container nazione ">
+                            <div>
+                              <a href="listaSensori?nazione=italia"
+                              class="country-button" onclick="toggleSelection(event)">Italia</a>
+                              <a href="listaSensori?nazione=spagna"
+                              class="country-button" onclick="toggleSelection(event)">Spagna</a>
+                              <a href="listaSensori?nazione=albania"
+                              class="country-button" onclick="toggleSelection(event)">Albania</a>
+                              <a href="listaSensori?nazione=grecia"
+                              class="country-button" onclick="toggleSelection(event)">Grecia</a>
+                              <a href="listaSensori?nazione=malta"
+                              class="country-button" onclick="toggleSelection(event)">Malta</a>
+                              <a href="listaSensori?nazione=bulgaria"
+                              class="country-button" onclick="toggleSelection(event)">Bulgaria</a>
+                              <a href="listaSensori?nazione=turchia"
+                              class="country-button" onclick="toggleSelection(event)">Turchia</a>
+                              <a href="listaSensori?nazione=serbia"
+                              class="country-button" onclick="toggleSelection(event)">Serbia</a>
+                              <a href="listaSensori?nazione=bosniaederzegovina"
+                              class="country-button" onclick="toggleSelection(event)">Bosnia ed Erzegovina</a>
+                              <a href="listaSensori?nazione=croazia"
+                              class="country-button" onclick="toggleSelection(event)">Croazia</a>
+                              <a href="listaSensori?nazione=monaco"
+                              class="country-button" onclick="toggleSelection(event)">Monaco</a>
+                              <a href="listaSensori?nazione=romania"
+                              class="country-button" onclick="toggleSelection(event)">Romania</a>
+                              <a href="listaSensori?nazione=austria"
+                              class="country-button" onclick="toggleSelection(event)">Austria</a>
+                              <a href="listaSensori?nazione=svezia"
+                              class="country-button" onclick="toggleSelection(event)">Svezia</a>
+                              <a href="listaSensori?nazione=slovenia"
+                              class="country-button" onclick="toggleSelection(event)">Slovenia</a>
+                              <a href="listaSensori?nazione=polonia"
+                              class="country-button" onclick="toggleSelection(event)">Polonia</a>
+                              <a href="listaSensori?nazione=germania"
+                              class="country-button" onclick="toggleSelection(event)">Germania</a>
+                              <a href="listaSensori?nazione=finlandia"
+                              class="country-button" onclick="toggleSelection(event)">Finlandia</a>
+                              <a href="listaSensori?nazione=svizzera"
+                              class="country-button" onclick="toggleSelection(event)">Svizzera</a>
+                              <a href="listaSensori?nazione=irlanda"
+                              class="country-button" onclick="toggleSelection(event)">Irlanda</a>
+                              <a href="listaSensori?nazione=ungheria"
+                              class="country-button" onclick="toggleSelection(event)">Ungheria</a>
+                              <a href="listaSensori?nazione=belgio"
+                              class="country-button" onclick="toggleSelection(event)">Belgio</a>
+                              <a href="listaSensori?nazione=norvegia"
+                              class="country-button" onclick="toggleSelection(event)">Norvegia</a>
+                              <a href="listaSensori?nazione=lettonia"
+                              class="country-button" onclick="toggleSelection(event)">Lettonia</a>
+                              <a href="listaSensori?nazione=moldavia"
+                              class="country-button" onclick="toggleSelection(event)">Moldavia</a>
+                              <a href="listaSensori?nazione=liechtenstein"
+                              class="country-button" onclick="toggleSelection(event)">Liechtenstein</a>
+                              <a href="listaSensori?nazione=slovacchia"
+                              class="country-button" onclick="toggleSelection(event)">Slovacchia</a>
+                              <a href="listaSensori?nazione=cechi"
+                              class="country-button" onclick="toggleSelection(event)">Cechia</a>
+                              <a href="listaSensori?nazione=ucraina"
+                              class="country-button" onclick="toggleSelection(event)">Ucraina</a>
+                            </div>
+                          </div>
                         </div>
-                    </li>
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle  pl-0 pr-0" data-toggle="dropdown" id="profileDropdown">
                             <i class="typcn typcn-user-outline mr-0"></i>
@@ -268,7 +529,7 @@
                     <button type="button" class="btn btn-primary"  style= "background-color: #7dba56 !important; border-color: #7dba56;" onclick = "inviaSensorePreferito()" >Preferito</button>
                   </div>
                   <div class="mb-3 mb-xl-0 pr-1">
-                    <button type="button" class="btn btn-primary" onclick = "rimandaelimina()" >Elimina</button>
+                    <button type="button" class="btn btn-primary elimina" onclick = "rimandaelimina()">Elimina</button>
                   </div>
                 </div>
               </div>
@@ -319,7 +580,7 @@
                                       <input type="number" id="dataValue" name="dataValue" required>
                                   </div>
                                   <div class="input-group">
-                                      <button type="button" onclick="updateData()">Update</button>
+                                      <button class="btn btn-primary" style= "background-color: #7dba56 !important; border-color: #7dba56; padding: 0.875rem 1.5rem;" type="button" onclick="updateData()">Update</button>
                                   </div>
                               </form>
                               <form id="updateForm">
@@ -333,17 +594,25 @@
                                 </div>
                                 <div class="input-group">
                                     <label id="firstDateLabel" for="dateValue">Seleziona la data:</label>
-                                    <input type="date" id="dateValue" name="dateValue" required>
+                                    <input type="date" id="dateValue" name="dateValue" min=2015-01-01 max="2023-12-31" required>
                                 </div>
                                 <div class="input-group" id="secondDateGroup" style="display: none;">
                                     <label for="secondDateValue">Seleziona la seconda data:</label>
-                                    <input type="date" id="secondDateValue" name="secondDateValue">
+                                    <input type="date" id="secondDateValue" min=2015-01-01 max="2023-12-31" name="secondDateValue">
                                 </div>
                                 <div class="input-group">
-                                    <button type="button" onclick="updateGrafici()">Update</button>
+                                    <button class="btn btn-primary" style= "background-color: #7dba56 !important; border-color: #7dba56; padding: 0.875rem 1.5rem;" type="button" onclick="updateGrafici()">Update</button>
                                 </div>
                             </form>
+                          <div>
+                            <label>Visualizza stato meteo</label>
+                            <button id="openCalendar">Open Calendar</button>
                           </div>
+                          <div>
+                            <label>Visualizza media eventi</label>
+                            <button type="button" onclick="visualizzaMedia()">Visualizza Media</button>
+                          </div>
+                        </div>
                             <!-- Qua ci devo fare il coso per le query -->
                             </div>
                             <div class="d-flex justify-content-center mb-4">
@@ -372,7 +641,8 @@
             <div class="col-xl grid-margin stretch-card" id="card-dati-precipitazioni">
               <div class="card">
                 <div class="card-body">
-                  <div class="d-flex flex-wrap justify-content-between">
+                  <!--<div class="d-flex flex-wrap justify-content-between">-->
+                  <div class="flex-wrap justify-content-between">
                     <h4 class="card-title mb-3">Storico Temperatura</h4>
                     <div id="datiTemperatura"></div>
                   </div>
@@ -442,6 +712,9 @@
     <!-- Custom js for this page-->
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
 
@@ -464,7 +737,90 @@
       document.getElementById("queryType").addEventListener("change", toggleDateRange);
       toggleDateRange(); // Call the function to set the initial state
   }
-  </script>
+
+  $(document).ready(function () {
+    $('#openCalendar').on('click', function () {
+        Swal.fire({
+            title: 'Seleziona una data',
+            html: '<div id="datepicker"></div>',
+            customClass: {
+                container: 'custom-swal-container',
+                popup: 'custom-swal-popup',
+                title: 'custom-swal-title',
+            },
+            didOpen: function () {
+                $("#datepicker").datepicker({
+                    dateFormat: 'yy-mm-dd',
+                    onSelect: function (dateText) {
+                        $.ajax({
+                            url: '/visitaeventi',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({ date: dateText, idSensore: idsensoremio }),
+                            success: function (response) {
+                                console.log('Data received:', response);
+                                if (response.success && response.data.measurementsPrecipitation.length > 0) {
+                                    const weather = response.data.measurementsPrecipitation[0];
+                                    let weatherIcon, weatherText;
+                                    
+                                    switch(weather.weather_condition) {
+                                        case 'sole':
+                                            weatherIcon = '☀️';
+                                            weatherText = 'Soleggiato';
+                                            break;
+                                        case 'pioggia':
+                                            weatherIcon = '🌧️';
+                                            weatherText = 'Piovoso';
+                                            break;
+                                        case 'neve':
+                                            weatherIcon = '❄️';
+                                            weatherText = 'Nevoso';
+                                            break;
+                                        default:
+                                            weatherIcon = '🌤️';
+                                            weatherText = 'Condizioni miste';
+                                    }
+
+                                    Swal.fire({
+                                        title: 'Condizioni Meteorologiche',
+                                        html: `
+                                            <div style="font-size: 48px;">${weatherIcon}</div>
+                                            <h2>${weatherText}</h2>
+                                            <p>Umidità relativa: ${weather.relative_humidity_2m}%</p>
+                                            <p>Precipitazioni: ${weather.precipitation} mm</p>
+                                        `,
+                                        icon: 'info'
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Dati non disponibili',
+                                        text: 'Non sono disponibili dati meteorologici per questa data.',
+                                        icon: 'info'
+                                    });
+                                }
+                            },
+                            error: function (error) {
+                                Swal.fire({
+                                    title: 'Errore',
+                                    text: 'Si è verificato un errore nel recupero dei dati.',
+                                    icon: 'error'
+                                });
+                            }
+                        });
+                    },
+                    beforeShow: function(input, inst) {
+                        inst.dpDiv.addClass('custom-datepicker');
+                    }
+                });
+            },
+            showCancelButton: true,
+            showConfirmButton: false,
+            cancelButtonText: 'Chiudi'
+        });
+    });
+});
+
+</script>
 
 
   <script>
@@ -525,10 +881,10 @@
       
       // Aggiungi il secondo paragrafo come figlio del parent
       parent.appendChild(paragrafo2);
-  }else {
+    } else {
       var arrayInquinamento = inquinamento;
       creaGraficoInquinamento()
-  }
+    }
 
 
       function creaGraficoInquinamento() 
@@ -980,6 +1336,97 @@
           }
         });
       } 
+
+      var sensore = JSON.parse('{{ sensore | tojson }}');
+
+      function visualizzaMedia() {
+        const risultati = {};
+        
+        // Funzione di supporto per calcolare statistiche
+        function calcolaStatistiche(array, chiave) {
+          const valori = array.map(item => item[chiave]).filter(val => val !== undefined);
+          const somma = valori.reduce((acc, val) => acc + val, 0);
+          const media = somma / valori.length;
+          return {
+            somma: somma,
+            media: media.toFixed(2),
+            minimo: Math.min(...valori),
+            massimo: Math.max(...valori)
+          };
+        }
+      
+        // Analisi precipitazioni
+        risultati.precipitazioni = calcolaStatistiche(sensore[0].measurementsPrecipitation, 'precipitation');
+        risultati.umiditaRelativa = calcolaStatistiche(sensore[0].measurementsPrecipitation, 'relative_humidity_2m');
+      
+        // Analisi temperatura
+        risultati.temperatura2m = calcolaStatistiche(sensore[0].measurementsTemperature, 'temperature_2m');
+        risultati.pressioneSuperficie = calcolaStatistiche(sensore[0].measurementsTemperature, 'surface_pressure');
+      
+        // Analisi vento
+        risultati.velocitaVento = calcolaStatistiche(sensore[0].measurementsWind, 'wind_speed_10m');
+        risultati.rafficheDiVento = calcolaStatistiche(sensore[0].measurementsWind, 'wind_gusts_10m');
+      
+        console.log('Risultati:', risultati);
+        generaAllert(risultati);
+      }
+      
+
+      function generaAllert(data) {
+        Swal.fire({
+          title: 'Medie e Valori Estremi',
+          html: `
+            <div style="text-align: left;">
+              <ul>
+                <strong><li>Precipitazioni:</strong>
+                  <ul>
+                    <li>Somma: ${data.precipitazioni.somma} mm</li>
+                    <li>Media: ${data.precipitazioni.media} mm</li>
+                    <li>Minimo: ${data.precipitazioni.minimo} mm</li>
+                    <li>Massimo: ${data.precipitazioni.massimo} mm</li>
+                  </ul>
+                </li>
+                <strong><li>Pressione Atmosferica al Suolo:</strong>
+                  <ul>
+                    <li>Media: ${data.pressioneSuperficie.media} hPa</li>
+                    <li>Minimo: ${data.pressioneSuperficie.minimo} hPa</li>
+                    <li>Massimo: ${data.pressioneSuperficie.massimo} hPa</li>
+                  </ul>
+                </li>
+                <strong><li>Raffiche di Vento:</strong>
+                  <ul>
+                    <li>Media: ${data.rafficheDiVento.media} km/h</li>
+                    <li>Minimo: ${data.rafficheDiVento.minimo} km/h</li>
+                    <li>Massimo: ${data.rafficheDiVento.massimo} km/h</li>
+                  </ul>
+                </li>
+                <strong><li>Temperatura:</strong>
+                  <ul>
+                    <li>Media: ${data.temperatura2m.media} °C</li>
+                    <li>Minimo: ${data.temperatura2m.minimo} °C</li>
+                    <li>Massimo: ${data.temperatura2m.massimo} °C</li>
+                  </ul>
+                </li>
+                <strong><li>Umidità Relativa:</strong>
+                  <ul>
+                    <li>Media: ${data.umiditaRelativa.media}%</li>
+                    <li>Minimo: ${data.umiditaRelativa.minimo}%</li>
+                    <li>Massimo: ${data.umiditaRelativa.massimo}%</li>
+                  </ul>
+                </li>
+                <strong><li>Velocità del Vento:</strong>
+                  <ul>
+                    <li>Media: ${data.velocitaVento.media} km/h</li>
+                    <li>Minimo: ${data.velocitaVento.minimo} km/h</li>
+                    <li>Massimo: ${data.velocitaVento.massimo} km/h</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          `,
+          confirmButtonText: 'Chiudi'
+        });
+      }
   </script>
 
   </body>
