@@ -653,3 +653,60 @@ def RetrivePreferiti():
             "nazione": nazione
         })
     return listaCoordinate
+
+def Filter_by_date_meteo(id: str, data: str) -> dict:
+    # Costruzione della query
+    query = {
+        "_id": ObjectId(id),
+        "measurements": {
+            "$elemMatch": {
+                "time": data,
+                "precipitation": {"$gte": 0}
+            }
+        }
+    }
+
+    # Proiezione per includere solo le misurazioni che soddisfano il criterio di data
+    projection = {
+        "measurements": {
+            "$filter": {
+                "input": "$measurements",
+                "as": "m",
+                "cond": {
+                    "$and": [
+                        {"$eq": ["$$m.time", data]},
+                        {"$gte": ["$$m.precipitation", 0]}
+                    ]
+                }
+            }
+        }
+    }
+    
+    trovato = sensori.find_one(query, projection)
+    if trovato is None:
+        return None
+    
+    measurementsPrecipitation = []
+
+    for m in trovato["measurements"]:
+        # Determina se ha piovuto, nevicato o c'è stato il sole
+        weather_condition = "sole"
+        if m.get("precipitation", 0) > 0:
+            if m.get("rain", False):
+                weather_condition = "pioggia"
+            elif m.get("snowfall", 0) > 0:
+                weather_condition = "neve"
+        
+        measurementsPrecipitation.append({
+            "relative_humidity_2m": m.get("relative_humidity_2m"),
+            "precipitation": m.get("precipitation"),
+            "rain": m.get("rain"),
+            "snowfall": m.get("snowfall"),
+            "weather_condition": weather_condition
+        })
+        
+    Sensorebydate = {
+        "id": id,
+        "measurementsPrecipitation": measurementsPrecipitation,
+    }
+    return Sensorebydate

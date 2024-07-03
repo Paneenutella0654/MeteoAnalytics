@@ -259,17 +259,16 @@ def settapreferito():
 
 
 
-@app.route('/test', methods=['GET', 'POST'])
+@app.route('/visitaeventi', methods=['GET', 'POST'])
 @login_required  
-def test():
-    idsensore = request.args.get("idSensore")
-    start_date = request.args.get("start_date")
-    end_date = request.args.get("end_date")
-    
-    try:
-        results = main_load.Filter_by_date_range(idsensore, start_date, end_date)
-        if results is None:
-            return jsonify({"success": False, "message": "No data found"}), 404
-        return jsonify({"success": True, "data": results}), 200
-    except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+def visitaeventi():
+    if request.method == 'POST':
+        data = request.json
+        data_selezionate = data['date']
+        idSensore = data['idSensore']
+        data_finale = data_selezionate +"T03:00:00" 
+        rilevazioni = main_load.Filter_by_date_meteo(idSensore, data_finale)
+        if rilevazioni != None:
+            return jsonify({"success": True, "data": rilevazioni})
+        elif rilevazioni == None:
+            return jsonify({"success": False})
