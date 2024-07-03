@@ -22,8 +22,6 @@
      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
      crossorigin=""/>
      <style>
-
-
       .custom-swal-container {
         z-index: 9999;
     }
@@ -170,7 +168,7 @@
 
       #map{
         border-radius: 3%;
-          height: 500px;
+          height: 750px;
           width: 100%;
           z-index: 1;
       }
@@ -500,7 +498,12 @@
                             <span class="menu-title">Sensori</span>
                         </a>
                     </li>
-
+                    <li class="nav-item">
+                      <a class="nav-link" href="/sensoriPreferiti">
+                        <i class="typcn typcn-star menu-icon"></i>
+                        <span class="menu-title">Sensori Preferiti</span>
+                      </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/user" aria-expanded="false" aria-controls="auth">
                             <i class="typcn typcn-user menu-icon"></i>
@@ -606,11 +609,11 @@
                             </form>
                           <div>
                             <label>Visualizza stato meteo</label>
-                            <button id="openCalendar">Open Calendar</button>
+                            <button class="btn btn-primary" style= "background-color: #7dba56 !important; border-color: #7dba56; padding: 0.875rem 1.5rem;" id="openCalendar">Apri Calendario</button>
                           </div>
                           <div>
                             <label>Visualizza media eventi</label>
-                            <button type="button" onclick="visualizzaMedia()">Visualizza Media</button>
+                            <button class="btn btn-primary" style= "background-color: #7dba56 !important; border-color: #7dba56; padding: 0.875rem 1.5rem;" type="button" onclick="visualizzaMedia()">Visualizza Media</button>
                           </div>
                         </div>
                             <!-- Qua ci devo fare il coso per le query -->
