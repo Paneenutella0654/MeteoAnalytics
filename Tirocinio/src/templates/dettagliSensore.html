@@ -556,7 +556,7 @@
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-wrap justify-content-between">
-                      <h4 class="card-title mb-3">Query di Ricerca</h4>
+                      <h4 class="card-title mb-3">Effettua le tue ricerche</h4>
                     </div>
                     <div class="row">
                       <div class="col-12">
@@ -567,7 +567,7 @@
                             <div class="container">
                               <form id="updateForm">
                                   <div class="input-group">
-                                      <label for="dataType">Seleziona il tipo di dato:</label>
+                                      <label for="dataType">Seleziona il tipo di dato che vuoi cercare:</label>
                                       <select id="dataType" name="dataType">
                                           <option value="temperature">Temperatura</option>
                                           <option value="wind">Velocita del Vento</option>
@@ -580,37 +580,37 @@
                                       <input type="number" id="dataValue" name="dataValue" required>
                                   </div>
                                   <div class="input-group">
-                                      <button class="btn btn-primary" style= "background-color: #7dba56 !important; border-color: #7dba56; padding: 0.875rem 1.5rem;" type="button" onclick="updateData()">Update</button>
+                                      <button class="btn btn-primary" style= "background-color: #7dba56 !important; border-color: #7dba56; padding: 0.875rem 1.5rem;" type="button" onclick="updateData()">Cerca</button>
                                   </div>
                               </form>
                               <form id="updateForm">
                                 <div class="input-group">
-                                    <label for="queryType">Seleziona il tipo di query:</label>
+                                    <label for="queryType">Seleziona la modalità di ricerca:</label>
                                     <select id="queryType" name="queryType">
                                         <option value="giornosingolo">Giorno singolo</option>
                                         <option value="giornosucc">Giorni successivi</option>
-                                        <option value="rangegiorni">Range di Giorni</option>
+                                        <option value="rangegiorni">Inserisci da: a:</option>
                                     </select>
                                 </div>
                                 <div class="input-group">
-                                    <label id="firstDateLabel" for="dateValue">Seleziona la data:</label>
+                                    <label id="firstDateLabel" for="dateValue">Seleziona la data di partenza:</label>
                                     <input type="date" id="dateValue" name="dateValue" min=2015-01-01 max="2023-12-31" required>
                                 </div>
                                 <div class="input-group" id="secondDateGroup" style="display: none;">
-                                    <label for="secondDateValue">Seleziona la seconda data:</label>
+                                    <label for="secondDateValue">Seleziona la data di fine:</label>
                                     <input type="date" id="secondDateValue" min=2015-01-01 max="2023-12-31" name="secondDateValue">
                                 </div>
                                 <div class="input-group">
-                                    <button class="btn btn-primary" style= "background-color: #7dba56 !important; border-color: #7dba56; padding: 0.875rem 1.5rem;" type="button" onclick="updateGrafici()">Update</button>
+                                    <button class="btn btn-primary" style= "background-color: #7dba56 !important; border-color: #7dba56; padding: 0.875rem 1.5rem;" type="button" onclick="updateGrafici()">Cerca</button>
                                 </div>
                             </form>
                           <div>
                             <label>Visualizza stato meteo</label>
-                            <button id="openCalendar">Open Calendar</button>
+                            <button id="openCalendar ">Apri il Calendario</button>
                           </div>
                           <div>
                             <label>Visualizza media eventi</label>
-                            <button type="button" onclick="visualizzaMedia()">Visualizza Media</button>
+                            <button type="button" onclick="visualizzaMedia()">Visualizza Media</button>ì
                           </div>
                         </div>
                             <!-- Qua ci devo fare il coso per le query -->
