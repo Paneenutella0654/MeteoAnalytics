@@ -754,6 +754,8 @@
             didOpen: function () {
                 $("#datepicker").datepicker({
                     dateFormat: 'yy-mm-dd',
+                    minDate: new Date(2015, 0, 1), // Imposta la data minima (anno, mese, giorno) - Gennaio è 0
+                    maxDate: new Date(2023, 11, 31),
                     onSelect: function (dateText) {
                         $.ajax({
                             url: '/visitaeventi',
