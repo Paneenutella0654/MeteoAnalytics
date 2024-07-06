@@ -575,6 +575,7 @@
                                           <option value="temperature">Temperatura</option>
                                           <option value="wind">Velocita del Vento</option>
                                           <option value="precipitation">Umidita</option>
+                                          <option value="inquinamento">Inquinamento Pm 2.5</option>
                                           <!-- Aggiungi altre opzioni qui -->
                                       </select>
                                   </div>
@@ -609,7 +610,7 @@
                             </form>
                           <div>
                             <label>Visualizza stato meteo</label>
-                            <button class="btn btn-primary" style= "background-color: #7dba56 !important; border-color: #7dba56; padding: 0.875rem 1.5rem;" id="openCalendar">Apri Calendario</button>
+                            <button class="btn btn-primary" style= "background-color: #7dba56 !important; border-color: #7dba56; padding: 0.875rem 1.5rem; margin-bottom: 15px" id="openCalendar">Apri Calendario</button>
                           </div>
                           <div>
                             <label>Visualizza media eventi</label>
@@ -820,7 +821,8 @@
             },
             showCancelButton: true,
             showConfirmButton: false,
-            cancelButtonText: 'Chiudi'
+            cancelButtonText: 'Chiudi',
+            cancelButtonColor: '#7dba56'
         });
     });
 });
@@ -1181,7 +1183,7 @@
         Swal.fire({
             title: "Vuoi impostare questo sensore come preferito?",
             showDenyButton: true,
-            showCancelButton: true,
+            confirmButtonColor:'#7dba56',
             confirmButtonText: "SI",
             denyButtonText: `NO`
         }).then((result) => {
@@ -1234,7 +1236,7 @@
           contentType: 'application/json',
           data: JSON.stringify(data),
           success: function(response) {
-              console.log('Success:', response);
+              console.log('Success:', response, 'data: ' , data);
 
               // Costruisci il contenuto della lista scrollabile
               let content = `<div style="max-height: 200px; overflow-y: auto;">`;
@@ -1252,7 +1254,9 @@
                             <p style="font-size: 1.2em; padding-bottom: 1em;"><b>Numero di sforamenti:</b> ${response.data.length - 1}</p>
                             ${content}
                         `,
-                  icon: 'success'
+                  icon: 'success',
+                  confirmButtonText:'Chiudi', 
+                  confirmButtonColor:'#7dba56'
               });
           },
           error: function(xhr, status, error) {
@@ -1429,7 +1433,8 @@
               </ul>
             </div>
           `,
-          confirmButtonText: 'Chiudi'
+          confirmButtonText: 'Chiudi',
+          confirmButtonColor:'#7dba56'
         });
       }
   </script>

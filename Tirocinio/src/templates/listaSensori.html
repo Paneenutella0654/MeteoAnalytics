@@ -243,7 +243,7 @@
                   </div>
                   <div class="d-flex flex-wrap justify-content-between rounded p-2 mt-2" style="background-color: #7dba56;">
                     <p id="paragrafo_{{sensore.id}}" class="mb-0 text-white" style="font-size:large;">Località</p>
-                    <p id="{{sensore.id}}_paragrafo" class="text-left text-black mb-0">{{sensore.nazione}}</p>
+                    <p id="{{sensore.id}}_paragrafo" class="text-left text-black mb-0">{{sensore.nazione | upper}}</p>
                   </div>
                   <a href="dettagliSensore?idSensore={{sensore.id}}"
                     class="d-flex flex-wrap justify-content-center rounded p-2 mt-2 btn btn-success btn-fw"

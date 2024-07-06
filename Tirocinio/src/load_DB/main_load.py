@@ -206,11 +206,13 @@ def sensoriByNazione(nazione: str):
         id = str(trovato.get("id"))
         latitude = trovato.get("lat")
         longitude = trovato.get("lon")
+        nazione = trovato.get("nazione")
 
         listaCoordinate.append({
             "id": id,
             "lat": latitude,
-            "lon": longitude
+            "lon": longitude,
+            "nazione": nazione
         })
     return listaCoordinate
 

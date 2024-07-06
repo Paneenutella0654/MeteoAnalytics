@@ -220,6 +220,8 @@ def contagiorni():
         idsensore = data['id']
         limite_inferiore = float(data['value'])
         dati_sensore = main_load.SensorebyID(idsensore)
+        idMacroSensore = dati_sensore[0]['id']
+        datiinquinamento = main_load.RetriveInquinamentoBySensoredID(idMacroSensore)
         if data['type'] == 'temperature':
             temperature = dati_sensore[0]['measurementsTemperature']
             result = [
@@ -244,6 +246,16 @@ def contagiorni():
                         if entry['relative_humidity_2m'] > limite_inferiore
             ]
             return jsonify({'success': True, 'data': result,'tipo': data['type']})
+        elif data['type'] == 'inquinamento':
+            result = []
+            for entry in datiinquinamento:
+                for i, pm2_5_value in enumerate(entry['pm2_5']):
+                    if float(pm2_5_value) > limite_inferiore:
+                        result.append({
+                            'valore_rilevazione': float(pm2_5_value),
+                            'time': entry['time'][i] if isinstance(entry['time'], list) else entry['time']
+                        })
+            return jsonify({'success': True, 'data': result, 'tipo': 'pm2.5'})
 
 
 @app.route('/settapreferito', methods=['GET', 'POST'])
