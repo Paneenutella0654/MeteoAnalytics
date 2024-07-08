@@ -168,7 +168,7 @@
 
       #map{
         border-radius: 3%;
-          height: 750px;
+          height: 850px;
           width: 100%;
           z-index: 1;
       }
@@ -616,6 +616,10 @@
                             <label>Visualizza media eventi</label>
                             <button class="btn btn-primary" style= "background-color: #7dba56 !important; border-color: #7dba56; padding: 0.875rem 1.5rem;" type="button" onclick="visualizzaMedia()">Visualizza Media</button>
                           </div>
+                          <div>
+                            <label style="margin-top: 15px">Scarica Grafici</label>
+                            <button class="btn btn-primary" id="downloadButton" style= "background-color: #7dba56 !important; border-color: #7dba56; padding: 0.875rem 1.5rem" type="button" onclick="scaricaGrafici()">Donwload</button>
+                          </div>
                         </div>
                             <!-- Qua ci devo fare il coso per le query -->
                             </div>
@@ -719,7 +723,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
 
   <script>
@@ -827,6 +832,52 @@
     });
 });
 
+document.getElementById('downloadButton').addEventListener('click', scaricaGrafici);
+
+
+async function scaricaGrafici() {
+  var zip = new JSZip();
+
+  console.log("Inizio processo di download");
+  console.log("Grafici disponibili:", Object.keys(charts));
+
+  for (var chartId in charts) {
+    if (charts.hasOwnProperty(chartId)) {
+      console.log("Processando grafico:", chartId);
+      var canvas = charts[chartId].canvas;
+      console.log(`Dimensioni canvas per ${chartId}:`, canvas.width, "x", canvas.height);
+      console.log("Oggetto Chart per", chartId, ":", charts[chartId]);
+
+      try {
+        const blob = await new Promise((resolve, reject) => {
+          canvas.toBlob(blob => {
+            if (blob) {
+              console.log("Blob creato per", chartId, "dimensione:", blob.size);
+              resolve(blob);
+            } else {
+              console.error("Errore nella creazione del blob per", chartId);
+              reject("Errore blob: " + chartId);
+            }
+          });
+        });
+
+        zip.file(chartId + ".png", blob);
+      } catch (error) {
+        console.error("Errore durante la creazione del blob per", chartId, error);
+      }
+    }
+  }
+
+  try {
+    console.log("Tutti i grafici processati, generazione ZIP");
+    const content = await zip.generateAsync({type:"blob"});
+    console.log("ZIP generato, dimensione:", content.size);
+    saveAs(content, "tutti_i_grafici.zip");
+  } catch (error) {
+    console.error("Errore nella generazione del ZIP:", error);
+  }
+}
+
 </script>
 
 
@@ -845,6 +896,7 @@
     var lat = sensore[0].latitude;
     var lon = sensore[0].longitude;
     var idsensoremio = sensore[0].id;
+    var charts = {};
 
 
     var map = L.map('map').setView([lat, lon], 15);
@@ -856,6 +908,7 @@
     L.marker([lat,lon],{icon: SensorIcon}).addTo(map);
 
     var inquinamento = {{ datiinquinamento|tojson|safe }};
+    console.log(inquinamento)
 
     if (!inquinamento || !Array.isArray(inquinamento) || inquinamento.length === 0) {
       var parent = document.getElementById("datiInquinamento");
@@ -916,7 +969,8 @@
     
         // Serve per le keys degli oggetti
         var datasets = [];
-        var keys = Object.keys(arrayInquinamento[0]).filter(key => key !== "id" && key !== "idSensore" && key !== "time");
+        var keys = Object.keys(arrayInquinamento[0]).filter(key => key !== "id" && key !== "idSensore" && key !== "time" && key !== "latitude" && key !== "longitude");
+        console.log(keys)
     
         for (var c = 0; c < keys.length; c++) 
         {
@@ -943,7 +997,7 @@
 
     
         // Crea finalmente il grafico
-        new Chart(document.getElementById("lineChartinquinamento"), {
+        charts["lineChartinquinamento"] = new Chart(document.getElementById("lineChartinquinamento"), {
           type: 'line',
           data: {
             labels: labelsData,
@@ -1014,7 +1068,7 @@
 
     
         // Crea finalmente il grafico
-        new Chart(document.getElementById("precipitation"), {
+        charts["precipitation"] = new Chart(document.getElementById("precipitation"), {
           type: 'line',
           data: {
             labels: labelsData,
@@ -1086,7 +1140,7 @@
 
     
         // Crea finalmente il grafico
-        new Chart(document.getElementById("wind"), {
+        charts["wind"] = new Chart(document.getElementById("wind"), {
           type: 'line',
           data: {
             labels: labelsData,
@@ -1156,7 +1210,7 @@
 
     
         // Crea finalmente il grafico
-        new Chart(document.getElementById("temperature"), {
+        charts["temperature"] = new Chart(document.getElementById("temperature"), {
           type: 'line',
           data: {
             labels: labelsData,
