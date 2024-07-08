@@ -1,14 +1,20 @@
 # MeteoAnalytics
+![Logo](https://github.com/Paneenutella0654/MeteoAnalytics/assets/104584785/8d833304-bb69-4e71-bfc0-54adaa61c1c4)
+<br>
+# Descrizione
+MeteoAnalytics: Un'applicazione web per la visualizzazione e l'analisi approfondita di dati meteo provenienti da sensori europei
 
-MeteoAnalytics è una web-app che permette la visualizzazione e un approfondita analisi sui dati recuperati da sensori sparsi per l'Europa.
+Sviluppo per il corso di Basi di Dati II (a.a. 2023-2024)
+
+# Team:
+• Gerardo Frino<br>
+• Giulio Triggiani<br>
+• Maria Lombardi<br>
 
 ## Table of Contents
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Installation
 
